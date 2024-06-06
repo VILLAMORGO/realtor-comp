@@ -1,0 +1,44 @@
+<nav class="navbar navbar-expand-lg bg-dark border-bottom border-body" data-bs-theme="dark">
+  <div class="container-fluid px-5">
+    <div>
+        <a class="navbar-brand">Realtor Comp</a>
+        <%= image_tag('realtorcomplogo.png', alt: 'Realtor Logo', style: 'width: 40px;') %>
+    </div>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText">
+      <ul class="navbar-nav mx-auto mb-2 mb-lg-0 mx-5 d-flex justify-content-center">
+        <li class="nav-item">
+          <%= link_to 'Home', home_path, :class => "nav-link" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to 'Find Listing', home_path, :class => "nav-link" %>
+        </li>
+      </ul>
+      <span class="navbar-text">
+        The place to find commissions splits!
+      </span>
+      <ul class="navbar-nav text-white">
+        <%if user_signed_in? %>
+            <li class="nav-item nav-link active text-white">
+                Welcome, <%=current_user.email%>!
+            </li>
+            <li class="nav-item">
+                <%= link_to 'Edit Profile', edit_user_registration_path, :class => "nav-link" %>
+            </li>
+            <li class="nav-item">
+                <%= link_to 'Log Out', destroy_user_session_path, data: { turbo_method: :delete }, :class => "nav-link" %>
+            </li>
+        <%else%>
+            <li class="nav-item">
+                <%= link_to 'Sign Up', new_user_registration_path, :class => "nav-link active" %>
+            </li>
+            <li class="nav-item">
+                <%= link_to 'Sign In', new_user_session_path, :class => "nav-link active" %>
+            </li>
+        <%end%>
+      </ul>
+    </div>
+  </div>
+</nav>
