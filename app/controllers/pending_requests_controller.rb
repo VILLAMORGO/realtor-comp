@@ -1,9 +1,9 @@
 class PendingRequestsController < ApplicationController
 
     def index
-        @request =  User.where(role: "trader", state: "Pending").where.not(confirmed_at: nil).order(:confirmed_at)
+        @request = User.where(role: "agent", status: "Pending").where.not(confirmed_at: nil).order(:confirmed_at)
     end
-
+        
     def show
 
     end
@@ -11,10 +11,10 @@ class PendingRequestsController < ApplicationController
     def update
         @user = User.find(params[:id])
         
-        if @user.update(state: params[:state])
-          UserMailer.with(user: @user).approve_email.deliver_now if params[:state] == "Approved"
-          UserMailer.with(user: @user).decline_email.deliver_now if params[:state] == "Declined"
-          redirect_to pending_requests_path, notice: "#{@user.email} has been #{@user.state}"
+        if @user.update(status: params[:status])
+        #   UserMailer.with(user: @user).approve_email.deliver_now if params[:status] == "Approved"
+        #   UserMailer.with(user: @user).decline_email.deliver_now if params[:status] == "Declined"
+          redirect_to pending_requests_path, notice: "#{@user.email} has been #{@user.status}"
         end
     end
 end 

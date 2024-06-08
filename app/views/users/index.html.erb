@@ -1,0 +1,25 @@
+<div class="card mx-auto mt-5 text-center responsive-users">
+
+  <div class="card-header d-flex justify-content-center">
+    <h4>All Agents</h4>
+    <%= link_to "Add Agent", new_user_path, class:"btn btn-info position-absolute top-1 end-0 mx-4 "%>
+       
+  </div>
+
+  <ul class="list-group list-group-flush overflow-auto container" style="min-height: 20rem; max-height: 35rem;">
+    <% @agents.each do |agent| %>
+      <li class="list-group-item d-flex justify-content-between ">
+          <%= link_to  agent.email, user_path(agent), class: "btn btn-outline-light text-dark col"%>
+          
+          <span class="ms-2 mt-2 col text-center">
+            <%=  agent.role %> 
+          </span>
+
+          <span class="ms-2 col text-center btn btn-dark border rounded-pill">
+             <%= agent.mls_number %> number
+          </span>
+      </li>
+    <% end %>
+  </ul>
+
+</div>

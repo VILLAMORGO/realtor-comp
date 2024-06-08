@@ -1,0 +1,78 @@
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<div class="mt-5 ">
+    <div class="card border-info mx-auto text-warning  text-dark">
+
+            <h2 class="card-header text-center bg-info bg-opacity-25">
+                <%= user.email %>
+                <span class='badge bg-dark rounded-pill position-absolute top-1 end-0 mx-3'>
+                    <%= user.status %> stocks
+                </span>
+        
+            </h2>
+
+            <div class="card-body overflow-auto ps-4" style="min-height: 20rem; max-height: 35rem;">
+
+                <div class="card-title d-flex">
+                    <strong>
+                        Date Added: 
+                    </strong>
+                    <p class="ms-2">
+                        <%= user.created_at.strftime("%A %B %d, %Y") %>
+                    </p>
+                </div>
+
+                <div class="card-title d-flex">
+                    <strong>
+                        Last profile update: 
+                    </strong>
+                    <p class="ms-2">
+                        <%= user.updated_at.strftime("%A %B %d, %Y") %>
+                    </p>
+                </div>
+
+                <div class="card-title d-flex">
+                    <strong>
+                        Role:
+                    </strong>
+                    <p class="ms-2">
+                        <%= user.role %>
+                    </p>
+                </div>
+
+                <div class="card-title d-flex ">
+                    <strong class="mt-2">
+                        Total Transactions:
+                    </strong>
+                    
+                </div>
+
+                <div class="card-title d-flex">
+                    <strong>
+                        Last Transaction:
+                    </strong>
+                </div>
+
+                <div class="card-title">
+                    <strong>
+                        Stocks:
+                    </strong>
+                    <div class="container ms-2">
+                        <div class = "row overflow-auto" style="min-height: 10rem; max-height: 15rem;">
+                            
+                        </div>
+                    </div>
+                </div>
+                    
+            </div>
+
+            <div class="card-footer btn-group ">
+        
+                <%= link_to "Edit", edit_user_path(user), class:  "btn btn-info mx-3" %>
+
+                <%= link_to "Delete",  user_path(user), method: :delete, data: { confirm: "Are you sure you want to delete #{user.email}'s profile?" }, class: "btn btn-danger mx-3" %>
+
+                <%= link_to "Back", users_path, class:  "btn btn-secondary mx-3" %>
+                
+            </div>
+    </div>
+</div>
