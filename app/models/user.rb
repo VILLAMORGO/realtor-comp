@@ -8,4 +8,11 @@ class User < ApplicationRecord
   validates :mls_number, numericality: { only_integer: true }, allow_blank: true
 
   enum role: [:agent, :admin]
+
+  validates :state, presence: true
+  STATUS = ["Pending", "Declined", "Approved"]
+
+  def confirmed?
+    true
+  end
 end
