@@ -107,10 +107,10 @@
         <p>Choose who you are:</p>
         <div class="btn-group btn-group-toggle" data-toggle="buttons">
           <label class="btn btn-secondary <%= 'active' if @user.agent? %>">
-            <%= f.radio_button :role, :agent, autocomplete: "off", checked: @user.agent? %> Agent
+            <%= f.radio_button :role, :agent, autocomplete: "off", checked: @user.agent?, class: 'd-none' %> Agent
           </label>
           <label class="btn btn-secondary <%= 'active' if @user.broker? %>">
-            <%= f.radio_button :role, :broker, autocomplete: "off", checked: @user.broker? %> Broker
+            <%= f.radio_button :role, :broker, autocomplete: "off", checked: @user.broker?, class: 'd-none' %> Broker
           </label>
         </div>
 
