@@ -10,11 +10,11 @@
         <div class="row">
           <div class="col-md-6 mb-2">
             <%= f.label :first_name, "First Name" %>
-            <%= f.text_field :first_name, class: "form-control", placeholder: "First Name" %>
+            <%= f.text_field :first_name, class: "form-control", placeholder: "First Name", maxlength: "25" %>
           </div>
           <div class="col-md-6 mb-2">
             <%= f.label :last_name, "Last Name" %>
-            <%= f.text_field :last_name, class: "form-control", placeholder: "Last Name" %>
+            <%= f.text_field :last_name, class: "form-control", placeholder: "Last Name", maxlength: "25" %>
           </div>
         </div>
 
@@ -26,7 +26,7 @@
 
           <div class="col-md-6 mb-2">
             <%= f.label :email, "Email Address" %>
-            <%= f.email_field :email, class: "form-control", placeholder: "Email address" %>
+            <%= f.email_field :email, class: "form-control", placeholder: "Email address", maxlength: "25" %>
           </div>
         </div>
        
@@ -49,7 +49,7 @@
         <br>
         <h6 class="card-title text-left mt-2 mb-2">
           Additional Information (Optional):
-          <button type="button" id="toggle-optional-fields" class="btn btn-light border-dark">Show/Hide Optional Fields</button>
+          <button type="button" id="toggle-optional-fields" class="btn btn-light border-dark">Show Optional Fields</button>
         </h6>
         <hr>
 
@@ -57,16 +57,16 @@
           <p class="fw-semibold">Address:</p>
           <div class="form-group mb-2">
             <%= f.label :street_address %>
-            <%= f.text_field :street_address, class: "form-control", placeholder: "1234 Main St" %>
+            <%= f.text_field :street_address, class: "form-control", placeholder: "1234 Main St", maxlength: "25" %>
           </div>
           <div class="form-group mb-2">
             <%= f.label :home_address %>
-            <%= f.text_field :home_address, class: "form-control", placeholder: "Apartment, studio, or floor" %>
+            <%= f.text_field :home_address, class: "form-control", placeholder: "Apartment, studio, or floor", maxlength: "25" %>
           </div>
           <div class="row">
             <div class="form-group col-md-8 mb-2">
               <%= f.label :city_address %>
-              <%= f.text_field :city_address, class: "form-control", placeholder: "City" %>
+              <%= f.text_field :city_address, class: "form-control", placeholder: "City", maxlength: "25" %>
             </div>
             
             <div class="form-group col-md-4 mb-2">
@@ -81,17 +81,17 @@
           <div class="row">
             <div class="col-md-6 mb-2">
               <%= f.label :broker_first_name, "Broker's First Name" %>
-              <%= f.text_field :broker_first_name, class: "form-control", placeholder: "His/Her first name ..." %>
+              <%= f.text_field :broker_first_name, class: "form-control", placeholder: "His/Her first name ...", maxlength: "25" %>
             </div>
             <div class="col-md-6 mb-2">
               <%= f.label :broker_last_name, "Broker's Last Name" %>
-              <%= f.text_field :broker_last_name, class: "form-control", placeholder: "His/Her last name ..." %>
+              <%= f.text_field :broker_last_name, class: "form-control", placeholder: "His/Her last name ...", maxlength: "25" %>
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 mb-2">
               <%= f.label :broker_email, "Broker's Email Address" %>
-              <%= f.email_field :broker_email, class: "form-control", placeholder: "Your broker's email address" %>
+              <%= f.email_field :broker_email, class: "form-control", placeholder: "Your broker's email address", maxlength: "25" %>
             </div>
             <div class="col-md-6 mb-2">
                 <%= f.label :broker_phone_number, "Broker's Phone Number" %>
@@ -107,11 +107,11 @@
         <div class="row">
           <div class="form-group col-md-6 mb-2">
             <%= f.label :password %>
-            <%= f.password_field :password, class: "form-control", placeholder: "Password" %>
+            <%= f.password_field :password, class: "form-control", placeholder: "Password", maxlength: "25" %>
           </div>
           <div class="form-group col-md-6 mb-2">
             <%= f.label :password_confirmation, "Confirm Password" %>
-            <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm Password" %>
+            <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm Password", maxlength: "25" %>
           </div>
         </div>
       </div>
