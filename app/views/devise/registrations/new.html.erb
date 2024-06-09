@@ -47,51 +47,56 @@
         </div>
 
         <br>
-        <h6 class="card-title text-left mt-2 mb-2">Additional Information (Optional):</h6>
+        <h6 class="card-title text-left mt-2 mb-2">
+          Additional Information (Optional):
+          <button type="button" id="toggle-optional-fields" class="btn btn-light border-dark">Show/Hide Optional Fields</button>
+        </h6>
         <hr>
 
-        <p class="fw-semibold">Address:</p>
-        <div class="form-group mb-2">
-          <%= f.label :street_address %>
-          <%= f.text_field :street_address, class: "form-control", placeholder: "1234 Main St" %>
-        </div>
-        <div class="form-group mb-2">
-          <%= f.label :home_address %>
-          <%= f.text_field :home_address, class: "form-control", placeholder: "Apartment, studio, or floor" %>
-        </div>
-        <div class="row">
-          <div class="form-group col-md-8 mb-2">
-            <%= f.label :city_address %>
-            <%= f.text_field :city_address, class: "form-control", placeholder: "City" %>
+        <div id="optional-fields" class="hidden">
+          <p class="fw-semibold">Address:</p>
+          <div class="form-group mb-2">
+            <%= f.label :street_address %>
+            <%= f.text_field :street_address, class: "form-control", placeholder: "1234 Main St" %>
           </div>
-          
-          <div class="form-group col-md-4 mb-2">
-            <%= f.label :zip_code %>
-            <%= f.number_field :zip_code, class: "form-control", placeholder: "Zip Code" %>
+          <div class="form-group mb-2">
+            <%= f.label :home_address %>
+            <%= f.text_field :home_address, class: "form-control", placeholder: "Apartment, studio, or floor" %>
           </div>
-        </div>
+          <div class="row">
+            <div class="form-group col-md-8 mb-2">
+              <%= f.label :city_address %>
+              <%= f.text_field :city_address, class: "form-control", placeholder: "City" %>
+            </div>
+            
+            <div class="form-group col-md-4 mb-2">
+              <%= f.label :zip_code %>
+              <%= f.number_field :zip_code, class: "form-control", placeholder: "Zip Code" %>
+            </div>
+          </div>
 
-        <br>
-        <p class="fw-semibold">Broker's Information:</p>
+          <br>
+          <p class="fw-semibold">Broker's Information:</p>
 
-        <div class="row">
-          <div class="col-md-6 mb-2">
-            <%= f.label :broker_first_name, "Broker's First Name" %>
-            <%= f.text_field :broker_first_name, class: "form-control", placeholder: "His/Her first name ..." %>
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <%= f.label :broker_first_name, "Broker's First Name" %>
+              <%= f.text_field :broker_first_name, class: "form-control", placeholder: "His/Her first name ..." %>
+            </div>
+            <div class="col-md-6 mb-2">
+              <%= f.label :broker_last_name, "Broker's Last Name" %>
+              <%= f.text_field :broker_last_name, class: "form-control", placeholder: "His/Her last name ..." %>
+            </div>
           </div>
-          <div class="col-md-6 mb-2">
-            <%= f.label :broker_last_name, "Broker's Last Name" %>
-            <%= f.text_field :broker_last_name, class: "form-control", placeholder: "His/Her last name ..." %>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-md-6 mb-2">
-            <%= f.label :broker_email, "Broker's Email Address" %>
-            <%= f.email_field :broker_email, class: "form-control", placeholder: "Your broker's email address" %>
-          </div>
-          <div class="col-md-6 mb-2">
-              <%= f.label :broker_phone_number, "Broker's Phone Number" %>
-              <%= f.number_field :broker_phone_number, class: "form-control", placeholder: "Your broker's phone number" %>
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <%= f.label :broker_email, "Broker's Email Address" %>
+              <%= f.email_field :broker_email, class: "form-control", placeholder: "Your broker's email address" %>
+            </div>
+            <div class="col-md-6 mb-2">
+                <%= f.label :broker_phone_number, "Broker's Phone Number" %>
+                <%= f.number_field :broker_phone_number, class: "form-control", placeholder: "Your broker's phone number" %>
+            </div>
           </div>
         </div>
         
