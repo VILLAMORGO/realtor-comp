@@ -7,7 +7,7 @@ class User < ApplicationRecord
   validates :first_name, :last_name, presence: true
   validates :mls_number, numericality: { only_integer: true }, allow_blank: true
 
-  enum role: [:agent, :admin]
+  enum role: [:agent, :broker, :admin]
 
   validates :state, presence: true
   STATUS = ["Pending", "Declined", "Approved"]

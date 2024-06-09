@@ -14,20 +14,19 @@ input[type=number] {
 }
 
 #optional-fields {
-    max-height: 0;
-    overflow: hidden;
-    transition: max-height 1s ease-out, opacity 1s ease-out; 
-    opacity: 0;
-  }
-  
-  #optional-fields.visible {
-    max-height: 1000px; 
-    opacity: 1;
-    transition: max-height 1.5s ease-in, opacity 1.3s ease-in; 
-  }
-  
-  #optional-fields.hidden {
-    max-height: 0;
-    opacity: 0;
-  }
-   
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 1s ease-out, opacity 1s ease-out; 
+  opacity: 0;
+}
+
+#optional-fields.visible {
+  max-height: 1000px; 
+  opacity: 1;
+  transition: max-height 1.5s ease-in, opacity 1.3s ease-in; 
+}
+
+#optional-fields.hidden {
+  max-height: 0;
+  opacity: 0;
+}

@@ -99,7 +99,21 @@
             </div>
           </div>
         </div>
+
+        <br>
+        <h6 class="card-title text-left mt-2 mb-2">What are you?</h6>
+        <hr>
         
+        <p>Choose who you are:</p>
+        <div class="btn-group btn-group-toggle" data-toggle="buttons">
+          <label class="btn btn-secondary <%= 'active' if @user.agent? %>">
+            <%= f.radio_button :role, :agent, autocomplete: "off", checked: @user.agent? %> Agent
+          </label>
+          <label class="btn btn-secondary <%= 'active' if @user.broker? %>">
+            <%= f.radio_button :role, :broker, autocomplete: "off", checked: @user.broker? %> Broker
+          </label>
+        </div>
+
         <br>
         <h6 class="card-title text-left mt-2 mb-2">Create Password:</h6>
         <hr>

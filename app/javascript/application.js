@@ -32,3 +32,13 @@ document.addEventListener("DOMContentLoaded", function() {
   });
 });
 
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.btn-group-toggle .btn').forEach(function(button) {
+    button.addEventListener('click', function() {
+      document.querySelectorAll('.btn-group-toggle .btn').forEach(function(btn) {
+        btn.classList.remove('active');
+      });
+      this.classList.add('active');
+    });
+  });
+});
