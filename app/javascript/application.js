@@ -15,3 +15,30 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 
+document.addEventListener("DOMContentLoaded", function() {
+  var toggleButton = document.getElementById("toggle-optional-fields");
+  var optionalFields = document.getElementById("optional-fields");
+
+  toggleButton.addEventListener("click", function() {
+    if (optionalFields.classList.contains("hidden")) {
+      optionalFields.classList.remove("hidden");
+      optionalFields.classList.add("visible");
+      toggleButton.textContent = "Hide Optional Fields";
+    } else {
+      optionalFields.classList.remove("visible");
+      optionalFields.classList.add("hidden");
+      toggleButton.textContent = "Show Optional Fields";
+    }
+  });
+});
+
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.btn-group-toggle .btn').forEach(function(button) {
+    button.addEventListener('click', function() {
+      document.querySelectorAll('.btn-group-toggle .btn').forEach(function(btn) {
+        btn.classList.remove('active');
+      });
+      this.classList.add('active');
+    });
+  });
+});

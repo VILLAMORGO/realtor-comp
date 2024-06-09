@@ -23,6 +23,7 @@ class UsersController < ApplicationController
       @user = User.new(user_params)
       @user.state = "Approved"
       @user.skip_confirmation!
+      Rails.logger.debug "User Params: #{user_params.inspect}"
       if @user.save
         redirect_to @user, notice: 'New agent was successfully created.'
       else
