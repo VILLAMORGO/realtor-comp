@@ -42,12 +42,12 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_sign_up_params
-    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :mls_number, :state,:street_address, :home_address, :city_address, :zip_code])
+    devise_parameter_sanitizer.permit(:sign_up, keys: [:first_name, :last_name, :mls_number, :state,:street_address, :home_address, :city_address, :zip_code, :phone_number, :realtor_license_number, :broker_first_name, :broker_last_name, :broker_email, :broker_phone_number])
   end
 
   # If you have extra params to permit, append them to the sanitizer.
   def configure_account_update_params
-    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :mls_number, :state, :street_address, :home_address, :city_address, :zip_code])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :mls_number, :state, :street_address, :home_address, :city_address, :zip_code, :phone_number, :realtor_license_number, :broker_first_name, :broker_last_name, :broker_email, :broker_phone_number])
   end
 
   # The path used after sign up.
