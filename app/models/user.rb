@@ -15,4 +15,16 @@ class User < ApplicationRecord
   def confirmed?
     true
   end
+
+  def admin?
+    self.role == 'admin'
+  end
+
+  def agent?
+    self.role == 'agent'
+  end
+
+  def broker?
+    self.role == 'broker'
+  end
 end
