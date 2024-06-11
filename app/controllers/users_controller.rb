@@ -3,10 +3,10 @@ class UsersController < ApplicationController
   
   
     def index
-      @users = User.all
-      @agents = @users.where(role: "agent", status: "Approved")
+      @agents = User.where(role: 'agent', status: "Approved")
+      @brokers = User.where(role: 'broker', status: "Approved")
     end
-  
+
     def show
       @user = User.find(params[:id])
     end

@@ -13,20 +13,22 @@
           <%= link_to 'Home', home_path, class: "nav-link" %>
         </li>
         <li class="nav-item">
-          <%= link_to 'Find Listing', home_path, class: "nav-link" %>
+          <%= link_to 'Dashboard', users_path, class: "nav-link" %>
         </li>
         <% if user_signed_in? && current_user.admin? %>
           <li class="nav-item">
             <%= link_to 'Pending Request', pending_requests_path, class: "nav-link" %>
           </li>
           <li class="nav-item">
-            <%= link_to 'Agents', users_path, class: "nav-link" %>
+            <%= link_to 'Declined Request', declined_requests_path, class: "nav-link" %>
           </li>
         <% end %>
       </ul>
-      <span class="navbar-text text-white me-3">
-        The place to find commissions splits!
-      </span>
+      <% if user_signed_in? && current_user.admin?%>
+        <span class="navbar-text text-white me-3">
+          The place to find commissions splits!
+        </span>
+      <% end %>
       <ul class="navbar-nav text-white">
         <% if user_signed_in? %>
           <li class="nav-item nav-link text-white">
