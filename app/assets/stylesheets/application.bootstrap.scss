@@ -43,3 +43,36 @@ body {
   background-color: #eceff0;
   color: #a9aeae; /* Ensure the text is readable on a dark background */
 }
+
+.responsive-listings {
+  margin-top: 50px;
+}
+
+.table-header {
+  background-color: #f8f9fa;
+}
+
+.table-hover tbody tr:hover {
+  background-color: #f1f1f1;
+}
+
+.card-title {
+  font-weight: bold;
+  font-size: 16px;
+}
+
+.card-header {
+  background-color: #ffffff;
+}
+
+.table {
+  margin-bottom: 0;
+}
+
+.btn-outline-secondary {
+  font-size: 12px;
+}
+
+.btn-outline-danger {
+  font-size: 12px;
+}

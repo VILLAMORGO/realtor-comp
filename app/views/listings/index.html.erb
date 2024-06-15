@@ -1,26 +1,48 @@
-<h1>My Listings</h1>
+<div class="card border-0 rounded-4 shadow-sm mt-5 text-center responsive-listings my-5 col-md-9 mx-auto">
+  <div class="card-header d-flex align-items-center border-0 py-4" style="background-color: white;">
+    <h6 class="card-title text-start px-3 my-auto fw-bold">LISTINGS</h6>
+    <%= link_to 'Add Listing', new_listing_path, class: 'btn btn-info position-absolute top-1 end-0 mx-4', style: 'font-size: 14px;' %>
+  </div>
 
-<%= link_to 'Add Listing', new_listing_path, class: 'btn btn-primary' %>
+  <div class="table-responsive rounded-bottom-3">
+    <table class="table align-middle table-edge table-hover table-nowrap mb-0">
+      <thead class="table-header text-secondary small">
+        <tr>
+          <th>Title</th>
+          <th>Description</th>
+          <th>Price</th>
+          <th class="text-center" colspan="2">Actions</th>
+        </tr>
+      </thead>
+      <tbody class="list container">
+        <% @listings.each do |listing| %>
+          <tr>
+            <td><%= listing.title %></td>
+            <td><%= listing.description %></td>
+            <td><%= number_to_currency(listing.price) %></td>
+            <td class="text-center">
+              <%= link_to 'Edit', edit_listing_path(listing), class: 'btn btn-sm btn-outline-secondary' %>
+            </td>
+            <td class="text-center">
+              <%= link_to 'Delete', listing_path(listing), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete #{listing.title}?" }, class: 'btn btn-sm btn-outline-danger' %>
+            </td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 
-<table>
-  <thead>
-    <tr>
-      <th>Title</th>
-      <th>Description</th>
-      <th>Price</th>
-      <th colspan="3"></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @listings.each do |listing| %>
-      <tr>
-        <td><%= listing.title %></td>
-        <td><%= listing.description %></td>
-        <td><%= listing.price %></td>
-        <td><%= link_to 'Edit', edit_listing_path(listing) %></td>
-        <td><%= link_to 'Delete', listing, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-      </tr>
-    <% end %>
-  </tbody>
-</table>
+  <div class="card-footer" style="background-color: white;">
+    <div class="d-flex justify-content-between align-items-center">
+      <div class="me-5 text-secondary small">
+        Showing: <span class="list-pagination-page-first">1</span> - <span class="list-pagination-page-last">8</span> of <span class="list-pagination-pages">20</span>
+      </div>
+      <!-- Pagination -->
+      <ul class="pagination list-pagination mb-0" style="display: flex;">
+        <li class="page-item active"><a class="page page-link" href="javascript: void(0);" data-i="1" data-page="8">1</a></li>
+        <li class="page-item"><a class="page page-link" href="javascript: void(0);" data-i="2" data-page="8">2</a></li>
+        <li class="page-item"><a class="page page-link" href="javascript: void(0);" data-i="3" data-page="8">3</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
