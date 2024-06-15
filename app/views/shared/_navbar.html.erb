@@ -9,13 +9,15 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0 mx-5 d-flex justify-content-center">
-        <li class="nav-item">
-          <%= link_to 'Home', home_path, class: "nav-link" %>
-        </li>
         <% if user_signed_in? && current_user.admin? %>
           <li class="nav-item">
             <%= link_to 'Dashboard', users_path, class: "nav-link" %>
           </li>
+        <% end %>
+        <li class="nav-item">
+            <%= link_to 'Listings', listings_path, class: "nav-link" %>
+        </li>
+        <% if user_signed_in? && current_user.admin? %>
           <li class="nav-item">
             <%= link_to 'Pending Request', pending_requests_path, class: "nav-link" %>
           </li>

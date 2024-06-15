@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :listings, dependent: :destroy
+  
   validates :first_name, :last_name, presence: true
   validates :mls_number, numericality: { only_integer: true }, allow_blank: true
 
