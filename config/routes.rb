@@ -1,12 +1,9 @@
 Rails.application.routes.draw do
-  # Defines the root path route ("/")
-  root "home#index"
-  
-  get 'home', to: 'home#index'
-  
+
   # Define custom controller for Devise registrations
   devise_for :users, controllers: {
-    registrations: 'users/registrations'
+    registrations: 'users/registrations',
+    sessions: 'users/sessions' # Add this line
   }
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
@@ -16,4 +13,15 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :edit, :update, :create, :new]
   resources :pending_requests, only: [:index, :update]
   resources :declined_requests, only: [:index, :destroy]
+  resources :listings, only: [:index, :create, :edit, :update, :destroy, :new]
+
+  authenticated :user, lambda { |u| u.admin? } do
+    root 'users#index', as: :authenticated_admin_root
+  end
+
+  authenticated :user do
+    root 'listings#index', as: :authenticated_user_root
+  end
+
+  root 'listings#index' # Default root if no user is logged in
 end
