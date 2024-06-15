@@ -91,8 +91,12 @@
       <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?", turbo_confirm: "Are you sure?" }, method: :delete, class: 'btn btn-light border border-dark' %>
     </div>
 
-    <div class="text-center">
-      <%= link_to "Back", home_path, class: 'text-center', style: 'text-decoration: none;' %>
+    <div class="text-center mt-2 mb-3">
+      <% if current_user.admin? %>
+        <%= link_to "Back", authenticated_admin_root_path, class: 'text-center', style: 'text-decoration: none;' %>
+      <% else %>
+        <%= link_to "Back", authenticated_user_root_path, class: 'text-center text-dark-emphasis', style: 'text-decoration: none;' %>
+      <% end %>
     </div>
   </div>
 </div>
