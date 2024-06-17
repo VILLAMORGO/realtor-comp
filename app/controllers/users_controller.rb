@@ -41,4 +41,16 @@ class UsersController < ApplicationController
       redirect_to authenticated_user_root_path, notice: "You must be an admin to perform this action."
     end
   end
+
+  def approve
+    @user = User.find(params[:id])
+    if @user.update(approved: true)
+      UserMailer.approval_email(@user).deliver_later
+      flash[:notice] = "User approved and notification email sent."
+    else
+      flash[:alert] = "There was an error approving the user."
+    end
+    redirect_to users_path
+  end
+  
 end

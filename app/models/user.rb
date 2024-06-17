@@ -6,6 +6,8 @@ class User < ApplicationRecord
 
   has_many :listings, dependent: :destroy
   
+  after_update :send_approval_email, if: :saved_change_to_approved?
+
   validates :first_name, :last_name, presence: true
   validates :mls_number, numericality: { only_integer: true }, allow_blank: true
 
@@ -32,5 +34,11 @@ class User < ApplicationRecord
 
   def full_name
     "#{first_name} #{last_name}"
+  end
+
+  private
+
+  def send_approval_email
+    UserMailer.approval_email(self).deliver_later
   end
 end
