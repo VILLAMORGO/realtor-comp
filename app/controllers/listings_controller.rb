@@ -4,7 +4,8 @@ class ListingsController < ApplicationController
   before_action :set_listing, only: [:edit, :update, :destroy]
 
   def index
-    @listings = current_user.listings
+    @per_page = (params[:per_page] || 10).to_i
+    @listings = current_user.listings.paginate(page: params[:page], per_page: @per_page)
   end
 
   def show
