@@ -13,4 +13,10 @@ module ApplicationHelper
           ['Virginia', 'VA'], ['Washington', 'WA'], ['West Virginia', 'WV'], ['Wisconsin', 'WI'], ['Wyoming', 'WY']
         ]
     end
+
+    # Custom pagination renderer
+    def will_paginate_with_bootstrap(collection, options = {})
+      options = options.merge(renderer: BootstrapPagination::Rails)
+      will_paginate(collection, options)
+    end
 end
