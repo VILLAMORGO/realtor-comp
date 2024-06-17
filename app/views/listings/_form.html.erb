@@ -16,19 +16,21 @@
             <% end %>
 
             <div class="field form-group mb-3">
-              <%= form.label :title, class: "form-label" %><br />
-              <%= form.text_field :title, class: "form-control" %>
+              <%= form.label :listing_amount, "Listing Amount", class: "form-label" %><br />
+              <%= form.number_field :listing_amount, class: "form-control" %>
             </div>
 
             <div class="field form-group mb-3">
-              <%= form.label :description, class: "form-label" %><br />
-              <%= form.text_area :description, class: "form-control" %>
+              <%= form.label :listing_agent, "Listing Agent", class: "form-label" %><br />
+              <%= form.collection_select :listing_agent, @agents, :id, :full_name, prompt: "Select an Agent", class: "form-control" %>
             </div>
 
             <div class="field form-group mb-3">
-              <%= form.label :price, class: "form-label" %><br />
-              <%= form.number_field :price, class: "form-control" %>
+              <%= form.label :commission_split, "Commission Split", class: "form-label" %><br />
+              <%= form.number_field :commission_split, class: "form-control", step: :any %>
             </div>
+
+            <%= form.hidden_field :listing_mls_number %>
 
             <div class="actions d-grid mb-3 mt-4">
               <%= form.submit "Save Listing", class: "btn btn-primary btn-login text-uppercase fw-bold" %>
