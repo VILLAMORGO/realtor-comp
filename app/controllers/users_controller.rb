@@ -2,8 +2,9 @@ class UsersController < ApplicationController
   before_action :verify_is_admin, only: [:index, :edit, :show, :create, :new, :destroy]
 
   def index
-    @agents = User.where(role: 'agent', status: "Approved")
-    @brokers = User.where(role: 'broker', status: "Approved")
+    @per_page = (params[:per_page] || 10).to_i
+    @agents = User.where(role: 'agent', status: "Approved").paginate(page: params[:page], per_page: @per_page)
+    @brokers = User.where(role: 'broker', status: "Approved").paginate(page: params[:page], per_page: @per_page)
   end
 
   def show

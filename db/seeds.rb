@@ -25,7 +25,7 @@ User.create(
     confirmed_at: DateTime.now
 )
 
-5.times do |i|
+30.times do |i|
     User.create(
         email: "agent#{i+1}@test.com",
         password: 'agentpassword123',

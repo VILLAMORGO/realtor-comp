@@ -1,6 +1,23 @@
-<div class="card border-0 rounded-4 shadow-sm mt-5 text-center responsive-users my-5 col-md-9 mx-auto">
-
+<!-- Items per page selection form -->
+<div class="card mt-5 text-center responsive-users col-md-9 mx-auto">
   <div class="card-header d-flex align-items-center border-0 py-4" style="background-color: white;">
+    <div class="text-start col-md-1">
+      <%= form_with url: users_path, method: :get, local: true do %>
+        <label for="per_page" class="text-secondary small">Items per page:</label>
+        <select name="per_page" id="per_page" onchange="this.form.submit();" class="form-control-sm">
+          <option value="5" <%= 'selected' if @per_page.to_i == 5 %>>5</option>
+          <option value="10" <%= 'selected' if @per_page.to_i == 10 %>>10</option>
+          <option value="25" <%= 'selected' if @per_page.to_i == 25 %>>25</option>
+          <option value="100" <%= 'selected' if @per_page.to_i == 100 %>>100</option>
+        </select>
+      <% end %>
+    </div>
+    <%= link_to "Add User", new_user_path, class: "btn btn-info position-absolute top-1 end-0 mx-4", style: "font-size: 14px;" %>
+  </div>
+</div>
+    
+<div class="card border-0 rounded-4 shadow-sm mt-2 text-center responsive-users my-5 col-md-9 mx-auto">
+  <div class="card-header d-flex justify-content-between align-items-center border-0 py-4" style="background-color: white;">
     <h6 class="card-title text-start px-3 my-auto fw-bold">USERS</h6>
     <div class="btn-group btn-group-toggle ms-3" data-toggle="buttons">
       <label class="btn btn-outline active" style="font-size: 12px;" data-bs-target="#user-carousel" data-bs-slide-to="0">
@@ -10,7 +27,6 @@
         Broker
       </label>
     </div>
-    <%= link_to "Add User", new_user_path, class: "btn btn-info position-absolute top-1 end-0 mx-4", style: "font-size: 14px;" %>
   </div>
 
   <div id="user-carousel" class="carousel slide" data-bs="carousel">
@@ -34,25 +50,23 @@
             </thead>
             <tbody class="list container">
               <% @agents.each do |agent| %>
-                <% if agent.role == 'agent' %>
-                  <tr>
-                    <td>
-                      <div class="form-check mb-0">
-                        <input class="form-check-input" type="checkbox" value="">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="avatar avatar-circle avatar-xs me-2">
-                        <span class="avatar-title text-bg-primary-soft"><%= agent.first_name[0] %><%= agent.last_name[0] %></span>
-                      </div>
-                      <span class="name fw-bold"><%= agent.first_name %> <%= agent.last_name %></span>
-                    </td>
-                    <td class="email"><%= agent.email %></td>
-                    <td class="mls_number"><%= agent.mls_number %></td>
-                    <td class="status"><span class="legend-circle bg-<%= agent.status == 'Pending' ? 'warning' : 'success' %>"></span><%= agent.status %></td>
-                    <td class="role"><%= agent.role %></td>
-                  </tr>
-                <% end %>
+                <tr>
+                  <td>
+                    <div class="form-check mb-0">
+                      <input class="form-check-input" type="checkbox" value="">
+                    </div>
+                  </td>
+                  <td>
+                    <div class="avatar avatar-circle avatar-xs me-2">
+                      <span class="avatar-title text-bg-primary-soft"><%= agent.first_name[0] %><%= agent.last_name[0] %></span>
+                    </div>
+                    <span class="name fw-bold"><%= agent.first_name %> <%= agent.last_name %></span>
+                  </td>
+                  <td class="email"><%= agent.email %></td>
+                  <td class="mls_number"><%= agent.mls_number %></td>
+                  <td class="status"><span class="legend-circle bg-<%= agent.status == 'Pending' ? 'warning' : 'success' %>"></span><%= agent.status %></td>
+                  <td class="role"><%= agent.role %></td>
+                </tr>
               <% end %>
             </tbody>
           </table>
@@ -60,15 +74,10 @@
         <div class="card-footer" style="background-color: white;">
           <div class="d-flex justify-content-between align-items-center">
             <div class="me-5 text-secondary small">
-              Showing: <span class="list-pagination-page-first">1</span> - <span class="list-pagination-page-last">8</span> of <span class="list-pagination-pages">20</span>
+              Showing: <%= @agents.offset_value + 1 %> - <%= [@agents.offset_value + @agents.length, @agents.total_entries].min %> of <%= @agents.total_entries %>
             </div>
-
             <!-- Pagination -->
-            <ul class="pagination list-pagination mb-0" style="display: flex;">
-              <li class="page-item active"><a class="page page-link" href="javascript: void(0);" data-i="1" data-page="8">1</a></li>
-              <li class="page-item"><a class="page page-link" href="javascript: void(0);" data-i="2" data-page="8">2</a></li>
-              <li class="page-item"><a class="page page-link" href="javascript: void(0);" data-i="3" data-page="8">3</a></li>
-            </ul>
+            <%= will_paginate @agents, renderer: CustomPaginationRenderer %>
           </div>
         </div>
       </div>
@@ -91,25 +100,23 @@
             </thead>
             <tbody class="list container">
               <% @brokers.each do |broker| %>
-                <% if broker.role == 'broker' %>
-                  <tr>
-                    <td>
-                      <div class="form-check mb-0">
-                        <input class="form-check-input" type="checkbox" value="">
-                      </div>
-                    </td>
-                    <td>
-                      <div class="avatar avatar-circle avatar-xs me-2">
-                        <span class="avatar-title text-bg-primary-soft"><%= broker.first_name[0] %><%= broker.last_name[0] %></span>
-                      </div>
-                      <span class="name fw-bold"><%= broker.first_name %> <%= broker.last_name %></span>
-                    </td>
-                    <td class="email"><%= broker.email %></td>
-                    <td class="mls_number"><%= broker.mls_number %></td>
-                    <td class="status"><span class="legend-circle bg-<%= broker.status == 'Pending' ? 'warning' : 'success' %>"></span><%= broker.status %></td>
-                    <td class="role"><%= broker.role %></td>
-                  </tr>
-                <% end %>
+                <tr>
+                  <td>
+                    <div class="form-check mb-0">
+                      <input class="form-check-input" type="checkbox" value="">
+                    </div>
+                  </td>
+                  <td>
+                    <div class="avatar avatar-circle avatar-xs me-2">
+                      <span class="avatar-title text-bg-primary-soft"><%= broker.first_name[0] %><%= broker.last_name[0] %></span>
+                    </div>
+                    <span class="name fw-bold"><%= broker.first_name %> <%= broker.last_name %></span>
+                  </td>
+                  <td class="email"><%= broker.email %></td>
+                  <td class="mls_number"><%= broker.mls_number %></td>
+                  <td class="status"><span class="legend-circle bg-<%= broker.status == 'Pending' ? 'warning' : 'success' %>"></span><%= broker.status %></td>
+                  <td class="role"><%= broker.role %></td>
+                </tr>
               <% end %>
             </tbody>
           </table>
@@ -117,19 +124,13 @@
         <div class="card-footer" style="background-color: white;">
           <div class="d-flex justify-content-between align-items-center">
             <div class="me-5 text-secondary small">
-              Showing: <span class="list-pagination-page-first">1</span> - <span class="list-pagination-page-last">8</span> of <span class="list-pagination-pages">20</span>
+              Showing: <%= @brokers.offset_value + 1 %> - <%= [@brokers.offset_value + @brokers.length, @brokers.total_entries].min %> of <%= @brokers.total_entries %>
             </div>
-
             <!-- Pagination -->
-            <ul class="pagination list-pagination mb-0" style="display: flex;">
-              <li class="page-item active"><a class="page page-link" href="javascript: void(0);" data-i="1" data-page="8">1</a></li>
-              <li class="page-item"><a class="page page-link" href="javascript: void(0);" data-i="2" data-page="8">2</a></li>
-              <li class="page-item"><a class="page page-link" href="javascript: void(0);" data-i="3" data-page="8">3</a></li>
-            </ul>
+            <%= will_paginate @brokers, renderer: CustomPaginationRenderer %>
           </div>
         </div>
       </div>
     </div>
   </div>
-
 </div>
