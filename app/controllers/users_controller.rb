@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :verify_is_admin, only: [:index, :edit, :show, :create, :new, :destroy]
+  before_action :verify_is_admin, only: [:index, :edit, :show, :destroy]
 
   def index
     @per_page = (params[:per_page] || 10).to_i
@@ -15,19 +15,12 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
   end
 
-  def new
-    @user = User.new
-  end
-
-  def create
-    @user = User.new(user_params)
-    @user.state = "Approved"
-    @user.skip_confirmation!
-    Rails.logger.debug "User Params: #{user_params.inspect}"
-    if @user.save
-      redirect_to @user, notice: 'New agent was successfully created.'
+  def update
+    @user = User.find(params[:id])
+    if @user.update(user_params)
+      redirect_to @user, notice: 'User was successfully updated.'
     else
-      render :new
+      render :edit
     end
   end
 
@@ -40,7 +33,7 @@ class UsersController < ApplicationController
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :status)
+    params.require(:user).permit(:email, :password, :password_confirmation, :status, :first_name, :last_name, :mls_number, :state, :street_address, :home_address, :city_address, :zip_code, :phone_number, :realtor_license_number, :broker_first_name, :broker_last_name, :broker_email, :broker_phone_number, :role)
   end
 
   def verify_is_admin
