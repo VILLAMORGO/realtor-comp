@@ -3,9 +3,13 @@ class PendingRequestsController < ApplicationController
     before_action :verify_is_admin, only: [:index, :show, :update]
 
     def index
-        @request = User.where(role: "agent", status: "Pending").where.not(confirmed_at: nil).order(:confirmed_at)
-    end
-        
+        @per_page = params[:per_page] || 10
+        @requests = User.where(role: "agent", status: "Pending")
+                        .where.not(confirmed_at: nil)
+                        .order(:confirmed_at)
+                        .paginate(page: params[:page], per_page: @per_page)
+    end  
+    
     def show
 
     end

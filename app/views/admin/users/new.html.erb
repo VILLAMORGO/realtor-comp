@@ -1,0 +1,144 @@
+<div class="d-flex justify-content-center">
+  <div class="card col-sm-6 mt-5 mb-5 border border-dark mx-1">
+    <%= form_for(@user) do |f| %>
+      <div class='card-body mt-3 px-4'>
+        <h5 class="card-title text-center mt-2 mb-4">Create New User Account</h5>
+        
+        <div class="form-row">
+          <h6 class="card-title text-left mt-2 mb-2">Personal Information:</h6>
+          <hr>
+
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <%= f.label :first_name, "First Name" %>
+              <%= f.text_field :first_name, class: "form-control", placeholder: "First Name", maxlength: "25" %>
+            </div>
+            <div class="col-md-6 mb-2">
+              <%= f.label :last_name, "Last Name" %>
+              <%= f.text_field :last_name, class: "form-control", placeholder: "Last Name", maxlength: "25" %>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <%= f.label :phone_number, "Phone Number" %>
+              <%= f.number_field :phone_number, class: "form-control", placeholder: "Phone Number" %>
+            </div>
+
+            <div class="col-md-6 mb-2">
+              <%= f.label :email, "Email Address" %>
+              <%= f.email_field :email, class: "form-control", placeholder: "Email address", maxlength: "25" %>
+            </div>
+          </div>
+          
+          <div class="form-group mb-2">
+            <%= f.label :mls_number, "MLS Number" %>
+            <%= f.number_field :mls_number, class: "form-control", placeholder: "MLS number" %>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6 mb-2">
+              <%= f.label :realtor_license_number, "Realtor License Number" %>
+              <%= f.number_field :realtor_license_number, class: "form-control", placeholder: "Realtor License Number" %>
+            </div>
+            <div class="col-md-6 mb-2">
+              <%= f.label :state %>
+              <%= f.select :state, options_for_select(us_states, @user.state), {}, class: "form-control" %>
+            </div>
+          </div>
+
+          <br>
+          <h6 class="card-title text-left mt-2 mb-2">
+            Additional Information (Optional):
+            <button type="button" id="toggle-optional-fields" class="btn btn-light border-dark">Show Optional Fields</button>
+          </h6>
+          <hr>
+
+          <div id="optional-fields" class="hidden">
+            <p class="fw-semibold">Address:</p>
+            <div class="form-group mb-2">
+              <%= f.label :street_address %>
+              <%= f.text_field :street_address, class: "form-control", placeholder: "1234 Main St", maxlength: "25" %>
+            </div>
+            <div class="form-group mb-2">
+              <%= f.label :home_address %>
+              <%= f.text_field :home_address, class: "form-control", placeholder: "Apartment, studio, or floor", maxlength: "25" %>
+            </div>
+            <div class="row">
+              <div class="form-group col-md-8 mb-2">
+                <%= f.label :city_address %>
+                <%= f.text_field :city_address, class: "form-control", placeholder: "City", maxlength: "25" %>
+              </div>
+              
+              <div class="form-group col-md-4 mb-2">
+                <%= f.label :zip_code %>
+                <%= f.number_field :zip_code, class: "form-control", placeholder: "Zip Code" %>
+              </div>
+            </div>
+
+            <br>
+            <p class="fw-semibold">Broker's Information:</p>
+
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <%= f.label :broker_first_name, "Broker's First Name" %>
+                <%= f.text_field :broker_first_name, class: "form-control", placeholder: "Broker's first name ...", maxlength: "25" %>
+              </div>
+              <div class="col-md-6 mb-2">
+                <%= f.label :broker_last_name, "Broker's Last Name" %>
+                <%= f.text_field :broker_last_name, class: "form-control", placeholder: "Broker's last name ...", maxlength: "25" %>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6 mb-2">
+                <%= f.label :broker_email, "Broker's Email Address" %>
+                <%= f.email_field :broker_email, class: "form-control", placeholder: "Broker's email address", maxlength: "25" %>
+              </div>
+              <div class="col-md-6 mb-2">
+                  <%= f.label :broker_phone_number, "Broker's Phone Number" %>
+                  <%= f.number_field :broker_phone_number, class: "form-control", placeholder: "Broker's phone number" %>
+              </div>
+            </div>
+          </div>
+
+          <br>
+          <h6 class="card-title text-left mt-2 mb-2">Choose user's role</h6>
+          <hr>
+          
+          <div class="btn-group btn-group-toggle" data-toggle="buttons">
+            <label class="btn btn-secondary <%= 'active' if @user.agent? %>">
+              <%= f.radio_button :role, :agent, autocomplete: "off", checked: @user.agent?, class: 'd-none' %> Agent
+            </label>
+            <label class="btn btn-secondary <%= 'active' if @user.broker? %>">
+              <%= f.radio_button :role, :broker, autocomplete: "off", checked: @user.broker?, class: 'd-none' %> Broker
+            </label>
+          </div>
+
+          <br/>
+          <br/>
+          <h6 class="card-title text-left mt-2 mb-2">Create Password:</h6>
+          <hr>
+
+          <div class="row">
+            <div class="form-group col-md-6 mb-2">
+              <%= f.label :password %>
+              <%= f.password_field :password, class: "form-control", placeholder: "Password", maxlength: "25" %>
+            </div>
+            <div class="form-group col-md-6 mb-2">
+              <%= f.label :password_confirmation, "Confirm Password" %>
+              <%= f.password_field :password_confirmation, class: "form-control", placeholder: "Confirm Password", maxlength: "25" %>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center mt-4">
+          <%= f.submit "Create Account", class: "btn btn-primary text-center mt-2 col-md-6" %>
+        </div>
+      </div>
+    <% end %>
+    
+    <div class="d-flex justify-content-center mb-5">
+      <%= link_to "Back to Users", users_path, class: "btn btn-primary text-center mt-2 col-md-6" %>
+    </div>
+   
+  </div>
+</div>
