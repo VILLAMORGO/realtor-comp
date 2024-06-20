@@ -4,6 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  after_update :send_approval_email, if: :saved_change_to_approved?
+
   has_many :listings, dependent: :destroy
   
   after_update :send_approval_email, if: :saved_change_to_approved?
@@ -30,6 +32,12 @@ class User < ApplicationRecord
 
   def broker?
     self.role == 'broker'
+  end
+
+  private
+
+  def send_approval_email
+    UserMailer.approval_email(self).deliver_later
   end
 
   def full_name
