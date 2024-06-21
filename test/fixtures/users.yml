@@ -4,8 +4,48 @@
 # model remove the "{}" from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+
+admin:
+  email: admin@example.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  first_name: Admin
+  last_name: User
+  mls_number: "12345678"
+  state: "VA"
+  street_address: "123 Admin St"
+  home_address: "123 Admin Home"
+  city_address: "Admin City"
+  zip_code: "12345"
+  role: admin
+  status: Approved
+  confirmed_at: <%= DateTime.now %>
+
+agent_one:
+  email: agent1@example.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  first_name: Agent
+  last_name: One
+  mls_number: "87654321"
+  state: "VA"
+  street_address: "1 Agent St"
+  home_address: "1 Agent Home"
+  city_address: "Agent City"
+  zip_code: "12341"
+  role: agent
+  status: Pending
+  confirmed_at: <%= DateTime.now %>
+
+agent_two:
+  email: agent2@example.com
+  encrypted_password: <%= User.new.send(:password_digest, 'password') %>
+  first_name: Agent
+  last_name: Two
+  mls_number: "87654322"
+  state: "VA"
+  street_address: "2 Agent St"
+  home_address: "2 Agent Home"
+  city_address: "Agent City"
+  zip_code: "12342"
+  role: agent
+  status: Pending
+  confirmed_at: <%= DateTime.now %>

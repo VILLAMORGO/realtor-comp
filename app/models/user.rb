@@ -4,12 +4,12 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-  after_update :send_approval_email, if: :saved_change_to_approved?
 
   has_many :listings, dependent: :destroy
   
-  after_update :send_approval_email, if: :saved_change_to_approved?
+  after_update :send_approval_email, if: :status_changed_to_approved?
 
+  validates :email, presence: true, uniqueness: true
   validates :first_name, :last_name, presence: true
   validates :mls_number, numericality: { only_integer: true }, allow_blank: true
 
@@ -37,16 +37,17 @@ class User < ApplicationRecord
   private
 
   def send_approval_email
-    UserMailer.approval_email(self).deliver_later
+    Rails.logger.debug "Send approval email called for user: #{self.id}"
+    UserMailer.with(user: self).approval_email.deliver_later
   end
 
   def full_name
     "#{first_name} #{last_name}"
   end
 
-  private
-
-  def send_approval_email
-    UserMailer.approval_email(self).deliver_later
+  def status_changed_to_approved?
+    change = saved_change_to_status?
+    Rails.logger.debug "Status change detected for user: #{self.id} - #{change}"
+    change && status == "Approved"
   end
 end
