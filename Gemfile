@@ -74,3 +74,4 @@ gem "devise", "~> 4.9"
 gem 'will_paginate', '~> 3.3'
 gem 'will_paginate-bootstrap'
 gem 'mailjet', :git => 'https://github.com/mailjet/mailjet-gem.git'
+gem 'ransack'

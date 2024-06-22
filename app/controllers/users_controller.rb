@@ -2,10 +2,15 @@ class UsersController < ApplicationController
   before_action :verify_is_admin, only: [:index, :edit, :show, :destroy]
 
   def index
+    @q = User.ransack(params[:q])
+    @users = @q.result
+  
     @per_page = (params[:per_page] || 10).to_i
-    @agents = User.where(role: 'agent', status: "Approved").paginate(page: params[:page], per_page: @per_page)
-    @brokers = User.where(role: 'broker', status: "Approved").paginate(page: params[:page], per_page: @per_page)
-  end
+    @page = params[:page]
+  
+    @agents = @users.where(role: 'agent', status: "Approved").paginate(page: @page, per_page: @per_page)
+    @brokers = @users.where(role: 'broker', status: "Approved").paginate(page: @page, per_page: @per_page)
+  end  
 
   def show
     @user = User.find(params[:id])

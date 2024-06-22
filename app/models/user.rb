@@ -50,4 +50,12 @@ class User < ApplicationRecord
     Rails.logger.debug "Status change detected for user: #{self.id} - #{change}"
     change && status == "Approved"
   end
+
+  def self.ransackable_attributes(_auth_object = nil)
+    [
+      "first_name",
+      "last_name",
+      "mls_number"
+    ]
+  end
 end
