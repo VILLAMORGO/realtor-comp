@@ -12,15 +12,16 @@
         </select>
       <% end %>
     </div>
-    <div class="text-end col-md-4 ms-auto">
-      <%= form_with url: users_path, method: :get, local: true do %>
-        <div class="input-group">
-          <%= text_field_tag :q, params[:q], class: "form-control", placeholder: "Search users..." %>
-          <button type="submit" class="btn btn-outline-secondary">Search</button>
+    <div class="text-end col-md-4 ms-auto d-flex d-flex align-items-center">
+      <%= search_form_for @q, url: users_path, html: { method: :get, class: "input-group" } do |f| %>
+        <%= f.text_field :first_name_cont, class: "form-control mx-1", placeholder: "First name..." %>
+        <%= f.text_field :last_name_cont, class: "form-control mx-1", placeholder: "Last name..." %>
+        <div class="input-group-append d-flex d-flex align-items-center">
+          <%= f.submit "Search", class: "btn btn-outline-secondary" %>
         </div>
       <% end %>
     </div>
-    <%= link_to "Add User", new_admin_user_path, class: "btn btn-info mx-4", style: "font-size: 14px;" %>
+    <%= link_to "Add User", new_admin_user_path, class: "btn btn-info mx-2", style: "font-size: 14px;" %>
   </div>
 </div>
     

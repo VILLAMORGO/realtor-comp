@@ -33,6 +33,14 @@ class User < ApplicationRecord
   def broker?
     self.role == 'broker'
   end
+ 
+  def self.ransackable_attributes(auth_object = nil)
+    ["first_name", "last_name", "mls_number", "email", "status", "role"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["listings"]
+  end
 
   private
 
@@ -51,11 +59,4 @@ class User < ApplicationRecord
     change && status == "Approved"
   end
 
-  def self.ransackable_attributes(_auth_object = nil)
-    [
-      "first_name",
-      "last_name",
-      "mls_number"
-    ]
-  end
 end

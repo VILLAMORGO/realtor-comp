@@ -4,13 +4,36 @@ class UsersController < ApplicationController
   def index
     @q = User.ransack(params[:q])
     @users = @q.result
-  
+
     @per_page = (params[:per_page] || 10).to_i
-    @page = params[:page]
-  
-    @agents = @users.where(role: 'agent', status: "Approved").paginate(page: @page, per_page: @per_page)
-    @brokers = @users.where(role: 'broker', status: "Approved").paginate(page: @page, per_page: @per_page)
-  end  
+    @page = params[:page] || 1
+
+    # Fetching agents and brokers separately with pagination
+    @agents = @users.where(role: 'agent', status: 'Approved').paginate(page: @page, per_page: @per_page)
+    @brokers = @users.where(role: 'broker', status: 'Approved').paginate(page: @page, per_page: @per_page)
+
+    respond_to do |format|
+      format.html
+      format.json {
+        render json: {
+          agents: @agents,
+          brokers: @brokers,
+          agents_pagination: {
+            current_page: @agents.current_page,
+            total_pages: @agents.total_pages,
+            per_page: @agents.per_page,
+            total_entries: @agents.total_entries
+          },
+          brokers_pagination: {
+            current_page: @brokers.current_page,
+            total_pages: @brokers.total_pages,
+            per_page: @brokers.per_page,
+            total_entries: @brokers.total_entries
+          }
+        }
+      }
+    end
+  end
 
   def show
     @user = User.find(params[:id])
