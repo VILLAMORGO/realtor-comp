@@ -33,6 +33,14 @@ class User < ApplicationRecord
   def broker?
     self.role == 'broker'
   end
+ 
+  def self.ransackable_attributes(auth_object = nil)
+    ["first_name", "last_name", "mls_number", "email", "status", "role"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["listings"]
+  end
 
   private
 
@@ -50,4 +58,5 @@ class User < ApplicationRecord
     Rails.logger.debug "Status change detected for user: #{self.id} - #{change}"
     change && status == "Approved"
   end
+
 end
