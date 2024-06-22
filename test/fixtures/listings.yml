@@ -1,13 +1,15 @@
 # Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: MyString
-  description: MyText
-  price: 9.99
-  user: one
+  user: admin
+  listing_mls_number: "MLS123"
+  listing_amount: 250000.00
+  listing_agent: 1
+  commission_split: 2.5
 
 two:
-  title: MyString
-  description: MyText
-  price: 9.99
-  user: two
+  user: agent_one
+  listing_mls_number: "MLS124"
+  listing_amount: 300000.00
+  listing_agent: 1
+  commission_split: 2.5

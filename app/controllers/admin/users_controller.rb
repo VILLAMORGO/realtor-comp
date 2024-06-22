@@ -8,11 +8,9 @@ module Admin
   
       def create
         @user = User.new(user_params)
-        @user.state = "Approved"
-        @user.skip_confirmation!
-        Rails.logger.debug "User Params: #{user_params.inspect}"
+        @user.status = "Pending"
         if @user.save
-          redirect_to admin_users_path, notice: 'New agent was successfully created.'
+          redirect_to some_path, notice: 'User was successfully created.'
         else
           render :new
         end
