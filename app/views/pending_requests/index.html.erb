@@ -18,6 +18,19 @@
   </div>
 </div>
 
+<div class="card mt-1 text-center responsive-users col-md-9 mx-auto">
+  <div class="card-header d-flex align-items-center justify-content-end py-4" style="background-color: white;">
+    <div class="text-start">
+      <%= search_form_for @q, url: pending_requests_path, html: { method: :get, class: "input-group" } do |f| %>
+        <%= f.text_field :email_cont, class: "form-control col mx-2", placeholder: "Search by email..." %>
+        <div class="input-group-append d-flex d-flex align-items-center">
+          <%= f.submit "Search", class: "btn btn-outline-secondary" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
 <!-- Requests List -->
 <div class="card border-0 rounded-4 shadow-sm mt-2 text-center responsive-request col-md-9 mx-auto">
   <div class="card-body p-0">

@@ -3,10 +3,15 @@ class PendingRequestsController < ApplicationController
     before_action :verify_is_admin, only: [:index, :show, :update]
 
     def index
-        @per_page = params[:per_page] || 10
-        @requests = User.where(role: "agent", status: "Pending")
+        @q = User.ransack(params[:q])
+        @users = @q.result
+
+        @per_page = (params[:per_page] || 10).to_i
+        @page = params[:page] || 1
+
+        @requests = @users.where(role: "agent", status: "Pending")
                         .order(:created_at)
-                        .paginate(page: params[:page], per_page: @per_page)
+                        .paginate(page: @page, per_page: @per_page)
     end  
     
     def show
