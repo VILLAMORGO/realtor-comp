@@ -5,7 +5,7 @@
             <h2 class="card-header text-center bg-info bg-opacity-25">
                 <%= user.email %>
                 <span class='badge bg-dark rounded-pill position-absolute top-1 end-0 mx-3'>
-                    <%= user.status %> stocks
+                    <%= user.status %> 
                 </span>
         
             </h2>
@@ -41,20 +41,20 @@
 
                 <div class="card-title d-flex ">
                     <strong class="mt-2">
-                        Total Transactions:
+                        MLS Number: <%= user.mls_number %> 
                     </strong>
                     
                 </div>
 
                 <div class="card-title d-flex">
                     <strong>
-                        Last Transaction:
+                        Zip Code: <%= user.zip_code %> 
                     </strong>
                 </div>
 
                 <div class="card-title">
                     <strong>
-                        Stocks:
+                        Realtor License Number: <%= user.realtor_license_number %>
                     </strong>
                     <div class="container ms-2">
                         <div class = "row overflow-auto" style="min-height: 10rem; max-height: 15rem;">
