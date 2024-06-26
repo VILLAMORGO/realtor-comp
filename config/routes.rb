@@ -1,17 +1,16 @@
 Rails.application.routes.draw do
-
   # Define custom controller for Devise registrations
   devise_for :users, controllers: {
     registrations: 'users/registrations',
-    sessions: 'users/sessions' # Add this line
+    sessions: 'users/sessions'
   }
 
   # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
-  # Can be used by load balancers and uptime monitors to verify that the app is live.
   get "up" => "rails/health#show", as: :rails_health_check
 
   namespace :admin do
     resources :users, only: [:new, :create]
+    resources :bulk_uploads, only: [:new, :create, :index]
   end
 
   resources :users, only: [:index, :show, :edit, :update, :destroy]
