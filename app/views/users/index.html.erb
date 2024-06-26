@@ -1,6 +1,6 @@
 <!-- Items per page selection form -->
 <div class="card mt-5 text-center responsive-users col-md-9 mx-auto">
-  <div class="card-header d-flex align-items-center border-0 py-4" style="background-color: white;">
+  <div class="card-header d-flex align-items-center justify-content-between border-0 py-4" style="background-color: white;">
     <div class="text-start col-md-1">
       <%= form_with url: users_path, method: :get, local: true do %>
         <label for="per_page" class="text-secondary small">Items per page:</label>
@@ -12,19 +12,36 @@
         </select>
       <% end %>
     </div>
+
+    <!-- Dropdown Menu for Adding Users -->
+    <div class="dropdown">
+      <i class="bi bi-person-add" id="addUserDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 24px; cursor: pointer;"></i>
+      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="addUserDropdown">
+        <li>
+          <%= link_to "Add Single User", new_admin_user_path, class: "dropdown-item" %>
+        </li>
+        <li>
+          <%= link_to "Add Users from CSV", new_admin_bulk_upload_path, class: "dropdown-item" %>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div class="card mt-1 text-center responsive-users col-md-9 mx-auto">
+  <div class="card-header d-flex align-items-center justify-content-end py-4" style="background-color: white;">
     <div class="text-end col-md-4 ms-auto d-flex d-flex align-items-center">
       <%= search_form_for @q, url: users_path, html: { method: :get, class: "input-group" } do |f| %>
         <%= f.text_field :first_name_cont, class: "form-control mx-1", placeholder: "First name..." %>
         <%= f.text_field :last_name_cont, class: "form-control mx-1", placeholder: "Last name..." %>
         <div class="input-group-append d-flex d-flex align-items-center">
-          <%= f.submit "Search", class: "btn btn-outline-secondary" %>
+          <%= f.submit "Search", class: "btn btn-outline-secondary ms-2" %>
         </div>
       <% end %>
     </div>
-    <%= link_to "Add User", new_admin_user_path, class: "btn btn-info mx-2", style: "font-size: 14px;" %>
   </div>
 </div>
-    
+
 <div class="card border-0 rounded-4 shadow-sm mt-2 text-center responsive-users my-5 col-md-9 mx-auto">
   <div class="card-header d-flex justify-content-between align-items-center border-0 py-4" style="background-color: white;">
     <h6 class="card-title text-start px-3 my-auto fw-bold">USERS</h6>

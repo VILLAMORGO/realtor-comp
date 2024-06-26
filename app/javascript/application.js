@@ -2,6 +2,7 @@
 import "@hotwired/turbo-rails"
 import "controllers"
 import * as bootstrap from "bootstrap"
+import "@popperjs/core"
 
 document.addEventListener('DOMContentLoaded', function() {
     document.querySelectorAll('input[type=number]').forEach(function(input) {
