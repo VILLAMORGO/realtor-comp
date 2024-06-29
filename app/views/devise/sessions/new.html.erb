@@ -9,10 +9,19 @@
           <%= f.label :email , class: "mb-1 fw-bold medium"%>
           <%= f.email_field :email, class: "form-control bg-input-color", placeholder: "Email" %>
         </div>
-        <div class="form-group col">
+        <div class="form-group col position-relative">
           <%= f.label :password, class: "mb-1 mt-3 fw-bold medium" %>
-          <%= f.password_field :password, class: "form-control bg-input-color", placeholder: "Password" %>
+          <div class="input-group">
+            <%= f.password_field :password, class: "form-control bg-input-color", placeholder: "Password", id: "password" %>
+            <button type="button" class="btn btn-outline-secondary position-absolute end-0 top-50 translate-middle-y" style="border: none; background: none; padding: 0;" onclick="togglePassword()">
+              <i class="bi bi-eye-slash" id="togglePasswordIcon"></i>
+            </button>
+          </div>
         </div>
+      </div>
+      <div class="form-check mt-3">
+        <%= f.check_box :remember_me, class: "form-check-input", id: "remember_me" %>
+        <%= f.label :remember_me, "Remember me", class: "form-check-label" %>
       </div>
       <div class="d-flex justify-content-start mt-4">
         <%= f.submit "Sign in", class: "btn btn-primary text-center mt-2 rounded-pill px-4" %>
@@ -26,3 +35,21 @@
     <div class="img-fluid bg-repeat-no-repeat overlay overlay-dark overlay-50 h-100" style="background-image: url('<%= asset_path 'sign-in.avif' %>');"></div>
   </div>
 </div>
+
+<script>
+  function togglePassword() {
+    var passwordField = document.getElementById("password");
+    var passwordFieldType = passwordField.getAttribute("type");
+    var toggleIcon = document.getElementById("togglePasswordIcon");
+
+    if (passwordFieldType === "password") {
+      passwordField.setAttribute("type", "text");
+      toggleIcon.classList.remove("bi-eye-slash");
+      toggleIcon.classList.add("bi-eye");
+    } else {
+      passwordField.setAttribute("type", "password");
+      toggleIcon.classList.remove("bi-eye");
+      toggleIcon.classList.add("bi-eye-slash");
+    }
+  }
+</script>
