@@ -1,24 +1,55 @@
-<div class="d-flex justify-content-center col-md-4 mx-auto" >
-  <div class="card mt-5 border border-dark mx-1 w-100" >
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'card-body mt-3 px-4' }) do |f| %>
-      <h5 class="card-title text-center mt-2 mb-3">Sign in</h5>
+<div class="d-flex flex-column flex-md-row justify-content-center col-md-8 mx-auto main-font">
+  <div class="card mt-5 border border-0 bg-color col-12 col-md-6">
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'card-body mt-3 px-2' }) do |f| %>
+      <h5 class="card-title text-start mt-2 mb-2 fs-3 tracking-wide">Sign In</h5>
+      <p class="text-secondary fw-medium tracking-wider opacity-75 mb-4">Enter your email address and password to access admin panel</p>
       
       <div class="form-row">
         <div class="form-group col">
-          <%= f.label :email %>
-          <%= f.email_field :email, class: "form-control", placeholder: "Email" %>
+          <%= f.label :email , class: "mb-1 fw-bold medium"%>
+          <%= f.email_field :email, class: "form-control bg-input-color", placeholder: "Email" %>
         </div>
-        <div class="form-group col">
-            <%= f.label :password %>
-            <%= f.password_field :password, class: "form-control", placeholder: "Password" %>
+        <div class="form-group col position-relative">
+          <%= f.label :password, class: "mb-1 mt-3 fw-bold medium" %>
+          <div class="input-group">
+            <%= f.password_field :password, class: "form-control bg-input-color", placeholder: "Password", id: "password" %>
+            <button type="button" class="btn btn-outline-secondary position-absolute end-0 top-50 translate-middle-y" style="border: none; background: none; padding: 0;" onclick="togglePassword()">
+              <i class="bi bi-eye-slash" id="togglePasswordIcon"></i>
+            </button>
           </div>
+        </div>
       </div>
-      <div class="d-flex justify-content-center mt-4">
-        <%= f.submit "Sign in", class: "btn btn-primary text-center mt-2 col-md-6" %>
+      <div class="form-check mt-3">
+        <%= f.check_box :remember_me, class: "form-check-input", id: "remember_me" %>
+        <%= f.label :remember_me, "Remember me", class: "form-check-label" %>
+      </div>
+      <div class="d-flex justify-content-start mt-4">
+        <%= f.submit "Sign in", class: "btn btn-primary text-center mt-2 rounded-pill px-4" %>
       </div>
     <% end %>
-    <div class="d-flex justify-content-center mb-5 text-secondary">
+    <div class="d-flex justify-content-start mt-5 mb-5 text-secondary">
       <%= render "devise/shared/links" %>
     </div>
   </div>
+  <div class="d-none d-md-block col-md-6 position-relative ms-5">
+    <div class="img-fluid bg-repeat-no-repeat overlay overlay-dark overlay-50 h-100" style="background-image: url('<%= asset_path 'sign-in.avif' %>');"></div>
+  </div>
 </div>
+
+<script>
+  function togglePassword() {
+    var passwordField = document.getElementById("password");
+    var passwordFieldType = passwordField.getAttribute("type");
+    var toggleIcon = document.getElementById("togglePasswordIcon");
+
+    if (passwordFieldType === "password") {
+      passwordField.setAttribute("type", "text");
+      toggleIcon.classList.remove("bi-eye-slash");
+      toggleIcon.classList.add("bi-eye");
+    } else {
+      passwordField.setAttribute("type", "password");
+      toggleIcon.classList.remove("bi-eye");
+      toggleIcon.classList.add("bi-eye-slash");
+    }
+  }
+</script>
