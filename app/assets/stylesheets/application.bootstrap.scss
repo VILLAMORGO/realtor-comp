@@ -94,3 +94,40 @@ body {
 .tracking-wider {
   letter-spacing: 0.05em;
 }
+
+.small-placeholder::placeholder {
+  font-size: 0.8em; 
+}
+
+// -- dashboard styles --------------------------------//
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-muted {
+  color: #6c757d !important;
+}
+
+.fw-semibold {
+  font-weight: 600;
+}
+
+.mb-2 {
+  margin-bottom: 0.5rem;
+}
+
+.mb-0 {
+  margin-bottom: 0 !important;
+}
+
+.fs-6 {
+  font-size: 1rem;
+}
+
+.fs-5 {
+  font-size: 1.25rem;
+}
+
+.text-primary {
+  color: #0d6efd !important;
+}

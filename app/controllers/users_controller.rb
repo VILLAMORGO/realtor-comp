@@ -33,6 +33,15 @@ class UsersController < ApplicationController
         }
       }
     end
+
+    # Report Data
+    @total_users = User.count
+    @users_by_role = User.group(:role).count
+    @users_by_status = User.group(:status).count
+    @recently_registered_users = User.where('created_at >= ?', 1.week.ago)
+
+    @total_listings = Listing.count
+    @listings_by_agent = Listing.group(:listing_agent).count
   end
 
   def show
