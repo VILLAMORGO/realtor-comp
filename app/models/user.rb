@@ -46,7 +46,7 @@ class User < ApplicationRecord
 
   def send_approval_email
     Rails.logger.debug "Send approval email called for user: #{self.id}"
-    UserMailer.with(user: self).approval_email.deliver_later
+    # UserMailer.with(user: self).approval_email.deliver_later
   end
 
   def full_name

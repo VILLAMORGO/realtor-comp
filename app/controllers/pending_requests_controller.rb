@@ -23,9 +23,9 @@ class PendingRequestsController < ApplicationController
     
         if @user.update(status: params[:status])
           if params[:status] == "Approved"
-            UserMailer.with(user: @user).approval_email.deliver_now
+            # UserMailer.with(user: @user).approval_email.deliver_now
           elsif params[:status] == "Declined"
-            UserMailer.with(user: @user).decline_email.deliver_now
+            # UserMailer.with(user: @user).decline_email.deliver_now
           end
           redirect_to pending_requests_path, notice: "#{@user.email} has been #{@user.status}"
         else
