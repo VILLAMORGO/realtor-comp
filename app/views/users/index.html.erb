@@ -1,133 +1,130 @@
-<div class="card mt-5 text-start responsive-users col-md-9 mx-auto bg-color border-0">
+<!-- Dashboard Header -->
+<div class="card mt-3 text-start responsive-users col-md-9 mx-auto bg-color border-0">
   <div class="card-header py-4 bg-color border-0 px-0">
     <h3 class="card-title text-start my-auto fw-bold fs-4 text-uppercase">Dashboard</h3>
   </div>
-  
 </div>
 
 <!-- Report Section -->
-<div class="card mt-3 text-center responsive-users col-md-9 mx-auto">
-  <div class="card-header py-4" style="background-color: white;">
-    <h6 class="card-title text-start px-3 my-auto fw-bold">ADMIN REPORT</h6>
-  </div>
-  <div class="card-body">
-    <div class="row">
-      <!-- Total Users Card -->
-      <div class="col-lg-6 col-xxl-3 d-flex">
-        <div class="card border-0 flex-fill w-100">
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <h5 class="text-uppercase text-muted fw-semibold mb-2">Total Users</h5>
-                <h2 class="mb-0"><%= @total_users %></h2>
-              </div>
-              <div class="col-auto">
-                <svg viewBox="0 0 24 24" height="30" width="30" class="text-primary" xmlns="http://www.w3.org/2000/svg">
-                  <!-- SVG Content -->
-                </svg>
-              </div>
+<div class="mt-2 text-center responsive-users col-md-9 mx-auto">
+  <div class="row">
+    <!-- Total Users Card -->
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card border-0 shadow rounded flex-fill responsive-cards">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="text-uppercase text-muted small fw-semibold mb-2 tracking-wide">Total Users</h5>
+              <h4 class="mb-0 fw-bold text-start"><%= @total_users %></h4>
+              <i class="bi bi-people position-absolute top-0 end-0 me-3 mt-3 fs-3 text-info"></i>
+            </div>
+            <div>
+              <svg viewBox="0 0 24 24" height="30" width="30" class="text-primary" xmlns="http://www.w3.org/2000/svg">
+                <!-- SVG Content -->
+              </svg>
             </div>
           </div>
-          <div class="card-footer">
-            <div class="row justify-content-between">
-              <div class="col-auto">
-                <p class="fs-6 text-muted text-uppercase mb-0">Users by Role</p>
-                <ul class="fs-5 fw-bold mb-0">
-                  <% @users_by_role.each do |role, count| %>
-                    <li><%= role.capitalize %>: <%= count %></li>
-                  <% end %>
-                </ul>
-              </div>
-              <div class="col text-end text-truncate">
-                <p class="fs-6 text-muted text-uppercase mb-0">Users by Status</p>
-                <ul class="fs-5 fw-bold mb-0">
-                  <% @users_by_status.each do |status, count| %>
-                    <li><%= status %>: <%= count %></li>
-                  <% end %>
-                </ul>
-              </div>
+        </div>
+        <div class="card-body border-top">
+          <div class="row justify-content-between">
+            <div class="col-auto">
+              <p class="text-muted text-secondary small text-uppercase mb-0">Users by Role</p>
+              <ul class="medium mb-0 tracking-wide text-decoration-none" style="list-style-type: none;">
+                <% @users_by_role.each do |role, count| %>
+                  <li class="decoration-none text-start"><%= role.capitalize %>: <%= count %></li>
+                <% end %>
+              </ul>
+            </div>
+            <div class="col text-end text-truncate">
+              <p class="text-muted text-secondary small text-uppercase mb-0">Users by Status</p>
+              <ul class="medium mb-0 tracking-wide text-decoration-none" style="list-style-type: none;">
+                <% @users_by_status.each do |status, count| %>
+                  <li><%= status %>: <%= count %></li>
+                <% end %>
+              </ul>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Recently Registered Users Card -->
-      <div class="col-lg-6 col-xxl-3 d-flex">
-        <div class="card border-0 flex-fill w-100">
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <h5 class="text-uppercase text-muted fw-semibold mb-2">Recently Registered Users</h5>
-                <h2 class="mb-0"><%= @recently_registered_users.count %></h2>
-              </div>
-              <div class="col-auto">
-                <svg viewBox="0 0 24 24" height="30" width="30" class="text-primary" xmlns="http://www.w3.org/2000/svg">
-                  <!-- SVG Content -->
-                </svg>
-              </div>
+    <!-- Recently Registered Users Card -->
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card border-0 shadow rounded flex-fill responsive-cards">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="text-uppercase text-muted small fw-semibold mb-2 tracking-wide">Recently Registered Users</h5>
+              <h4 class="mb-0 fw-bold text-start"><%= @recently_registered_users.count %></h4>
+              <i class="bi bi-person-check-fill position-absolute top-0 end-0 me-3 mt-3 fs-3 text-info"></i>
+            </div>
+            <div>
+              <svg viewBox="0 0 24 24" height="30" width="30" class="text-primary" xmlns="http://www.w3.org/2000/svg">
+                <!-- SVG Content -->
+              </svg>
             </div>
           </div>
-          <div class="card-footer">
-            <div class="row justify-content-between">
-              <div class="col-auto">
-                <p class="fs-6 text-muted text-uppercase mb-0">Today</p>
-                <p class="fs-5 fw-bold mb-0">57</p>
-              </div>
-              <div class="col text-end text-truncate">
-                <p class="fs-6 text-muted text-uppercase mb-0">Monthly</p>
-                <p class="fs-5 fw-bold mb-0">681</p>
-              </div>
+        </div>
+        <div class="card-body border-top">
+          <div class="row justify-content-between">
+            <div class="col-auto">
+              <p class="text-muted text-secondary small text-uppercase mb-0">Today</p>
+              <p class="medium mb-0 tracking-wide text-decoration-none"><%= @today_registered_users %></p>
+            </div>
+            <div class="col text-end text-truncate">
+              <p class="text-muted text-secondary small text-uppercase mb-0">Monthly</p>
+              <p class="medium mb-0 tracking-wide text-decoration-none"><%= @monthly_registered_users %></p>
             </div>
           </div>
         </div>
       </div>
+    </div>
 
-      <!-- Listings Statistics Card -->
-      <div class="col-lg-6 col-xxl-3 d-flex">
-        <div class="card border-0 flex-fill w-100">
-          <div class="card-body">
-            <div class="row">
-              <div class="col">
-                <h5 class="text-uppercase text-muted fw-semibold mb-2">Listings Statistics</h5>
-                <h2 class="mb-0"><%= @total_listings %></h2>
-              </div>
-              <div class="col-auto">
-                <svg viewBox="0 0 24 24" height="30" width="30" class="text-primary" xmlns="http://www.w3.org/2000/svg">
-                  <!-- SVG Content -->
-                </svg>
-              </div>
+    <!-- Listings Statistics Card -->
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card border-0 shadow rounded flex-fill responsive-cards">
+        <div class="card-body">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="text-uppercase text-muted small fw-semibold mb-2 tracking-wide">Listings Statistics</h5>
+              <h4 class="mb-0 fw-bold text-start"><%= @total_listings %></h4>
+              <i class="bi bi-list position-absolute top-0 end-0 me-3 mt-3 fs-3 text-info"></i>
+            </div>
+            <div>
+              <svg viewBox="0 0 24 24" height="30" width="30" class="text-primary" xmlns="http://www.w3.org/2000/svg">
+                <!-- SVG Content -->
+              </svg>
             </div>
           </div>
-          <div class="card-footer">
-            <div class="row justify-content-between">
-              <div class="col-auto">
-                <p class="fs-6 text-muted text-uppercase mb-0">Listings by Agent</p>
-                <ul class="fs-5 fw-bold mb-0">
-                  <% @listings_by_agent.each do |agent_id, count| %>
-                    <li>Agent <%= agent_id %>: <%= count %></li>
-                  <% end %>
-                </ul>
-              </div>
-              <div class="col text-end text-truncate">
-                <!-- Add any additional information here if needed -->
-              </div>
+        </div>
+        <div class="card-body border-top">
+          <div class="row justify-content-between">
+            <div class="col-auto">
+              <p class="text-muted text-secondary small text-uppercase mb-0">Listings by Agent</p>
+              <ul class="medium mb-0 tracking-wide text-decoration-none">
+                <% @listings_by_agent.each do |agent_id, count| %>
+                  <li class="decoration-none">Agent <%= agent_id %>: <%= count %></li>
+                <% end %>
+              </ul>
+            </div>
+            <div class="col text-end text-truncate">
+              <!-- Add any additional information here if needed -->
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Additional cards can be added in similar fashion -->
     </div>
   </div>
 </div>
 
-<!-- Items per page selection form -->
-<div class="card mt-5 text-center responsive-users col-md-9 mx-auto">
+<!-- Existing User Tables with Search -->
+<div class="card mt-2 text-center responsive-users col-md-9 mx-auto rounded">
   <div class="card-header d-flex align-items-center justify-content-between border-0 py-4" style="background-color: white;">
+    
+    <!-- Items per page selection form -->
     <div class="text-start col-md-1">
       <%= form_with url: users_path, method: :get, local: true do %>
-        <label for="per_page" class="text-secondary small">Items per page:</label>
-        <select name="per_page" id="per_page" onchange="this.form.submit();" class="form-control-sm">
+        <select name="per_page" id="per_page" onchange="this.form.submit();" class="form-control-sm border-0 compact-select">
           <option value="5" <%= 'selected' if @per_page.to_i == 5 %>>5</option>
           <option value="10" <%= 'selected' if @per_page.to_i == 10 %>>10</option>
           <option value="25" <%= 'selected' if @per_page.to_i == 25 %>>25</option>
@@ -136,29 +133,35 @@
       <% end %>
     </div>
 
-    <!-- Dropdown Menu for Adding Users -->
-    <div class="dropdown">
-      <i class="bi bi-person-add" id="addUserDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 24px; cursor: pointer;"></i>
-      <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="addUserDropdown">
-        <li>
-          <%= link_to "Add Single User", new_admin_user_path, class: "dropdown-item" %>
-        </li>
-        <li>
-          <%= link_to "Add Users from CSV", new_admin_bulk_upload_path, class: "dropdown-item" %>
-        </li>
-      </ul>
-    </div>
-  </div>
-</div>
+    <div class="d-flex">
+      <!-- Search button -->
+      <div class="d-md-none mx-3">
+        <button type="button" class="btn btn-outline-secondary rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#searchModal">
+          Search User...
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
 
-<!-- Existing User Tables -->
-<div class="card mt-1 text-center responsive-users col-md-9 mx-auto">
-  <div class="card-header d-flex align-items-center justify-content-end py-4" style="background-color: white;">
-    <div class="text-end col-md-4 ms-auto d-flex d-flex align-items-center">
+      <!-- Dropdown Menu for Adding Users -->
+      <div class="dropdown">
+        <i class="bi bi-person-fill-add fs-3 text-info" id="addUserDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 24px; cursor: pointer;"></i>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="addUserDropdown">
+          <li>
+            <%= link_to "Add Single User", new_admin_user_path, class: "dropdown-item" %>
+          </li>
+          <li>
+            <%= link_to "Add Users from CSV", new_admin_bulk_upload_path, class: "dropdown-item" %>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Search functionality -->
+    <div class="col-md-4 col-lg-4 ms-auto d-flex align-items-center d-none d-md-flex">
       <%= search_form_for @q, url: users_path, html: { method: :get, class: "input-group" } do |f| %>
         <%= f.text_field :first_name_cont, class: "form-control small-placeholder mx-1", placeholder: "First name..." %>
         <%= f.text_field :last_name_cont, class: "form-control small-placeholder mx-1", placeholder: "Last name..." %>
-        <div class="input-group-append d-flex d-flex align-items-center">
+        <div class="input-group-append d-flex align-items-center">
           <%= f.submit "Search", class: "btn btn-outline-secondary ms-2" %>
         </div>
       <% end %>
@@ -166,7 +169,28 @@
   </div>
 </div>
 
-<div class="card border-0 rounded-4 shadow-sm mt-2 text-center responsive-users my-5 col-md-9 mx-auto">
+<!-- Search Modal for small screens -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="searchModalLabel">Search Users</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= search_form_for @q, url: users_path, html: { method: :get, class: "input-group" } do |f| %>
+          <%= f.text_field :first_name_cont, class: "form-control small-placeholder mb-2", placeholder: "First name..." %>
+          <%= f.text_field :last_name_cont, class: "form-control small-placeholder mb-2", placeholder: "Last name..." %>
+          <div class="input-group-append d-flex justify-content-end">
+            <%= f.submit "Search", class: "btn btn-outline-secondary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card border-0 rounded-4 shadow rounded mt-2 text-center responsive-users my-5 col-md-9 mx-auto">
   <div class="card-header d-flex justify-content-between align-items-center border-0 py-4" style="background-color: white;">
     <h6 class="card-title text-start px-3 my-auto fw-bold">USERS</h6>
     <div class="btn-group btn-group-toggle ms-3" data-toggle="buttons">
@@ -196,11 +220,12 @@
                 <th>MLS Number</th>
                 <th>Status</th>
                 <th>Role</th>
+                <th>Action</th>
               </tr>
             </thead>
-            <tbody class="list container">
+            <tbody class="list container px-3">
               <% @agents.each do |agent| %>
-                <tr>
+                <tr class="mx-3">
                   <td>
                     <div class="form-check mb-0">
                       <input class="form-check-input" type="checkbox" value="">
@@ -216,6 +241,11 @@
                   <td class="mls_number"><%= agent.mls_number %></td>
                   <td class="status"><span class="legend-circle bg-<%= agent.status == 'Pending' ? 'warning' : 'success' %>"></span><%= agent.status %></td>
                   <td class="role"><%= agent.role %></td>
+                  <td class="action">
+                    <%= link_to edit_user_path(agent) do %>
+                      <i class="bi bi-person-fill-gear fs-3 text-info" style="cursor: pointer;"></i>
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
             </tbody>
@@ -270,6 +300,7 @@
               <% end %>
             </tbody>
           </table>
+        </div>
         <div class="card-footer" style="background-color: white;">
           <div class="d-flex justify-content-between align-items-center">
             <div class="me-5 text-secondary small">
@@ -281,5 +312,17 @@
         </div>
       </div>
     </div>
+  </div>
+</div>
+
+<!-- Line Charts -->
+<div class="card mt-3 text-start responsive-users col-md-9 mx-auto bg-color border-0">
+  <div class="col">
+    <h5>Users Over Time</h5>
+    <%= line_chart @users_by_day, library: { title: { text: "Users Registered Over Time", x: -20 } } %>
+  </div>
+  <div class="col mt-3">
+    <h5>Listings Over Time</h5>
+    <%= line_chart @listings_by_day, library: { title: { text: "Listings Created Over Time", x: -20 } } %>
   </div>
 </div>
