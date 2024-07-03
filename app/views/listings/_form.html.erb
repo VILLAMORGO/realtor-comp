@@ -22,7 +22,7 @@
 
             <div class="field form-group mb-3">
               <%= form.label :listing_agent, "Listing Agent", class: "form-label" %><br />
-              <%= form.collection_select :listing_agent, @agents, :id, :full_name, prompt: "Select an Agent", class: "form-control" %>
+              <%= form.collection_select :listing_agent, @agents, :id, :first_name, prompt: "Select an Agent", class: "form-control" %>
             </div>
 
             <div class="field form-group mb-3">
