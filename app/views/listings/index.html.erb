@@ -33,7 +33,7 @@
           <tr>
             <td><%= listing.listing_mls_number %></td>
             <td><%= number_to_currency(listing.listing_amount) %></td>
-            <td><%= User.find(listing.listing_agent).full_name %></td>
+            <td><%= User.find(listing.listing_agent).first_name %></td>
             <td><%= listing.commission_split %>%</td>
             <td class="text-center">
               <%= link_to 'Edit', edit_listing_path(listing), class: 'btn btn-sm btn-outline-secondary' %>
