@@ -16,7 +16,7 @@ Rails.application.routes.draw do
   resources :users, only: [:index, :show, :edit, :update, :destroy]
   resources :pending_requests, only: [:index, :update]
   resources :declined_requests, only: [:index, :destroy]
-  resources :listings, only: [:index, :create, :edit, :update, :destroy, :new]
+  resources :listings, only: [:index, :create, :edit, :update, :destroy, :new, :show]
 
   authenticated :user, lambda { |u| u.admin? } do
     root 'users#index', as: :authenticated_admin_root

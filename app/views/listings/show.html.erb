@@ -1,0 +1,27 @@
+<div class="container mt-5">
+  <div class="row">
+    <div class="col-md-8 mx-auto">
+      <div class="card">
+        <div class="card-header">
+          <h5 class="card-title">Listing Details</h5>
+        </div>
+        <div class="card-body">
+          <p><strong>MLS Number:</strong> <%= @listing.listing_mls_number %></p>
+          <p><strong>Listing Amount:</strong> <%= number_to_currency(@listing.listing_amount) %></p>
+          <p><strong>Listing Agent:</strong> <%= User.find(@listing.listing_agent).first_name %></p>
+          <p><strong>Commission Split:</strong> 
+            <% if @listing.commission_type == 'percentage' %>
+              <%= @listing.commission_split %>%
+            <% else %>
+              <%= number_to_currency(@listing.commission_split) %>
+            <% end %>
+          </p>
+        </div>
+        <div class="card-footer">
+          <%= link_to 'Edit', edit_listing_path(@listing), class: 'btn btn-primary' %>
+          <%= link_to 'Back', listings_path, class: 'btn btn-secondary' %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
