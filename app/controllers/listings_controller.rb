@@ -1,7 +1,7 @@
 class ListingsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_agents, only: [:new, :edit, :create, :update]
-  before_action :set_listing, only: [:edit, :update, :destroy]
+  before_action :set_listing, only: [:show, :edit, :update, :destroy]
 
   def index
     @per_page = (params[:per_page] || 10).to_i
@@ -9,7 +9,6 @@ class ListingsController < ApplicationController
   end
 
   def show
-    @listing = current_user.listings.find(params[:id])
   end
 
   def new
@@ -56,7 +55,7 @@ class ListingsController < ApplicationController
   end
 
   def listing_params
-    params.require(:listing).permit(:listing_amount, :listing_agent, :commission_split, :listing_mls_number)
+    params.require(:listing).permit(:listing_amount, :listing_agent, :commission_split, :commission_type, :listing_mls_number)
   end
 
   def set_listing_mls_number
