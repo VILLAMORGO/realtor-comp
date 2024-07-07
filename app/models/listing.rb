@@ -8,6 +8,14 @@ class Listing < ApplicationRecord
 
   validate :commission_split_within_valid_range
 
+  def self.ransackable_attributes(auth_object = nil)
+    ["commission_split", "commission_type", "created_at", "id", "listing_agent", "listing_amount", "listing_mls_number", "updated_at", "user_id"]
+  end
+
+  def self.ransackable_associations(auth_object = nil)
+    ["user"]
+  end
+
   private
 
   def commission_split_within_valid_range

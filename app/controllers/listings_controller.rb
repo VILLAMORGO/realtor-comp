@@ -4,10 +4,15 @@ class ListingsController < ApplicationController
   before_action :set_listing, only: [:show, :edit, :update, :destroy]
 
   def index
+    @q = Listing.includes(:user).ransack(params[:q])
     @per_page = (params[:per_page] || 10).to_i
-    @listings = current_user.listings.paginate(page: params[:page], per_page: @per_page)
+    @listings = @q.result.paginate(page: params[:page], per_page: @per_page)
+  rescue => e
+    Rails.logger.error "Ransack search error: #{e.message}"
+    flash[:alert] = "Error: #{e.message}"
+    @listings = Listing.none.paginate(page: params[:page], per_page: @per_page)
   end
-
+  
   def show
   end
 

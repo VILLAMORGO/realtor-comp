@@ -1,13 +1,11 @@
-<div class="card border-0 rounded-4 shadow-sm mt-5 text-center responsive-listings my-5 col-md-9 mx-auto">
-  <div class="card-header d-flex align-items-center border-0 py-4" style="background-color: white;">
-    <h6 class="card-title text-start px-3 my-auto fw-bold">LISTINGS</h6>
-    <%= link_to 'Add Listing', new_listing_path, class: 'btn btn-info position-absolute top-1 end-0 mx-4', style: 'font-size: 14px;' %>
-
+<!-- Existing User Tables with Search -->
+<div class="card mt-5 text-center responsive-users col-md-9 mx-auto rounded">
+  <div class="card-header d-flex align-items-center justify-content-between border-0 py-4" style="background-color: white;">
+    
     <!-- Items per page selection form -->
     <div class="text-start col-md-1">
       <%= form_with url: listings_path, method: :get, local: true do %>
-        <label for="per_page" class="text-secondary small">Items per page:</label>
-        <select name="per_page" id="per_page" onchange="this.form.submit();" class="form-control">
+        <select name="per_page" id="per_page" onchange="this.form.submit();" class="form-control-sm border-0 compact-select">
           <option value="5" <%= 'selected' if @per_page.to_i == 5 %>>5</option>
           <option value="10" <%= 'selected' if @per_page.to_i == 10 %>>10</option>
           <option value="25" <%= 'selected' if @per_page.to_i == 25 %>>25</option>
@@ -15,6 +13,54 @@
         </select>
       <% end %>
     </div>
+
+    <div class="d-flex">
+      <!-- Search button for small screens -->
+      <div class="d-md-none mx-3">
+        <button type="button" class="btn btn-outline-secondary rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#searchModal">
+          Search User...
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+
+      <%= link_to 'Add Listing', new_listing_path, class: 'btn btn-info mx-4', style: 'font-size: 14px;' %>
+    </div>
+
+    <!-- Search functionality for larger screens -->
+    <div class="col-md-4 col-lg-4 ms-auto d-flex align-items-center d-none d-md-flex">
+      <%= search_form_for @q, url: listings_path, html: { method: :get, class: "input-group" } do |f| %>
+        <%= f.text_field :user_first_name_cont, class: "form-control small-placeholder mx-1", placeholder: "Name..." %>
+        <div class="input-group-append d-flex align-items-center">
+          <%= f.submit "Search", class: "btn btn-outline-secondary ms-2" %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+<!-- Search Modal for small screens -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="searchModalLabel">Search Users</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= search_form_for @q, url: listings_path, html: { method: :get, class: "input-group" } do |f| %>
+          <%= f.text_field :listing_agent_cont, class: "form-control small-placeholder mb-2", placeholder: "Name..." %>
+          <div class="input-group-append d-flex justify-content-end">
+            <%= f.submit "Search", class: "btn btn-outline-secondary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card border-0 rounded-4 shadow-sm text-center responsive-listings mt-2 col-md-9 mx-auto">
+  <div class="card-header d-flex align-items-center border-0 py-4" style="background-color: white;">
+    <h6 class="card-title text-start px-3 my-auto fw-bold">LISTINGS</h6>
   </div>
 
   <div class="table-responsive rounded-bottom-3">
