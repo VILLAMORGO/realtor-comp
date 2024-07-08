@@ -29,7 +29,7 @@
     <!-- Search functionality for larger screens -->
     <div class="col-md-4 col-lg-4 ms-auto d-flex align-items-center d-none d-md-flex">
       <%= search_form_for @q, url: listings_path, html: { method: :get, class: "input-group" } do |f| %>
-        <%= f.text_field :user_first_name_cont, class: "form-control small-placeholder mx-1", placeholder: "Name..." %>
+        <%= f.text_field :listing_mls_number_cont, class: "form-control small-placeholder mx-1", placeholder: "MLS Number..." %>
         <div class="input-group-append d-flex align-items-center">
           <%= f.submit "Search", class: "btn btn-outline-secondary ms-2" %>
         </div>
@@ -48,7 +48,7 @@
       </div>
       <div class="modal-body">
         <%= search_form_for @q, url: listings_path, html: { method: :get, class: "input-group" } do |f| %>
-          <%= f.text_field :listing_agent_cont, class: "form-control small-placeholder mb-2", placeholder: "Name..." %>
+          <%= f.text_field :listing_mls_number_cont, class: "form-control small-placeholder mb-2", placeholder: "MLS Number..." %>
           <div class="input-group-append d-flex justify-content-end">
             <%= f.submit "Search", class: "btn btn-outline-secondary" %>
           </div>
