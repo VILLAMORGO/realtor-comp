@@ -95,6 +95,10 @@ body {
   letter-spacing: 0.05em;
 }
 
+.tracking-widest {
+  letter-spacing: 0.1em;
+}
+
 .small-placeholder::placeholder {
   font-size: 0.8em; 
 }
@@ -146,3 +150,8 @@ body {
   min-height: 14rem; 
   max-height: 14rem;
 } 
+
+.heading-font {
+  font-family: 'Ibarra Real Nova', serif;
+  color: rgb(51,50,61);
+}
