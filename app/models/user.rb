@@ -4,9 +4,8 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
-
   has_many :listings, dependent: :destroy
-  
+
   after_update :send_approval_email, if: :status_changed_to_approved?
 
   validates :email, presence: true, uniqueness: true
@@ -23,17 +22,21 @@ class User < ApplicationRecord
   end
 
   def admin?
-    self.role == 'admin'
+    role == 'admin'
   end
 
   def agent?
-    self.role == 'agent'
+    role == 'agent'
   end
 
   def broker?
-    self.role == 'broker'
+    role == 'broker'
   end
- 
+
+  def subscription_active?
+    subscription_status == 'active'
+  end
+
   def self.ransackable_attributes(auth_object = nil)
     ["first_name", "last_name", "mls_number", "email", "status", "role"]
   end
@@ -45,7 +48,7 @@ class User < ApplicationRecord
   private
 
   def send_approval_email
-    Rails.logger.debug "Send approval email called for user: #{self.id}"
+    Rails.logger.debug "Send approval email called for user: #{id}"
     # UserMailer.with(user: self).approval_email.deliver_later
   end
 
@@ -55,8 +58,7 @@ class User < ApplicationRecord
 
   def status_changed_to_approved?
     change = saved_change_to_status?
-    Rails.logger.debug "Status change detected for user: #{self.id} - #{change}"
+    Rails.logger.debug "Status change detected for user: #{id} - #{change}"
     change && status == "Approved"
   end
-
 end
