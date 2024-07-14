@@ -1,10 +1,9 @@
-<div class="d-flex flex-column justify-content-center mx-auto main-font mt-5" style="max-width: 1000px;">
-    <h3>Choose Your Subscription Plan:</h3>
-    <p>Your current plan: <%= current_user.subscription_plan.present? ? current_user.subscription.name : 'None' %></p>
-    <p>Your remaining credit: $<%= current_user.subscription_plan.present? ? current_user.subscription.credit : '0.00' %></p>
+<!-- app/views/subscriptions/new.html.erb -->
+<div class="d-flex flex-column justify-content-center text-center mx-auto main-font mt-5" style="max-width: 1000px;">
+  <h3 class="mt-4 text-uppercase tracking-widest fw-semibold">Choose your  subscription  plan</h3>
 </div>
 
-<main class="card mx-auto p-4 bg-color border-0 mt-5" style="max-width: 1000px;">
+<main class="card mx-auto p-4 bg-color border-0 mt-2" style="max-width: 1000px;">
   <div class="row d-flex align-items-center row-cols-1 row-cols-md-3 mb-2 text-center">
     <div class="col">
       <div class="card mb-4 rounded-5 shadow-sm border-1">
@@ -32,7 +31,7 @@
             <li>Sample Perks</li>
             <li>Sample Perks</li>
           </ul>
-          <button class="btn btn-lg btn-dark rounded-pill" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" style="width: 80%;" data-plan-id="monthly_plan_id">Subscribe?</button>
+          <button class="btn btn-lg btn-dark rounded-pill" data-plan-id="monthly_plan_id" style="width: 80%;">Subscribe?</button>
         </div>
       </div>
     </div>
@@ -47,7 +46,7 @@
             <li>Sample Perks</li>
             <li>Sample Perks</li>
           </ul>
-          <button class="btn btn-lg btn-primary rounded-pill" data-bs-target="#exampleModalToggle2" data-bs-toggle="modal" style="width: 80%;" data-plan-id="annual_plan_id">Subscribe?</button>
+          <button class="btn btn-lg btn-primary rounded-pill" data-plan-id="annual_plan_id" style="width: 80%;">Subscribe?</button>
         </div>
       </div>
     </div>
@@ -88,66 +87,52 @@
   </div>
 </main>
 
-<!-- Modal for subscription -->
-<div class="modal fade" id="exampleModalToggle2" aria-hidden="true" aria-labelledby="exampleModalToggleLabel2" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalToggleLabel2">Subscribe to Premium</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-      </div>
-      <div class="modal-body">
-        <!-- Subscription form will be here -->
-        <%= form_with url: subscriptions_path, method: :post, id: 'subscription-form' do %>
-          <%= hidden_field_tag :stripeToken %>
-          <%= hidden_field_tag :plan_id, '', id: 'selected-plan-id' %>
-          <div class="form-group">
-            <label for="card-element">Credit or debit card</label>
-            <div id="card-element">
-              <!-- A Stripe Element will be inserted here. -->
-            </div>
-            <div id="card-errors" role="alert"></div>
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="submit" class="btn btn-primary">Subscribe</button>
-          </div>
-        <% end %>
-      </div>
-    </div>
-  </div>
-</div>
-
 <script src="https://js.stripe.com/v3/"></script>
 <script>
   document.addEventListener("DOMContentLoaded", function() {
-    var stripe = Stripe('<%= Rails.application.credentials.dig(:stripe, :publishable_key) %>');
+    var stripePublishableKey = '<%= Rails.application.credentials.stripe_publishable_key %>';
+    if (!stripePublishableKey) {
+      console.error("Stripe publishable key is missing!");
+      return;
+    }
 
-    var form = document.getElementById('subscription-form');
-    var planIdInput = document.getElementById('selected-plan-id');
+    var stripe = Stripe(stripePublishableKey);
 
-    document.querySelectorAll('[data-bs-toggle="modal"]').forEach(button => {
+    var buttons = document.querySelectorAll('[data-plan-id]');
+    buttons.forEach(function(button) {
       button.addEventListener('click', function(event) {
         var planId = event.target.getAttribute('data-plan-id');
-        planIdInput.value = planId;
-      });
-    });
+        console.log("Button clicked. Plan ID:", planId);
 
-    form.addEventListener('submit', function(event) {
-      event.preventDefault();
-
-      stripe.createToken('card').then(function(result) {
-        if (result.error) {
-          console.error(result.error.message);
-        } else {
-          var hiddenInput = document.createElement('input');
-          hiddenInput.setAttribute('type', 'hidden');
-          hiddenInput.setAttribute('name', 'stripeToken');
-          hiddenInput.setAttribute('value', result.token.id);
-          form.appendChild(hiddenInput);
-
-          form.submit();
-        }
+        fetch('<%= create_checkout_session_subscriptions_path %>', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'X-CSRF-Token': '<%= form_authenticity_token %>'
+          },
+          body: JSON.stringify({ plan_id: planId })
+        })
+        .then(response => {
+          console.log("Fetch response status:", response.status);
+          if (!response.ok) {
+            return response.text().then(text => { throw new Error(text) });
+          }
+          return response.json();
+        })
+        .then(session => {
+          console.log("Session ID:", session.id);
+          return stripe.redirectToCheckout({ sessionId: session.id });
+        })
+        .then(result => {
+          if (result.error) {
+            console.error("Error in Stripe redirect:", result.error.message);
+            alert(result.error.message);
+          }
+        })
+        .catch(error => {
+          console.error('Error:', error); 
+          alert('An error occurred. Please try again.');
+        });
       });
     });
   });

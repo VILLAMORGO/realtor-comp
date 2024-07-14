@@ -1,6 +1,9 @@
 Rails.application.routes.draw do
   get 'subscriptions/new'
   get 'subscriptions/create'
+
+  post '/stripe/webhook', to: 'stripe_webhooks#create'
+
   # Define custom controller for Devise registrations
   devise_for :users, controllers: {
     registrations: 'users/registrations',
@@ -20,7 +23,11 @@ Rails.application.routes.draw do
   resources :declined_requests, only: [:index, :destroy]
   resources :listings, only: [:index, :create, :edit, :update, :destroy, :new, :show]
 
-  resources :subscriptions, only: [:new, :create]
+  resources :subscriptions, only: [:new, :create] do
+    collection do
+      post :create_checkout_session
+    end
+  end
 
   authenticated :user, lambda { |u| u.admin? } do
     root 'users#index', as: :authenticated_admin_root

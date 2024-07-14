@@ -1,0 +1,38 @@
+=> 
+[[32m#<ActiveSupport::Logger:0x00007f13dc445650[0m
+  @default_formatter[32m=[0m[32m#<Logger::Formatter:0x00007f13d7ee6730[0m @datetime_format[32m=[0m[36m[1mnil[0m[32m>[0m,
+  @formatter[32m=[0m
+   [32m#<ActiveSupport::Logger::SimpleFormatter:0x00007f13d7ee4368[0m
+    @datetime_format[32m=[0m[36m[1mnil[0m,
+    @thread_key[32m=[0m[31m[1m"[0m[31mactivesupport_tagged_logging_tags:105080[0m[31m[1m"[0m[32m>[0m,
+  @level[32m=[0m[34m[1m0[0m,
+  @level_override[32m=[0m{},
+  @local_level_key[32m=[0m[33m:[0m[33mlogger_thread_safe_level_18280[0m,
+  @logdev[32m=[0m
+   [32m#<Logger::LogDevice:0x00007f13dc447720[0m
+    @binmode[32m=[0m[36m[1mfalse[0m,
+    @dev[32m=[0m[32m#<File:/home/villamor/my-projects/realtor-comp/log/development.log>[0m,
+    @filename[32m=[0m[31m[1m"[0m[31m/home/villamor/my-projects/realtor-comp/log/development.log[0m[31m[1m"[0m,
+    @mon_data[32m=[0m[32m#<Monitor:0x00007f13d7ee6618[0m[32m>[0m,
+    @mon_data_owner_object_id[32m=[0m[34m[1m5100[0m,
+    @shift_age[32m=[0m[34m[1m1[0m,
+    @shift_period_suffix[32m=[0m[31m[1m"[0m[31m%Y%m%d[0m[31m[1m"[0m,
+    @shift_size[32m=[0m[34m[1m104857600[0m[32m>[0m,
+  @progname[32m=[0m[36m[1mnil[0m[32m>[0m,
+ [32m#<ActiveSupport::Logger:0x00007f13d770c870[0m
+  @default_formatter[32m=[0m[32m#<Logger::Formatter:0x00007f13d77fb358[0m @datetime_format[32m=[0m[36m[1mnil[0m[32m>[0m,
+  @formatter[32m=[0m[32m#<ActiveSupport::Logger::SimpleFormatter:0x00007f13d77fb038[0m @datetime_format[32m=[0m[36m[1mnil[0m[32m>[0m,
+  @level[32m=[0m[34m[1m0[0m,
+  @level_override[32m=[0m{},
+  @local_level_key[32m=[0m[33m:[0m[33mlogger_thread_safe_level_105100[0m,
+  @logdev[32m=[0m
+   [32m#<Logger::LogDevice:0x00007f13d770c820[0m
+    @binmode[32m=[0m[36m[1mfalse[0m,
+    @dev[32m=[0m[32m#<IO:<STDERR>>[0m,
+    @filename[32m=[0m[36m[1mnil[0m,
+    @mon_data[32m=[0m[32m#<Monitor:0x00007f13d77fb178[0m[32m>[0m,
+    @mon_data_owner_object_id[32m=[0m[34m[1m18260[0m,
+    @shift_age[32m=[0m[36m[1mnil[0m,
+    @shift_period_suffix[32m=[0m[36m[1mnil[0m,
+    @shift_size[32m=[0m[36m[1mnil[0m[32m>[0m,
+  @progname[32m=[0m[36m[1mnil[0m[32m>[0m]
