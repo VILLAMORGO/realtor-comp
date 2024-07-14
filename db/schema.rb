@@ -56,7 +56,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_07_10_192543) do
     t.string "subscription_plan"
     t.string "stripe_customer_id"
     t.string "subscription_id"
-    t.string "subscription_status"
+    t.string "subscription_status", default: "inactive"
     t.index ["confirmation_token"], name: "index_users_on_confirmation_token", unique: true
     t.index ["email"], name: "index_users_on_email", unique: true
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true

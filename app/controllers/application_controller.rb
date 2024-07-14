@@ -17,6 +17,6 @@ class ApplicationController < ActionController::Base
   end
 
   def on_subscription_page?
-    params[:controller] == "subscriptions" && params[:action] == "new"
+    params[:controller] == "subscriptions" && ["new", "create_checkout_session"].include?(params[:action])
   end
 end

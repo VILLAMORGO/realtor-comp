@@ -3,35 +3,36 @@ class SubscriptionsController < ApplicationController
 
   def new
     @plans = [
-      { id: 'monthly_plan_id', name: 'Monthly Plan', price: 1000 },
-      { id: 'annual_plan_id', name: 'Annual Plan', price: 10000 }
+      { id: 'monthly_plan_id', name: 'Monthly Plan', price: 15 },
+      { id: 'annual_plan_id', name: 'Annual Plan', price: 100 }
     ]
   end
 
-  def create
+  def create_checkout_session
     plan_id = params[:plan_id]
-    begin
-      customer = Stripe::Customer.create({
-        email: current_user.email,
-        source: params[:stripeToken]
-      })
 
-      subscription = Stripe::Subscription.create({
-        customer: customer.id,
-        items: [{ plan: plan_id }]
-      })
+    monthly_price_id = Rails.application.credentials.subscription_monthly_price_id
+    annually_price_id = Rails.application.credentials.subscription_annually_price_id
 
-      current_user.update(
-        subscription_plan: plan_id,
-        stripe_customer_id: customer.id,
-        subscription_id: subscription.id,
-        subscription_status: subscription.status
-      )
+    price_id = plan_id == 'monthly_plan_id' ? monthly_price_id : annually_price_id # Use the correct Stripe price IDs here
 
-      redirect_to root_path, notice: 'Subscription successful!'
-    rescue Stripe::StripeError => e
-      flash[:error] = e.message
-      render :new
+    session = Stripe::Checkout::Session.create(
+      payment_method_types: ['card'],
+      customer_email: current_user.email,
+      line_items: [{
+        price: price_id,
+        quantity: 1
+      }],
+      mode: 'subscription',
+      success_url: "#{root_url}?session_id={CHECKOUT_SESSION_ID}",
+      cancel_url: root_url
+    )
+
+    respond_to do |format|
+      format.json { render json: { id: session.id } }
     end
+  rescue => e
+    Rails.logger.error "Error creating Stripe checkout session: #{e.message}"
+    render json: { error: 'Unable to create checkout session' }, status: 400
   end
 end
