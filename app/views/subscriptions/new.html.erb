@@ -87,14 +87,15 @@
   </div>
 </main>
 
-<script src="https://js.stripe.com/v3/"></script>
 <script>
-  document.addEventListener("DOMContentLoaded", function() {
-    var stripePublishableKey = '<%= Rails.application.credentials.stripe_publishable_key %>';
+  document.addEventListener("turbo:load", function() {
+    var stripePublishableKey = document.querySelector('meta[name="stripe-key"]').getAttribute('content');
     if (!stripePublishableKey) {
       console.error("Stripe publishable key is missing!");
       return;
     }
+
+    console.log("Stripe js working...");
 
     var stripe = Stripe(stripePublishableKey);
 
