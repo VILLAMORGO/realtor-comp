@@ -32,12 +32,15 @@ class StripeWebhooksController < ApplicationController
     when 'checkout.session.completed'
       session = event['data']['object']
       handle_checkout_session_completed(session)
+      Rails.logger.info "handle_checkout_session_completed(session)."
     when 'invoice.payment_succeeded'
       invoice = event['data']['object']
       handle_invoice_payment_succeeded(invoice)
+      Rails.logger.info " handle_invoice_payment_succeeded(invoice)"
     when 'customer.subscription.updated'
       subscription = event['data']['object']
       handle_subscription_updated(subscription)
+      Rails.logger.info " handle_subscription_updated(subscription)"
     else
       Rails.logger.warn "Unhandled event type: #{event['type']}"
     end
@@ -48,11 +51,14 @@ class StripeWebhooksController < ApplicationController
     user = User.find_by(email: customer_email)
 
     if user
+      subscription = Stripe::Subscription.retrieve(session['subscription'])
       user.update(
         stripe_customer_id: session['customer'],
-        subscription_status: 'active'
+        subscription_status: 'active',
+        subscription_plan: subscription['items']['data'].first['price']['product'],
+        subscription_id: subscription['id']
       )
-      Rails.logger.info "User #{user.email} updated with stripe_customer_id and subscription_status."
+      Rails.logger.info "User #{user.email} updated with stripe_customer_id, subscription_status, subscription_plan, and subscription_id."
     else
       Rails.logger.error "User with email #{customer_email} not found."
     end
