@@ -52,10 +52,13 @@ class StripeWebhooksController < ApplicationController
 
     if user
       subscription = Stripe::Subscription.retrieve(session['subscription'])
+      interval = subscription['items']['data'].first['price']['recurring']['interval']
+      subscription_plan = interval == 'month' ? 'monthly' : 'annual'
+
       user.update(
         stripe_customer_id: session['customer'],
         subscription_status: 'active',
-        subscription_plan: subscription['items']['data'].first['price']['product'],
+        subscription_plan: subscription_plan,
         subscription_id: subscription['id']
       )
       Rails.logger.info "User #{user.email} updated with stripe_customer_id, subscription_status, subscription_plan, and subscription_id."
@@ -80,8 +83,11 @@ class StripeWebhooksController < ApplicationController
     user = User.find_by(email: customer.email)
 
     if user
+      interval = subscription['items']['data'].first['price']['recurring']['interval']
+      subscription_plan = interval == 'month' ? 'monthly' : 'annual'
+
       user.update(
-        subscription_plan: subscription['items']['data'].first['price']['product'],
+        subscription_plan: subscription_plan,
         subscription_id: subscription['id'],
         subscription_status: subscription['status']
       )
