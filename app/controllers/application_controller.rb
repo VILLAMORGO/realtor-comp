@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-  before_action :authenticate_user!, except: [:stripe_webhook]
+  before_action :authenticate_user!
   before_action :check_subscription, unless: :devise_controller?
 
   before_action :set_current_user, if: :user_signed_in?
