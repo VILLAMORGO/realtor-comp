@@ -1,10 +1,9 @@
 <!-- app/views/subscriptions/new.html.erb -->
-<div class="d-flex flex-column justify-content-center text-center mx-auto main-font mt-5" style="max-width: 1000px;">
-  <h3 class="mt-4 text-uppercase tracking-widest fw-semibold">Choose your  subscription  plan</h3>
-</div>
-
 <main class="card mx-auto p-4 bg-color border-0 mt-2" style="max-width: 1000px;">
-  <div class="row d-flex align-items-center row-cols-1 row-cols-md-3 mb-2 text-center">
+  <section class="first-main row align-items-center row-cols-1 row-cols-md-3 mb-2 text-center">
+    <div class="d-flex flex-column justify-content-center text-center mx-auto main-font mt-5" style="max-width: 1000px;">
+      <h3 class="mt-4 text-uppercase tracking-widest fw-semibold">Choose your  subscription  plan</h3>
+    </div>
     <div class="col">
       <div class="card mb-4 rounded-5 shadow-sm border-1">
         <div class="card-header py-3 rounded-top-5">
@@ -50,7 +49,72 @@
         </div>
       </div>
     </div>
-  </div>
+  </section>
+
+  <section id="carouselExample" class="carousel slide card mx-1 bg-color border-0 mt-1 carousel-main" style="max-width: 1000px;" >
+    <div class="d-flex flex-column justify-content-center text-center mx-auto main-font mt-1" style="max-width: 1000px;">
+      <h4 class="mt-2 text-uppercase tracking-widest fw-semibold">Choose your  subscription  plan</h4>
+    </div>
+    <p class="mt-4 tracking-wider fw-light text-center text-secondary"> ←  Swipe  →</p>
+    <div class="carousel-inner col d-flex align-items-center row-cols-1 row-cols-md-3 mb-2 text-center">
+      <div class="col carousel-item active">
+        <div class="card mb-4 rounded-5 shadow-sm border-1 d-block w-100">
+          <div class="card-header py-3 rounded-top-5">
+            <h4 class="my-0 fw-normal">Free</h4>
+          </div>
+          <div class="card-body rounded-5 border-1">
+            <h2 class="card-title pricing-card-title">&#x24; 0<small class="text-muted fw-light">/mo</small></h2>
+            <ul class="list-unstyled mt-3 mb4">
+              <li>Sample Perks</li>
+              <li>Sample Perks</li>
+            </ul>
+            <button type="button" class="btn btn-lg btn-outline-secondary rounded-pill disabled" style="width: 80%;">Already signed up</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col carousel-item">
+        <div class="card mb-4 rounded-5 shadow border-1 d-block w-100">
+          <div class="card-header py-3 text-white bg-dark border-dark rounded-top-5">
+            <h4 class="my-0 fw-normal">Monthly</h4>
+          </div>
+          <div class="card-body rounded-5 border-5 border-dark">
+            <h2 class="card-title pricing-card-title">&#x24; 10<small class="text-muted fw-light">/month</small></h2>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>Sample Perks</li>
+              <li>Sample Perks</li>
+            </ul>
+            <button class="btn btn-lg btn-dark rounded-pill" data-plan-id="monthly_plan_id" style="width: 80%;">Subscribe?</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="col carousel-item">
+        <div class="card mb-4 rounded-5 shadow border-1 d-block w-100">
+          <div class="card-header py-3 text-white bg-primary border-primary rounded-top-5">
+            <h4 class="my-0 fw-normal">Yearly</h4>
+          </div>
+          <div class="card-body rounded-5 border-5 border-primary">
+            <h2 class="card-title pricing-card-title">&#x24; 100<small class="text-muted fw-light">/year</small></h2>
+            <ul class="list-unstyled mt-3 mb-4">
+              <li>Sample Perks</li>
+              <li>Sample Perks</li>
+            </ul>
+            <button class="btn btn-lg btn-primary rounded-pill" data-plan-id="annual_plan_id" style="width: 80%;">Subscribe?</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </section>
 
   <h2 class="display-6 text-center mb-4">Compare plans</h2>
 
