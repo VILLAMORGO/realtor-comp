@@ -78,7 +78,10 @@ test:
 # for a full overview on how database connection configuration can be specified.
 #
 production:
-  <<: *default
+  adapter: postgresql
+  encoding: unicode
   database: realtor_comp_production
+  pool: 5
   username: realtorcomp
-  password: realtorcomp
+  password: <%= Rails.application.credentials.REALTOR_COMP_DATABASE_PASSWORD %>
+  host: localhost
