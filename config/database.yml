@@ -80,5 +80,5 @@ test:
 production:
   <<: *default
   database: realtor_comp_production
-  username: realtor_comp
+  username: realtorcomp
   password: <%= Rails.application.credentials.REALTOR_COMP_DATABASE_PASSWORD %>
