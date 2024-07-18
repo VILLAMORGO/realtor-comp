@@ -81,4 +81,4 @@ production:
   <<: *default
   database: realtor_comp_production
   username: realtor_comp
-  password: <%= ENV["REALTOR_COMP_DATABASE_PASSWORD"] %>
+  password: <%= Rails.application.credentials.REALTOR_COMP_DATABASE_PASSWORD %>
