@@ -23,13 +23,20 @@ end
 worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
 
 # Specifies the `port` that Puma will listen on to receive requests; default is 3000.
-port ENV.fetch("PORT") { 3000 }
+# You can uncomment the following line if you want to use port 3000.
+# port ENV.fetch("PORT") { 3000 }
+
+# Bind Puma to a Unix socket to be used with Nginx.
+bind "unix:///home/ubuntu/realtor-comp/tmp/sockets/puma.sock"
 
 # Specifies the `environment` that Puma will run in.
-environment ENV.fetch("RAILS_ENV") { "development" }
+environment ENV.fetch("RAILS_ENV") { "production" }
 
 # Specifies the `pidfile` that Puma will use.
 pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
+
+# Specifies the `state` file that Puma will use.
+state_path ENV.fetch("STATE_PATH") { "tmp/pids/puma.state" }
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
