@@ -39,7 +39,7 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 state_path ENV.fetch("STATE_PATH") { "tmp/pids/puma.state" }
 
 # Logging 
-stdout_redirect "/home/ubuntu/realtor-comp/log/puma.stdout.log", "home/ubuntu/realtor-comp/log/puma.stderr.log", true
+stdout_redirect "/home/ubuntu/realtor-comp/log/puma.stdout.log", "/home/ubuntu/realtor-comp/log/puma.stderr.log", true
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
