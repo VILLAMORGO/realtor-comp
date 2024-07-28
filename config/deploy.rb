@@ -39,6 +39,7 @@ append :rbenv_map_bins, 'puma', 'pumactl'
 append :linked_files, 'config/master.key'
 append :linked_files, 'config/credentials/production.key'
 
+# Puma tasks
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
   task :make_dirs do
@@ -58,6 +59,9 @@ namespace :puma do
     end
   end
 end
+
+# Ensure the Puma restart task is called after deploy:publishing
+after 'deploy:publishing', 'puma:restart'
 
 namespace :deploy do
   desc "Make sure local git is in sync with remote."
