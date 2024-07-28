@@ -53,7 +53,7 @@ namespace :puma do
   task :restart do
     on roles(:app) do
       info "Restarting Puma..."
-      execute :sudo, :systemctl, :restart, 'puma'
+      execute 'sudo systemctl restart puma.service'
       info "Puma restart command executed."
     end
   end
