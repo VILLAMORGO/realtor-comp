@@ -22,9 +22,10 @@ set :puma_error_log, "#{release_path}/log/puma.error.log"
 set :pty, true
 
 set :ssh_options, {
+  user: 'root',
+  keys: %w(~/.ssh/id_ed25519),
   forward_agent: true,
-  auth_methods: ["publickey"],
-  keys: ["sport_insight.pem"]
+  auth_methods: %w(publickey)
 }
 
 set :puma_preload_app, true
