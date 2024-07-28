@@ -1,11 +1,11 @@
 # Change these
-server '140.82.3.49', user: 'ubuntu', roles: [:web, :app, :db], primary: true
+server '140.82.3.49', user: 'root', roles: [:web, :app, :db], primary: true
 
 set :repo_url, 'git@github.com:VILLAMORGO/realtor-comp.git'
 set :application, 'realtor-comp'
 set :branch, 'main'
 
-set :user, 'ubuntu'
+set :user, 'root'
 set :puma_threads, [4, 16]
 set :puma_workers, 0
 
