@@ -21,6 +21,7 @@ set :puma_access_log, "#{release_path}/log/puma.access.log"
 set :puma_error_log, "#{release_path}/log/puma.error.log"
 set :pty, true
 set :puma_service_unit_name, 'puma'
+set :puma_restart_command, 'sudo systemctl restart puma'
 
 
 set :ssh_options, {
@@ -42,8 +43,7 @@ namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
   task :make_dirs do
     on roles(:app) do
-      execute "mkdir #{shared_path}/tmp/sockets -p"
-      execute "mkdir #{shared_path}/tmp/pids -p"
+      execute "mkdir -p #{shared_path}/tmp/sockets #{shared_path}/tmp/pids"
     end
   end
 
