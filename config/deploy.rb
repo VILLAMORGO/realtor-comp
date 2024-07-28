@@ -34,7 +34,7 @@ set :puma_init_active_record, true
 
 append :rbenv_map_bins, 'puma', 'pumactl'
 append :linked_files, 'config/master.key'
-append :linked_files, 'config/credentials/master.key'
+append :linked_files, 'config/credentials/production.key'
 
 namespace :puma do
   desc 'Create Directories for Puma Pids and Socket'
