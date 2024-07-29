@@ -90,31 +90,31 @@ namespace :deploy do
     end
   end
 
-  desc 'Start Nginx'
-  task :start_nginx do
-    on roles(:app), in: :sequence, wait: 5 do
-      invoke 'sudo /usr/sbin/nginx/service start'
+  desc 'Stop Nginx'
+  task :stop_nginx do
+    on roles(:web) do
+      execute :sudo, :systemctl, 'stop nginx'
     end
   end
 
-  desc 'Stop Nginx'
-  task :stop_nginx do
-    on roles(:app), in: :sequence, wait: 5 do
-      invoke 'sudo /usr/sbin/nginx/service stop'
+  desc 'Start Nginx'
+  task :start_nginx do
+    on roles(:web) do
+      execute :sudo, :systemctl, 'start nginx'
     end
   end
 
   desc 'Restart Nginx'
   task :restart_nginx do
-    on roles(:app), in: :sequence, wait: 5 do
-      invoke 'sudo /usr/sbin/nginx/service restart'
+    on roles(:web) do
+      execute :sudo, :systemctl, 'restart nginx'
     end
   end
 
-  before :starting, 'stop_nginx'
+  before 'deploy:publishing', 'deploy:stop_nginx'
   after :finishing, 'compile_assets'
   after :finishing, 'cleanup'
-  after :finishing, 'start_nginx'
+  after 'deploy:publishing', 'deploy:start_nginx'
 
 end
 
