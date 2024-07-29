@@ -93,21 +93,21 @@ namespace :deploy do
   desc 'Start Nginx'
   task :start_nginx do
     on roles(:app), in: :sequence, wait: 5 do
-      invoke 'sudo /usr/sbin/nginx start'
+      invoke 'sudo /usr/sbin/nginx/service start'
     end
   end
 
   desc 'Stop Nginx'
   task :stop_nginx do
     on roles(:app), in: :sequence, wait: 5 do
-      invoke 'sudo /usr/sbin/nginx stop'
+      invoke 'sudo /usr/sbin/nginx/service stop'
     end
   end
 
   desc 'Restart Nginx'
   task :restart_nginx do
     on roles(:app), in: :sequence, wait: 5 do
-      invoke 'sudo /usr/sbin/nginx restart'
+      invoke 'sudo /usr/sbin/nginx/service restart'
     end
   end
 
