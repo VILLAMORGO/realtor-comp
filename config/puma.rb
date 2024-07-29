@@ -27,7 +27,7 @@ worker_timeout 3600 if ENV.fetch("RAILS_ENV", "development") == "development"
 # port ENV.fetch("PORT") { 3000 }
 
 # Bind Puma to a Unix socket to be used with Nginx.
-bind "unix:///home/ubuntu/realtor-comp/tmp/sockets/puma.sock"
+# bind "unix:///home/ubuntu/realtor-comp/tmp/sockets/puma.sock"
 
 # Specifies the `environment` that Puma will run in.
 environment ENV.fetch("RAILS_ENV") { "production" }
@@ -39,7 +39,7 @@ pidfile ENV.fetch("PIDFILE") { "tmp/pids/server.pid" }
 state_path ENV.fetch("STATE_PATH") { "tmp/pids/puma.state" }
 
 # Logging 
-stdout_redirect "/home/ubuntu/realtor-comp/log/puma.stdout.log", "/home/ubuntu/realtor-comp/log/puma.stderr.log", true
+# stdout_redirect "/home/ubuntu/realtor-comp/log/puma.stdout.log", "/home/ubuntu/realtor-comp/log/puma.stderr.log", true
 
 # Allow puma to be restarted by `bin/rails restart` command.
 plugin :tmp_restart
