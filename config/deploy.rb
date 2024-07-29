@@ -100,6 +100,13 @@ namespace :deploy do
   desc 'Stop Nginx'
   task :stop_nginx do
     on roles(:app), in: :sequence, wait: 5 do
+      invoke 'sudo /usr/sbin/nginx stop'
+    end
+  end
+
+  desc 'Restart Nginx'
+  task :restart_nginx do
+    on roles(:app), in: :sequence, wait: 5 do
       invoke 'sudo /usr/sbin/nginx restart'
     end
   end
