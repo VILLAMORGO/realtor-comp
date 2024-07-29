@@ -11,9 +11,9 @@ class ApplicationController < ActionController::Base
   end
 
   def check_subscription
-    if user_signed_in? && !current_user.subscription_active? && !current_user.admin? && !on_subscription_page?
-      redirect_to new_subscription_path, alert: 'You must subscribe to access this page.'
-    end
+    # if user_signed_in? && !current_user.subscription_active? && !current_user.admin? && !on_subscription_page?
+    #   redirect_to new_subscription_path, alert: 'You must subscribe to access this page.'
+    # end
   end
 
   def on_subscription_page?
