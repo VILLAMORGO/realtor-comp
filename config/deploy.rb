@@ -90,8 +90,25 @@ namespace :deploy do
     end
   end
 
+  desc 'Start Nginx'
+  task :start_nginx do
+    on roles(:app), in: :sequence, wait: 5 do
+      invoke 'sudo /usr/sbin/nginx start'
+    end
+  end
+
+  desc 'Stop Nginx'
+  task :stop_nginx do
+    on roles(:app), in: :sequence, wait: 5 do
+      invoke 'sudo /usr/sbin/nginx restart'
+    end
+  end
+
+  before :starting, 'stop_nginx'
   after :finishing, 'compile_assets'
   after :finishing, 'cleanup'
+  after :finishing, 'start_nginx'
+
 end
 
 namespace :puma_config do
