@@ -21,6 +21,11 @@ set :puma_access_log, "#{release_path}/log/puma.access.log"
 set :puma_error_log, "#{release_path}/log/puma.error.log"
 set :pty, true
 
+# Update the restart command to use the new service name
+set :puma_service_unit_name, 'realtor-comp-puma'
+set :puma_restart_command, 'sudo systemctl restart realtor-comp-puma.service'
+
+
 set :ssh_options, {
   user: 'root',
   keys: %w(~/.ssh/id_ed25519),
@@ -51,7 +56,7 @@ namespace :puma do
   task :restart do
     on roles(:app) do
       info "Restarting Puma..."
-      execute 'sudo systemctl restart puma.service'
+      execute 'sudo systemctl restart realtor-comp-puma.service'
       info "Puma restart command executed."
     end
   end
