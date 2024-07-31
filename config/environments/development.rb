@@ -74,11 +74,14 @@ Rails.application.configure do
   config.action_mailer.mailjet_settings = {
     api_key: Rails.application.credentials.mailjet_api_key,
     secret_key: Rails.application.credentials.mailjet_secret_key,
-    default_from: Rails.application.credentials.mailjet_sender_address
-  
+    default_from: Rails.application.credentials.mailjet_sender_address,
+    debug: true
   }
 
   # Raise error when a before_action's only/except options reference missing actions
   config.action_controller.raise_on_missing_callback_actions = true
   config.action_mailer.default_url_options = { host: 'localhost', port: 3000 }
+
+  config.log_level = :debug
+
 end
