@@ -8,38 +8,27 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-User.create(
-    email: Rails.application.credentials.admin_email, 
-    password: Rails.application.credentials.admin_password, 
-    password_confirmation: Rails.application.credentials.admin_password,
-    first_name: "admin", 
-    last_name: "test", 
-    mls_number: "12345678", 
-    state: "VA", 
-    street_address: "streets", 
-    home_address: "home", 
-    city_address: "City", 
-    zip_code: "1234",
-    status: 'Approved',
-    role: 'admin',
-    confirmed_at: DateTime.now
-)
+# Remove existing sample users (agents)
+User.where("email LIKE ?", "agent%@test.com").destroy_all
 
-30.times do |i|
-    User.create(
-        email: "agent#{i+1}@test.com",
-        password: 'agentpassword123',
-        password_confirmation: 'agentpassword123',
-        first_name: "Agent#{i+1}",
-        last_name: "Test",
-        mls_number: "8765432#{i+1}",
-        state: "VA",
-        street_address: "Street #{i+1}",
-        home_address: "Home #{i+1}",
-        city_address: "City",
-        zip_code: "1234#{i+1}",
-        status: 'Pending',
-        role: 'agent',
-        confirmed_at: DateTime.now
-    )
+# Create admin accounts
+[
+  { email: Rails.application.credentials.admin1_email, password: Rails.application.credentials.admin1_password },
+  { email: Rails.application.credentials.admin2_email, password: Rails.application.credentials.admin2_password }
+].each do |admin_credentials|
+  User.find_or_create_by!(email: admin_credentials[:email]) do |user|
+    user.password = admin_credentials[:password]
+    user.password_confirmation = admin_credentials[:password]
+    user.first_name = "Admin"
+    user.last_name = "User"
+    user.mls_number = "12345678"
+    user.state = "VA"
+    user.street_address = "streets"
+    user.home_address = "home"
+    user.city_address = "City"
+    user.zip_code = "1234"
+    user.status = 'Approved'
+    user.role = 'admin'
+    user.confirmed_at = DateTime.now
   end
+end
