@@ -85,14 +85,14 @@ class StripeWebhooksController < ApplicationController
   def handle_subscription_updated(subscription)
     customer = Stripe::Customer.retrieve(subscription['customer'])
     user = User.find_by(email: customer.email)
-
+  
     if user
       interval = subscription['items']['data'].first['price']['recurring']['interval']
       subscription_plan = interval == 'month' ? 'monthly' : 'annual'
-
+  
       # Find the subscription record
       user_subscription = user.subscriptions.find_by(subscription_id: subscription['id'])
-
+  
       if user_subscription
         # Update the subscription record
         user_subscription.update(
@@ -101,11 +101,11 @@ class StripeWebhooksController < ApplicationController
         )
         Rails.logger.info "Subscription updated for user #{user.email}."
       end
-
+  
       # Update user's subscription status
       user.update(subscription_status: subscription['status'])
     else
       Rails.logger.error "User with email #{customer.email} not found."
     end
-  end
+  end  
 end
