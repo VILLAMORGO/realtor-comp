@@ -35,7 +35,15 @@ class User < ApplicationRecord
   end
 
   def subscription_active?
-    subscription_status == 'active'
+    subscription_status == "active" || (subscription_status == "trial" && trial_ends_at > Time.current)
+  end
+
+  def trial_period_active?
+    subscription_status == "trial" && trial_ends_at > Time.current
+  end
+
+  def subscription_expired?
+    !subscription_active?
   end
 
   def self.ransackable_attributes(auth_object = nil)

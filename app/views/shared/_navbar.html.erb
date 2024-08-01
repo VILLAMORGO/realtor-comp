@@ -28,7 +28,7 @@
           </li>
         <% end %>
       </ul>
-      <% if user_signed_in? && current_user.admin?%>
+      <% if user_signed_in? && current_user.admin? %>
         <span class="navbar-text text-white me-3">
           The place to find commissions splits!
         </span>
@@ -38,6 +38,13 @@
           <li class="nav-item nav-link text-white">
             Welcome, <%= current_user.email %>!
           </li>
+          <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
+            <% days_left = (current_user.trial_ends_at.to_date - Date.current).to_i %>
+            <li class="nav-item nav-link text-warning">
+              <%= pluralize(days_left, "day") %> left in trial. 
+              <%= link_to 'Subscribe', new_subscription_path, class: "text-warning fw-bold" %>
+            </li>
+          <% end %>
           <li class="nav-item">
             <%= link_to 'Edit Profile', edit_user_registration_path, class: "nav-link" %>
           </li>
