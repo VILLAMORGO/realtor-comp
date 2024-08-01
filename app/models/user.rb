@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :listings, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   after_update :send_approval_email, if: :status_changed_to_approved?
 

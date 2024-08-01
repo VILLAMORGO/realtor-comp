@@ -13,6 +13,7 @@ class SubscriptionsController < ApplicationController
 
     monthly_price_id = Rails.application.credentials.subscription_monthly_price_id
     annually_price_id = Rails.application.credentials.subscription_annually_price_id
+    root_url = Rails.application.credentials.root_url
 
     price_id = plan_id == 'monthly_plan_id' ? monthly_price_id : annually_price_id # Use the correct Stripe price IDs here
 
