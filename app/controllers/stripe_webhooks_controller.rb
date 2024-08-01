@@ -36,11 +36,11 @@ class StripeWebhooksController < ApplicationController
     when 'invoice.payment_succeeded'
       invoice = event['data']['object']
       handle_invoice_payment_succeeded(invoice)
-      Rails.logger.info " handle_invoice_payment_succeeded(invoice)"
+      Rails.logger.info "handle_invoice_payment_succeeded(invoice)"
     when 'customer.subscription.updated'
       subscription = event['data']['object']
       handle_subscription_updated(subscription)
-      Rails.logger.info " handle_subscription_updated(subscription)"
+      Rails.logger.info "handle_subscription_updated(subscription)"
     else
       Rails.logger.warn "Unhandled event type: #{event['type']}"
     end
@@ -55,12 +55,15 @@ class StripeWebhooksController < ApplicationController
       interval = subscription['items']['data'].first['price']['recurring']['interval']
       subscription_plan = interval == 'month' ? 'monthly' : 'annual'
 
-      user.update(
-        stripe_customer_id: session['customer'],
-        subscription_status: 'active',
+      # Create the subscription record
+      user.subscriptions.create(
         subscription_plan: subscription_plan,
+        stripe_customer_id: session['customer'],
         subscription_id: subscription['id']
       )
+
+      # Update user's subscription status
+      user.update(subscription_status: 'active')
       Rails.logger.info "User #{user.email} updated with stripe_customer_id, subscription_status, subscription_plan, and subscription_id."
     else
       Rails.logger.error "User with email #{customer_email} not found."
@@ -73,6 +76,7 @@ class StripeWebhooksController < ApplicationController
 
     if user
       Rails.logger.info "Payment succeeded for user #{user.email}."
+      user.update(subscription_status: 'active') if user.subscription_status == 'inactive'
     else
       Rails.logger.error "User with email #{customer_email} not found."
     end
@@ -81,19 +85,27 @@ class StripeWebhooksController < ApplicationController
   def handle_subscription_updated(subscription)
     customer = Stripe::Customer.retrieve(subscription['customer'])
     user = User.find_by(email: customer.email)
-
+  
     if user
       interval = subscription['items']['data'].first['price']['recurring']['interval']
       subscription_plan = interval == 'month' ? 'monthly' : 'annual'
-
-      user.update(
-        subscription_plan: subscription_plan,
-        subscription_id: subscription['id'],
-        subscription_status: subscription['status']
-      )
-      Rails.logger.info "Subscription updated for user #{user.email}."
+  
+      # Find the subscription record
+      user_subscription = user.subscriptions.find_by(subscription_id: subscription['id'])
+  
+      if user_subscription
+        # Update the subscription record
+        user_subscription.update(
+          subscription_plan: subscription_plan,
+          stripe_customer_id: subscription['customer']
+        )
+        Rails.logger.info "Subscription updated for user #{user.email}."
+      end
+  
+      # Update user's subscription status
+      user.update(subscription_status: subscription['status'])
     else
       Rails.logger.error "User with email #{customer.email} not found."
     end
-  end
+  end  
 end

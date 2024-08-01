@@ -5,6 +5,7 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable
 
   has_many :listings, dependent: :destroy
+  has_many :subscriptions, dependent: :destroy
 
   after_update :send_approval_email, if: :status_changed_to_approved?
 
@@ -34,7 +35,15 @@ class User < ApplicationRecord
   end
 
   def subscription_active?
-    subscription_status == 'active'
+    subscription_status == "active" || (subscription_status == "trial" && trial_ends_at > Time.current)
+  end
+
+  def trial_period_active?
+    subscription_status == "trial" && trial_ends_at > Time.current
+  end
+
+  def subscription_expired?
+    !subscription_active?
   end
 
   def self.ransackable_attributes(auth_object = nil)
