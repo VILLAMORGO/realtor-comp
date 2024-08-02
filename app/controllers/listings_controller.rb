@@ -2,6 +2,7 @@ class ListingsController < ApplicationController
   before_action :authenticate_user!
   before_action :set_agents, only: [:new, :edit, :create, :update]
   before_action :set_listing, only: [:show, :edit, :update, :destroy]
+  before_action :authorize_user!, only: [:edit, :update, :destroy]
 
   def index
     @q = Listing.includes(:user).ransack(params[:q])
@@ -66,5 +67,9 @@ class ListingsController < ApplicationController
   def set_listing_mls_number
     agent = User.find(listing_params[:listing_agent])
     @listing.listing_mls_number = agent.mls_number
+  end
+
+  def authorize_user!
+    redirect_to root_path, alert: 'You are not authorized to perform this action.' unless @listing.user_id == current_user.id
   end
 end
