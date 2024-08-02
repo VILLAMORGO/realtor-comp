@@ -60,7 +60,7 @@ class ListingsController < ApplicationController
   end
 
   def listing_params
-    params.require(:listing).permit(:listing_amount, :listing_agent, :commission_split, :commission_type, :listing_mls_number)
+    params.require(:listing).permit(:listing_amount, :listing_agent, :commission_split, :commission_type, :listing_mls_number, :notes)
   end
 
   def set_listing_mls_number
