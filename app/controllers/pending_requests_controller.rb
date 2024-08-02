@@ -9,7 +9,7 @@ class PendingRequestsController < ApplicationController
         @per_page = (params[:per_page] || 10).to_i
         @page = params[:page] || 1
 
-        @requests = @users.where(role: "agent", status: "Pending")
+        @requests = @users.where(status: "Pending")
                         .order(created_at: :desc)
                         .paginate(page: @page, per_page: @per_page)
     end  

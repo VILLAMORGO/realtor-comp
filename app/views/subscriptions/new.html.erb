@@ -1,9 +1,9 @@
 <!-- app/views/subscriptions/new.html.erb -->
-<main class="card mx-auto p-4 bg-color border-0 mt-2" style="max-width: 1000px;">
+<main class="card mx-auto bg-color border-0 mt-2" style="max-width: 1000px;">
   <div class="d-flex flex-column justify-content-center text-center mx-auto main-font mt-2 mb-5" style="max-width: 1000px;">
       <h3 class="mt-4 text-uppercase tracking-widest fw-semibold">Choose your  subscription  plan</h3>
   </div>
-  <section class="first-main row align-items-center row-cols-1 row-cols-md-3 mb-2 text-center">
+  <section class="first-main row align-items-center row-cols-1 row-cols-md-3 mb-2 text-center p-4">
     <div class="col">
       <div class="card mb-4 rounded-5 shadow-sm border-1">
         <div class="card-header py-3 rounded-top-5">
@@ -12,8 +12,13 @@
         <div class="card-body rounded-5 border-1">
           <h2 class="card-title pricing-card-title">&#x24; 0<small class="text-muted fw-light">/mo</small></h2>
           <ul class="list-unstyled mt-3 mb4">
-            <li>Sample Perks</li>
-            <li>Sample Perks</li>
+            <li>Unlimited listings for 30 days</li>
+            <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
+              <% days_left = (current_user.trial_ends_at.to_date - Date.current).to_i %>
+              <li class="nav-item nav-link text-warning">
+                <%= pluralize(days_left, "day") %> left in trial. 
+              </li>
+            <% end %>
           </ul>
           <button type="button" class="btn btn-lg btn-outline-secondary rounded-pill disabled" style="width: 80%;">Already signed up</button>
         </div>
@@ -27,8 +32,8 @@
         <div class="card-body rounded-5 border-5 border-dark">
           <h2 class="card-title pricing-card-title">&#x24; 1.99<small class="text-muted fw-light">/month</small></h2>
           <ul class="list-unstyled mt-3 mb-4">
-            <li>Sample Perks</li>
-            <li>Sample Perks</li>
+            <li>Unlimited listings for both.</li>
+            <li>Unlimited agents for brokers.</li>
           </ul>
           <button class="btn btn-lg btn-dark rounded-pill" data-plan-id="monthly_plan_id" style="width: 80%;">Subscribe?</button>
         </div>
@@ -42,16 +47,18 @@
         <div class="card-body rounded-5 border-5 border-primary">
           <h2 class="card-title pricing-card-title">&#x24; 20.00<small class="text-muted fw-light">/year</small></h2>
           <ul class="list-unstyled mt-3 mb-4">
-            <li>Sample Perks</li>
-            <li>Sample Perks</li>
+            <li class="fw-medium text-primary-emphasis">Gets two free months.</li>
+            <li class="fw-light">Unlimited listings for both.</li>
+            <li class="fw-light">Unlimited agents for brokers.</li>
           </ul>
           <button class="btn btn-lg btn-primary rounded-pill" data-plan-id="annual_plan_id" style="width: 80%;">Subscribe?</button>
         </div>
       </div>
+
     </div>
   </section>
 
-  <section id="carouselExample" class="carousel slide card mx-1 bg-color border-0 mt-1 carousel-main" style="max-width: 1000px;" >
+  <section id="carouselExample" class="carousel slide card mx-1 bg-color border-0 mt-1 carousel-main p-2" data-interval="false" style="max-width: 1000px;" >
     <p class="mt-0 tracking-wider fw-light text-center text-secondary"> ←  Swipe  →</p>
     <div class="carousel-inner col d-flex align-items-center row-cols-1 row-cols-md-3 mb-2 text-center">
       <div class="col carousel-item active">
@@ -62,8 +69,13 @@
           <div class="card-body rounded-5 border-1">
             <h2 class="card-title pricing-card-title">&#x24; 0<small class="text-muted fw-light">/mo</small></h2>
             <ul class="list-unstyled mt-3 mb4">
-              <li>Sample Perks</li>
-              <li>Sample Perks</li>
+              <li>Unlimited listings for 30 days</li>
+              <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
+                <% days_left = (current_user.trial_ends_at.to_date - Date.current).to_i %>
+                <li class="nav-item nav-link text-warning">
+                  <%= pluralize(days_left, "day") %> left in trial. 
+                </li>
+              <% end %>
             </ul>
             <button type="button" class="btn btn-lg btn-outline-secondary rounded-pill disabled" style="width: 80%;">Already signed up</button>
           </div>
@@ -76,10 +88,10 @@
             <h4 class="my-0 fw-normal">Monthly</h4>
           </div>
           <div class="card-body rounded-5 border-5 border-dark">
-            <h2 class="card-title pricing-card-title">&#x24; 10<small class="text-muted fw-light">/month</small></h2>
+            <h2 class="card-title pricing-card-title">&#x24; 1.99<small class="text-muted fw-light">/month</small></h2>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>Sample Perks</li>
-              <li>Sample Perks</li>
+              <li>Unlimited listings for both.</li>
+              <li>Unlimited agents for brokers.</li>
             </ul>
             <button class="btn btn-lg btn-dark rounded-pill" data-plan-id="monthly_plan_id" style="width: 80%;">Subscribe?</button>
           </div>
@@ -92,10 +104,11 @@
             <h4 class="my-0 fw-normal">Yearly</h4>
           </div>
           <div class="card-body rounded-5 border-5 border-primary">
-            <h2 class="card-title pricing-card-title">&#x24; 100<small class="text-muted fw-light">/year</small></h2>
+            <h2 class="card-title pricing-card-title">&#x24; 20<small class="text-muted fw-light">/year</small></h2>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>Sample Perks</li>
-              <li>Sample Perks</li>
+              <li class="fw-medium text-primary-emphasis">Gets two free months.</li>
+              <li class="fw-light">Unlimited listings for both.</li>
+              <li class="fw-light">Unlimited agents for brokers.</li>
             </ul>
             <button class="btn btn-lg btn-primary rounded-pill" data-plan-id="annual_plan_id" style="width: 80%;">Subscribe?</button>
           </div>
@@ -103,13 +116,18 @@
       </div>
 
     </div>
+     <!-- Previous button -->
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
+      <span class="carousel-control-prev-icon text-primary-emphasis fs-1" aria-hidden="true">
+        <i class="bi bi-arrow-left-circle-fill"></i>
+      </span>
     </button>
+
+    <!-- Next button -->
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
+      <span class="carousel-control-next-icon text-primary-emphasis fs-1" aria-hidden="true">
+        <i class="bi bi-arrow-right-circle-fill"></i>
+      </span>
     </button>
   </section>
 
@@ -120,23 +138,43 @@
       <thead>
         <tr>
           <th style="width: 34%; background-color: #f9f9fa;"></th>
-          <th style="width: 34%; background-color: #f9f9fa;">30 Days Free Trial</th>
-          <th style="width: 34%; background-color: #f9f9fa;">Monthly</th>
-          <th style="width: 34%; background-color: #f9f9fa;">Yearly</th>
+          <th style="width: 22%; background-color: #f9f9fa;">30 Days Free Trial</th>
+          <th style="width: 22%; background-color: #f9f9fa;">Monthly</th>
+          <th style="width: 22%; background-color: #f9f9fa;">Yearly</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <th scope="row" class="text-start" style="background-color: #f9f9fa;">Perks</th>
-          <td style="background-color: #f9f9fa;">1</td>
-          <td style="background-color: #f9f9fa;">Unlimited</td>
-          <td style="background-color: #f9f9fa;">Unlimited</td>
+          <th scope="row" class="text-start" style="background-color: #f9f9fa;">Price</th>
+          <td style="background-color: #f9f9fa;">$0/mo</td>
+          <td style="background-color: #f9f9fa;">$1.99/mo</td>
+          <td style="background-color: #f9f9fa;">$20/yr</td>
         </tr>
         <tr>
-          <th scope="row" class="text-start" style="background-color: #f9f9fa;">Perks</th>
-          <td style="background-color: #f9f9fa;">10</td>
-          <td style="background-color: #f9f9fa;">Unlimited</td>
-          <td style="background-color: #f9f9fa;">Unlimited</td>
+          <th scope="row" class="text-start" style="background-color: #f9f9fa;">Unlimited Listings</th>
+          <td style="background-color: #f9f9fa;">
+            <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
+                <% days_left = (current_user.trial_ends_at.to_date - Date.current).to_i %>
+                
+                  <%= pluralize(days_left, "day") %> left. 
+              <% else %>
+              Yes <p class="text-muted fw-light">(30 days)</p>
+              <% end %>
+          </td>
+          <td style="background-color: #f9f9fa;">Yes</td>
+          <td style="background-color: #f9f9fa;">Yes</td>
+        </tr>
+        <tr>
+          <th scope="row" class="text-start" style="background-color: #f9f9fa;">Unlimited Agents for Brokers</th>
+          <td style="background-color: #f9f9fa;">No</td>
+          <td style="background-color: #f9f9fa;">Yes</td>
+          <td style="background-color: #f9f9fa;">Yes</td>
+        </tr>
+        <tr>
+          <th scope="row" class="text-start" style="background-color: #f9f9fa;">Additional Benefits</th>
+          <td style="background-color: #f9f9fa;">N/A</td>
+          <td style="background-color: #f9f9fa;">N/A</td>
+          <td style="background-color: #f9f9fa;">2 months free</td>
         </tr>
       </tbody>
     </table>
