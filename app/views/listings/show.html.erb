@@ -16,6 +16,7 @@
               <%= number_to_currency(@listing.commission_split) %>
             <% end %>
           </p>
+          <p><strong>Notes:</strong> <%= @listing.notes %></p>
         </div>
         <div class="card-footer">
           <%= link_to 'Edit', edit_listing_path(@listing), class: 'btn btn-primary' %>

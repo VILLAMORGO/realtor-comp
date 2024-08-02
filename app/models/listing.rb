@@ -5,6 +5,8 @@ class Listing < ApplicationRecord
   validates :listing_agent, presence: true
   validates :commission_split, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :commission_type, presence: true, inclusion: { in: %w(percentage fixed), message: "%{value} is not a valid commission type" }
+  validates :notes, length: { maximum: 500 }, allow_blank: true
+
 
   validate :commission_split_within_valid_range
 

@@ -2,7 +2,7 @@
   <div class="d-flex flex-column flex-md-row justify-content-center align-items-center col-md-8 mx-auto main-font mb-5">
     <div class="card rounded-3 mt-5 shadow col-12 col-md-6 border border-0 bg-color">
       <div class="card-body px-2">
-        <h5 class="card-title text-start mt-2 ps-3 mb-2 fs-4 tracking-wide">New Listing</h5>
+        <h5 class="card-title text-start mt-2 ps-3 mb-2 fs-4 tracking-wide">MLS Listing</h5>
         <p class="text-secondary fw-medium ps-3 tracking-wider opacity-75 mb-3 normal">Fill in the form below to create a new listing</p>
         <div class="card-body px-3 pb-4 py-2">
           <% if @listing.errors.any? %>
@@ -40,6 +40,11 @@
             <p class="small">Commission Percentage Value: <span id="commission_percentage" class="fw-semibold"></span></p>
           </div>
 
+          <div class="form-group mb-3">
+            <%= form.label :notes, "Notes", class: "form-label fw-bold" %>
+            <%= form.text_area :notes, rows: 4, class: "form-control bg-input-color", maxlength: "500", placeholder: "Enter notes here (max 500 characters)" %>
+          </div>
+
           <%= form.hidden_field :listing_mls_number %>
 
           <div class="d-flex justify-content-start mt-4">
@@ -52,8 +57,8 @@
         </div>
       </div>
     </div>
-    <h1 class="d-none d-md-block col-md-6 px-5">Lorem ipsum dolor sit amet consectetur.</h1>
-    <h1 class="col-12 d-md-none px-5 mt-4">Lorem ipsum dolor sit amet consectetur.</h1>
+    <%# <h1 class="d-none d-md-block col-md-6 px-5">“Your message here” </h1>
+    <h1 class="col-12 d-md-none px-5 mt-4">“Your message here”</h1> %>
   </div>
 <% end %>
 
