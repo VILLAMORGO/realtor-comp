@@ -140,18 +140,7 @@
   </div>
 </div>
 
-<%# <script>
-  document.getElementById("toggle-optional-fields").addEventListener("click", function() {
-    var optionalFields = document.getElementById("optional-fields");
-    if (optionalFields.classList.contains("hidden")) {
-      optionalFields.classList.remove("hidden");
-      this.innerText = "Hide Optional Fields";
-    } else {
-      optionalFields.classList.add("hidden");
-      this.innerText = "Show Optional Fields";
-    }
-  });
-</script> %>
+<%= render 'shared/about_section' %>
 
 <style>
   .hero-section {
