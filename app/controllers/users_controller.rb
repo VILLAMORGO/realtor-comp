@@ -41,7 +41,7 @@ class UsersController < ApplicationController
     @recently_registered_users = User.where('created_at >= ?', 1.week.ago)
   
     @total_listings = Listing.count
-    @listings_by_agent = Listing.group(:listing_agent).count
+    # @listings_by_agent = Listing.group(:listing_agent).count
   
     # Calculate Today and Monthly Registered Users
     @today_registered_users = User.where('created_at >= ?', Time.zone.now.beginning_of_day).count

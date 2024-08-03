@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_08_02_184817) do
+ActiveRecord::Schema[7.1].define(version: 2024_08_03_115033) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
@@ -19,11 +19,10 @@ ActiveRecord::Schema[7.1].define(version: 2024_08_02_184817) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.string "listing_mls_number"
-    t.decimal "listing_amount", precision: 10, scale: 2
-    t.integer "listing_agent"
     t.decimal "commission_split", precision: 5, scale: 2
     t.string "commission_type"
     t.string "notes", limit: 500
+    t.decimal "listing_commission_amount", precision: 10, scale: 2
     t.index ["user_id"], name: "index_listings_on_user_id"
   end
 
