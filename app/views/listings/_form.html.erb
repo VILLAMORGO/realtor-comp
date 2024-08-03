@@ -17,13 +17,13 @@
           <% end %>
 
           <div class="form-group mb-3">
-            <%= form.label :listing_amount, "Listing Amount", class: "form-label fw-bold" %>
-            <%= form.number_field :listing_amount, class: "form-control bg-input-color", id: "listing_amount", placeholder: "Listing Amount" %>
+            <%= form.label :listing_mls_number, "MLS Number", class: "form-label fw-bold" %>
+            <%= form.text_field :listing_mls_number, class: "form-control bg-input-color", placeholder: "MLS Number" %>
           </div>
 
           <div class="form-group mb-3">
-            <%= form.label :listing_agent, "Listing Agent", class: "form-label fw-bold" %>
-            <%= form.collection_select :listing_agent, @agents, :id, :first_name, prompt: "Select an Agent", class: "form-control bg-input-color" %>
+            <%= form.label :listing_commission_amount, "Listing Commission Amount", class: "form-label fw-bold" %>
+            <%= form.number_field :listing_commission_amount, class: "form-control bg-input-color", id: "listing_commission_amount", placeholder: "Listing Commission Amount" %>
           </div>
 
           <div class="form-group mb-3">
@@ -44,8 +44,6 @@
             <%= form.label :notes, "Notes", class: "form-label fw-bold" %>
             <%= form.text_area :notes, rows: 4, class: "form-control bg-input-color", maxlength: "500", placeholder: "Enter notes here (max 500 characters)" %>
           </div>
-
-          <%= form.hidden_field :listing_mls_number %>
 
           <div class="d-flex justify-content-start mt-4">
             <%= form.submit "Save Listing", class: "btn btn-primary text-center mt-2 rounded-pill px-4" %>
@@ -69,14 +67,14 @@
     var commissionTypeSelect = document.getElementById("commission_type");
     var percentageField = document.getElementById("percentage_field");
     var commissionSplitInput = document.getElementById("commission_split");
-    var listingAmountInput = document.getElementById("listing_amount");
+    var listingCommissionAmountInput = document.getElementById("listing_commission_amount");
     var commissionPercentageDisplay = document.getElementById("commission_percentage");
 
     function calculatePercentage() {
-      var listingAmount = parseFloat(listingAmountInput.value);
+      var listingCommissionAmount = parseFloat(listingCommissionAmountInput.value);
       var commissionSplit = parseFloat(commissionSplitInput.value);
-      if (!isNaN(listingAmount) && !isNaN(commissionSplit)) {
-        var percentage = (commissionSplit * listingAmount) / 100;
+      if (!isNaN(listingCommissionAmount) && !isNaN(commissionSplit)) {
+        var percentage = (commissionSplit / 100) * listingCommissionAmount;
         commissionPercentageDisplay.textContent = '$' + percentage.toFixed(2);
       } else {
         commissionPercentageDisplay.textContent = '';
@@ -99,7 +97,7 @@
       }
     });
 
-    listingAmountInput.addEventListener("input", function() {
+    listingCommissionAmountInput.addEventListener("input", function() {
       if (commissionTypeSelect.value === "percentage") {
         calculatePercentage();
       }

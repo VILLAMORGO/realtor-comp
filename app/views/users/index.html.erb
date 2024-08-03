@@ -97,21 +97,6 @@
             </div>
           </div>
         </div>
-        <div class="card-body border-top overflow-y-scroll pb-2">
-          <div class="row justify-content-between">
-            <div class="col-auto">
-              <p class="text-muted text-secondary small text-uppercase mb-0">Listings by Agent</p>
-              <ul class="medium mb-0 tracking-wide" style="list-style-type: none;">
-                <% @listings_by_agent.each do |agent_id, count| %>
-                  <li >Agent <%= agent_id %>: <%= count %></li>
-                <% end %>
-              </ul>
-            </div>
-            <div class="col text-end text-truncate">
-              <!-- Add any additional information here if needed -->
-            </div>
-          </div>
-        </div>
       </div>
     </div>
   </div>
