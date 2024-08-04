@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'support/index'
   get 'subscriptions/new'
   get 'subscriptions/create'
 

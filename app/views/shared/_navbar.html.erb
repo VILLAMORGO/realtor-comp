@@ -18,6 +18,9 @@
           <li class="nav-item">
             <%= link_to 'Listings', listings_path, class: "nav-link" %>
           </li>
+          <li class="nav-item">
+            <%= link_to 'Support', support_index_path, class: 'nav-link' %>
+          </li>
         <% end %>
         <% if user_signed_in? && current_user.admin? %>
           <li class="nav-item">
@@ -57,6 +60,9 @@
           </li>
           <li class="nav-item">
             <%= link_to 'Sign In', new_user_session_path, class: "nav-link" %>
+          </li>
+          <li class="nav-item">
+            <%= link_to 'Support', support_index_path, class: 'nav-link' %>
           </li>
         <% end %>
       </ul>

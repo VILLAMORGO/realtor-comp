@@ -1,0 +1,18 @@
+<h1>Welcome to RealtorComp Support</h1>
+<p>We are here to help.</p>
+
+<div>
+   <%= link_to 'Email Support', 'mailto:support@realtorcomp.biz', class: 'btn btn-primary' %>
+</div>
+
+<h2>Frequently Asked Questions</h2>
+<div id="faq">
+  <p><strong>Q: How can I reset my password?</strong></p>
+
+  <% if user_signed_in? %>
+    <p>A: If you've forgotten your password, and want to change your password, you can do so from your account settings <%= link_to 'here', edit_user_registration_path %>. </p>
+  <% else %>
+    <p>A: If you've forgotten your password, you can reset it by clicking on the <%= link_to 'Forgot your password?', new_user_password_path %> link on the sign-in page.
+  <% end %>
+  <!-- More questions and answers can be added here -->
+</div>
