@@ -1,26 +1,22 @@
 <div class="container mt-5">
   <div class="row">
-    <div class="col-md-8 mx-auto">
-      <div class="card">
-        <div class="card-header">
-          <h5 class="card-title">Listing Details</h5>
-        </div>
-        <div class="card-body">
-          <p><strong>MLS Number:</strong> <%= @listing.listing_mls_number %></p>
-          <p><strong>Listing Amount:</strong> <%= number_to_currency(@listing.listing_amount) %></p>
-          <p><strong>Listing Agent:</strong> <%= User.find(@listing.listing_agent).first_name %></p>
-          <p><strong>Commission Split:</strong> 
-            <% if @listing.commission_type == 'percentage' %>
-              <%= @listing.commission_split %>%
-            <% else %>
-              <%= number_to_currency(@listing.commission_split) %>
-            <% end %>
-          </p>
-          <p><strong>Notes:</strong> <%= @listing.notes %></p>
-        </div>
-        <div class="card-footer">
-          <%= link_to 'Edit', edit_listing_path(@listing), class: 'btn btn-primary' %>
-          <%= link_to 'Back', listings_path, class: 'btn btn-secondary' %>
+    <div class="d-flex flex-column flex-md-row justify-content-center align-items-center col-md-8 mx-auto main-font mb-5">
+      <div class="card rounded-3 mt-5 shadow col-12 col-md-6 border border-0 bg-color">
+        <div class="card-body px-2">
+          <h5 class="card-title text-start mt-2 ps-3 mb-2 fs-4 tracking-wide">Buyer's Agent Compensation</h5>
+          <p class="text-secondary fw-medium ps-3 tracking-wider opacity-75 mb-3 normal">Listing Details</p>
+          <div class="card-body px-3 pb-4 py-2">
+            <p><strong>MLS Number:</strong> <%= @listing.listing_mls_number %></p>
+            <p><strong>Commission Amount:</strong> <%= number_to_currency(@listing.listing_commission_amount) %></p>
+            <p><strong>Commission type:</strong>
+              <%= @listing.commission_type %>
+            </p>
+            <p><strong>Notes:</strong> <%= @listing.notes %></p>
+          </div>
+          <div class="d-flex justify-content-start mt-4">
+            <%= link_to 'Edit', edit_listing_path(@listing), class: 'btn btn-primary text-center mt-2 rounded-pill px-4' %>
+            <%= link_to 'Back to Listings', listings_path, class: 'btn btn-secondary text-center mt-1 rounded-pill px-4' %>
+          </div>
         </div>
       </div>
     </div>

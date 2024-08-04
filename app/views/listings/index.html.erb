@@ -81,8 +81,8 @@
             <thead class="table-header text-secondary small">
               <tr>
                 <th>MLS Number</th>
-                <th>Listing Commission Amount</th>
-                <th>Split</th>
+                <th>Commission Amount</th>
+                <th>Commission Type</th>
                 <th class="text-center" colspan="3">Actions</th>
               </tr>
             </thead>
@@ -92,11 +92,7 @@
                   <td><%= listing.listing_mls_number %></td>
                   <td><%= number_to_currency(listing.listing_commission_amount) %></td>
                   <td>
-                    <% if listing.commission_type == 'percentage' %>
-                      <%= listing.commission_split %>%
-                    <% else %>
-                      <%= number_to_currency(listing.commission_split) %>
-                    <% end %>
+                    <%= listing.commission_type %>
                   </td>
                   <td class="text-center">
                     <%= link_to 'Show', listing_path(listing), class: "btn btn-sm btn-outline-primary #{'disabled' if listing.user_id != current_user.id}" %>
