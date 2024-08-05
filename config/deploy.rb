@@ -56,6 +56,8 @@ namespace :puma do
       info "Restarting Puma..."
       execute 'sudo systemctl restart realtor-comp-puma.service'
       info "Puma restart command executed."
+    rescue => e
+      error "Failed to restart Puma: #{e.message}"
     end
   end
 end
