@@ -195,16 +195,9 @@
           <table class="table align-middle table-edge table-hover table-nowrap mb-0">
             <thead class="table-header text-secondary small">
               <tr>
-                <th class="w-60px">
-                  <div class="form-check mb-0">
-                    <input class="form-check-input" type="checkbox" value="" id="checkAllCheckboxes">
-                  </div>
-                </th>
                 <th>Full name</th>
                 <th>Email</th>
                 <th>MLS Number</th>
-                <th>Status</th>
-                <th>Role</th>
                 <th>Action</th>
               </tr>
             </thead>
@@ -212,20 +205,17 @@
               <% @agents.each do |agent| %>
                 <tr class="mx-3">
                   <td>
-                    <div class="form-check mb-0">
-                      <input class="form-check-input" type="checkbox" value="">
-                    </div>
-                  </td>
-                  <td>
                     <div class="avatar avatar-circle avatar-xs me-2">
-                      <span class="avatar-title text-bg-primary-soft"><%= agent.first_name[0] %><%= agent.last_name[0] %></span>
+                      <span class="avatar-title text-bg-primary-soft">
+                        <i class="bi bi-person-circle"></i>
+                      </span>
                     </div>
                     <span class="name fw-bold"><%= agent.first_name %> <%= agent.last_name %></span>
                   </td>
-                  <td class="email"><%= agent.email %></td>
+                  <td class="email">
+                    <%= link_to  agent.email, user_path(agent), class: "btn btn-outline-light text-dark col"%>
+                  </td>
                   <td class="mls_number"><%= agent.mls_number %></td>
-                  <td class="status"><span class="legend-circle bg-<%= agent.status == 'Pending' ? 'warning' : 'success' %>"></span><%= agent.status %></td>
-                  <td class="role"><%= agent.role %></td>
                   <td class="action">
                     <%= link_to edit_user_path(agent) do %>
                       <i class="bi bi-person-fill-gear fs-3 text-info" style="cursor: pointer;"></i>
@@ -251,36 +241,32 @@
           <table class="table align-middle table-edge table-hover table-nowrap mb-0">
             <thead class="table-header text-secondary small">
               <tr>
-                <th class="w-60px">
-                  <div class="form-check mb-0">
-                    <input class="form-check-input" type="checkbox" value="" id="checkAllCheckboxes">
-                  </div>
-                </th>
                 <th>Full name</th>
                 <th>Email</th>
                 <th>MLS Number</th>
-                <th>Status</th>
-                <th>Role</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody class="list container">
               <% @brokers.each do |broker| %>
                 <tr>
                   <td>
-                    <div class="form-check mb-0">
-                      <input class="form-check-input" type="checkbox" value="">
-                    </div>
-                  </td>
-                  <td>
                     <div class="avatar avatar-circle avatar-xs me-2">
-                      <span class="avatar-title text-bg-primary-soft"><%= broker.first_name[0] %><%= broker.last_name[0] %></span>
+                      <span class="avatar-title text-bg-primary-soft">
+                        <i class="bi bi-person-circle"></i>
+                      </span>
                     </div>
                     <span class="name fw-bold"><%= broker.first_name %> <%= broker.last_name %></span>
                   </td>
-                  <td class="email"><%= broker.email %></td>
+                  <td class="email">
+                    <%= link_to  broker.email, user_path(broker), class: "btn btn-outline-light text-dark col"%>
+                  </td>
                   <td class="mls_number"><%= broker.mls_number %></td>
-                  <td class="status"><span class="legend-circle bg-<%= broker.status == 'Pending' ? 'warning' : 'success' %>"></span><%= broker.status %></td>
-                  <td class="role"><%= broker.role %></td>
+                  <td class="action">
+                    <%= link_to edit_user_path(broker) do %>
+                      <i class="bi bi-person-fill-gear fs-3 text-info" style="cursor: pointer;"></i>
+                    <% end %>
+                  </td>
                 </tr>
               <% end %>
             </tbody>

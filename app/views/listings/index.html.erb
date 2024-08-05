@@ -89,10 +89,20 @@
             <tbody class="list container">
               <% @my_listings.each do |listing| %>
                 <tr>
-                  <td><%= listing.listing_mls_number %></td>
-                  <td><%= number_to_currency(listing.listing_commission_amount) %></td>
                   <td>
-                    <%= listing.commission_type %>
+                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
+                      <%= listing.listing_mls_number %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
+                      <%= number_to_currency(listing.listing_commission_amount) %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
+                      <%= listing.commission_type %>
+                    <% end %>
                   </td>
                   <td class="text-center">
                     <%= link_to 'Show', listing_path(listing), class: "btn btn-sm btn-outline-primary #{'disabled' if listing.user_id != current_user.id}" %>
@@ -134,10 +144,20 @@
             <tbody class="list container">
               <% @all_listings.each do |listing| %>
                 <tr>
-                  <td><%= listing.listing_mls_number %></td>
-                  <td><%= number_to_currency(listing.listing_commission_amount) %></td>
                   <td>
-                    <%= listing.commission_type %>
+                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
+                      <%= listing.listing_mls_number %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
+                      <%= number_to_currency(listing.listing_commission_amount) %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
+                      <%= listing.commission_type %>
+                    <% end %>
                   </td>
                   <td class="text-center">
                     <%= link_to 'Show', listing_path(listing), class: "btn btn-sm btn-outline-primary" %>
@@ -164,14 +184,17 @@
         </div>
       </div>
     </div>
-
-    <%# <a class="carousel-control-prev" href="#listing-carousel" role="button" data-bs-slide="prev">
-      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Previous</span>
-    </a>
-    <a class="carousel-control-next" href="#listing-carousel" role="button" data-bs-slide="next">
-      <span class="carousel-control-next-icon" aria-hidden="true"></span>
-      <span class="visually-hidden">Next</span>
-    </a> %>
   </div>
 </div>
+<style>
+  .stretched-link {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .text-decoration-none {
+    text-decoration: none;
+  }
+</style>
