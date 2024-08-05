@@ -94,9 +94,9 @@
 
     <div class="text-start mt-2 mb-3">
       <% if current_user.admin? %>
-        <%= link_to "Back", authenticated_admin_root_path, class: 'text-start', style: 'text-decoration: none;' %>
+        <%= link_to "Back", :back, class: 'text-start', style: 'text-decoration: none;' %>
       <% else %>
-        <%= link_to "Back", authenticated_user_root_path, class: 'text-start text-dark-emphasis', style: 'text-decoration: none;' %>
+        <%= link_to "Back", :back, class: 'text-start text-dark-emphasis', style: 'text-decoration: none;' %>
       <% end %>
     </div>
   </div>
