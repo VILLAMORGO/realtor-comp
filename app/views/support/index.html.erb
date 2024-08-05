@@ -1,18 +1,36 @@
-<h1>Welcome to RealtorComp Support</h1>
-<p>We are here to help.</p>
-
-<div>
-   <%= link_to 'Email Support', 'mailto:support@realtorcomp.biz', class: 'btn btn-primary' %>
-</div>
-
-<h2>Frequently Asked Questions</h2>
-<div id="faq">
-  <p><strong>Q: How can I reset my password?</strong></p>
-
-  <% if user_signed_in? %>
-    <p>A: If you've forgotten your password, and want to change your password, you can do so from your account settings <%= link_to 'here', edit_user_registration_path %>. </p>
-  <% else %>
-    <p>A: If you've forgotten your password, you can reset it by clicking on the <%= link_to 'Forgot your password?', new_user_password_path %> link on the sign-in page.
-  <% end %>
-  <!-- More questions and answers can be added here -->
+<div class="container mt-5">
+  <div class="row">
+    <div class="d-flex flex-column justify-content-center align-items-center col-md-8 mx-auto main-font mb-5 text-start">
+      <div class="card col-12 col-md-12 border border-0 bg-color">
+        <h5 class="card-title mt-2 mb-2 fs-4 tracking-wide">Help Center</h5>
+      </div>
+      <div class="card rounded-3 mt-1 shadow col-12 col-md-12 border border-0 bg-color">
+        <div class="card-body">
+          <h6 class="card-title text-start mt-2 ps-3 fs-5">Welcome to RealtorComp Support</h6>
+          <p class="text-secondary fw-medium ps-3 tracking-wider opacity-75 normal">We are here to help.</p>
+          <h6 class="card-title text-start mt-2 ps-3 mb-2 fs-5">Frequently Asked Questions</h6>
+          <div id="faq" class="card-body px-3 pb-4 py-2">
+            <div class="d-flex flex-row">
+              <i class="bi bi-question-circle-fill fs-5 text-info me-2"></i>
+              <div>
+                <p class="fs-6"><strong>How can I reset my password?</strong></p>
+                <% if user_signed_in? %>
+                  <p>A: If you've forgotten your password and want to change it, you can do so from your account settings <%= link_to 'here', edit_user_registration_path %>.</p>
+                <% else %>
+                  <p>A: If you've forgotten your password, you can reset it by clicking on the <%= link_to 'Forgot your password?', new_user_password_path %> link on the sign-in page.</p>
+                <% end %>
+              </div>
+            </div>
+            <!-- Additional FAQ questions can be added here -->
+          </div>
+          <div class="card px-3 py-5 rounded-3 col-12 col-md-10 mx-auto d-flex justify-content-center align-items-center bg-info">
+            <h6 class="card-title text-white fs-5">Can't find what you're looking for?</h6>
+            <div>
+              <%= link_to 'Contact Us', 'mailto:support@realtorcomp.biz', class: 'btn btn-outline-dark text-center rounded-pill tracking-wide fw-semibold bg-color text-info border-info px-4 mt-2' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
