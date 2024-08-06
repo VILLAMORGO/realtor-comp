@@ -7,7 +7,16 @@
           <p class="text-secondary fw-medium ps-3 tracking-wider opacity-75 mb-3 normal">Listing Details</p>
           <div class="card-body px-3 pb-4 py-2">
             <p><strong>MLS Number:</strong> <%= @listing.listing_mls_number %></p>
-            <p><strong>Commission Amount:</strong> <%= number_to_currency(@listing.listing_commission_amount) %></p>
+            <p>
+              <strong>
+                Commission Amount:
+              </strong> 
+              <% if @listing.commission_type === "percentage" %>
+                <%= number_to_percentage(@listing.listing_commission_amount, precision: 5, strip_insignificant_zeros: true) %>
+              <% else %>
+                <%= number_to_currency(@listing.listing_commission_amount) %>
+              <% end %>
+            </p>
             <p><strong>Commission type:</strong>
               <%= @listing.commission_type %>
             </p>
