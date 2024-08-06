@@ -1,78 +1,88 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<div class="mt-5 ">
-    <div class="card border-info mx-auto text-warning  text-dark">
 
-            <h2 class="card-header text-center bg-info bg-opacity-25">
-                <%= user.email %>
-                <span class='badge bg-dark rounded-pill position-absolute top-1 end-0 mx-3'>
-                    <%= user.status %> 
-                </span>
-        
-            </h2>
-
-            <div class="card-body overflow-auto ps-4" style="min-height: 20rem; max-height: 35rem;">
-
-                <div class="card-title d-flex">
-                    <strong>
-                        Date Added: 
-                    </strong>
-                    <p class="ms-2">
-                        <%= user.created_at.strftime("%A %B %d, %Y") %>
-                    </p>
-                </div>
-
-                <div class="card-title d-flex">
-                    <strong>
-                        Last profile update: 
-                    </strong>
-                    <p class="ms-2">
-                        <%= user.updated_at.strftime("%A %B %d, %Y") %>
-                    </p>
-                </div>
-
-                <div class="card-title d-flex">
-                    <strong>
-                        Role:
-                    </strong>
-                    <p class="ms-2">
-                        <%= user.role %>
-                    </p>
-                </div>
-
-                <div class="card-title d-flex ">
-                    <strong class="mt-2">
-                        MLS Number: <%= user.mls_number %> 
-                    </strong>
-                    
-                </div>
-
-                <div class="card-title d-flex">
-                    <strong>
-                        Zip Code: <%= user.zip_code %> 
-                    </strong>
-                </div>
-
-                <div class="card-title">
-                    <strong>
-                        Realtor License Number: <%= user.realtor_license_number %>
-                    </strong>
-                    <div class="container ms-2">
-                        <div class = "row overflow-auto" style="min-height: 10rem; max-height: 15rem;">
-                            
-                        </div>
-                    </div>
-                </div>
-                    
-            </div>
-
-            <div class="card-footer btn-group ">
-        
-                <%= link_to "Edit", edit_user_path(user), class:  "btn btn-info mx-3" %>
-
-                <%= link_to "Delete",  user_path(user), method: :delete, data: { confirm: "Are you sure you want to delete #{user.email}'s profile?" }, class: "btn btn-danger mx-3" %>
-
-                <%= link_to "Back", users_path, class:  "btn btn-secondary mx-3" %>
-                
-            </div>
+<div class="card mt-5 py-5 px-3 mx-auto text-dark shadow border border-0 bg-color col-12 col-md-8">
+    <div class="card-header d-flex flex-column flex-md-row bg-opacity-25 bg-color ">
+        <div class="me-3 w-full h-auto d-flex justify-content-end" style="min-height: 100px;">
+            <img src="<%= user %>" alt="Profile Picture" class="rounded-circle border border-primary bg-white" style="min-width: 50px; min-height: 50px;">
+        </div>
+        <div class="">
+            <h5 class="card-title mb-1 fs-5 tracking-wide"><%= user.first_name %> <%= user.last_name %></h5>
+            <h5 class="card-title mb-3 fs-6 text-capitalize text-secondary"><%= user.role %></h5>
+            <span class="badge bg-dark rounded-pill px-3 py-2"><%= user.status %></span>
+        </div>
     </div>
+</div>
+
+<div class="card mt-5 p-4 mx-auto text-dark shadow border border-0 bg-color col-12 col-md-8 main-font">
+  <h3 class="card-title text-uppercase">Profile</h3>
+  <div class="row">
+    <h4 class="card-title bg-color card-title text-uppercase text-secondary mt-3">
+        About
+    </h4>
+
+    <div class="card-body overflow-auto">
+    
+        <p class="mt-2 card-text tracking-wide">
+            Date Added: <%= user.created_at.strftime("%A %B %d, %Y") %>
+        </p>
+        <p class="mt-2 card-text tracking-wide">
+            Last profile update: <%= user.updated_at.strftime("%A %B %d, %Y") %>
+        </p>
+
+        <p class="mt-2 card-text tracking-wide">
+            Role: <%= user.role %>
+        </p>
+
+        <p class="mt-2 card-text tracking-wide">
+            MLS Number: <%= user.mls_number %> 
+        </p>
+
+        <p class="mt-2 card-text tracking-wide">
+            Zip Code: <%= user.zip_code %>
+        </p>
+        
+        <p class="mt-2 card-text tracking-wide">
+            Realtor License Number: <%= user.realtor_license_number %>
+        </p>
+            
+    </div>
+  </div>
+</div>
+
+<div class="card mt-5 mb-4 mx-auto text-dark border border-0 bg-color col-12 col-md-8 main-font">
+  <h3 class="px-2">Listings</h3>
+  <div class="row">
+    <% user.listings.each do |listing| %>
+      <div class="col-md-4 mb-1">
+        <div class="card rounded-3 mt-2 shadow border border-0 bg-color">
+            <div class="card-body px-2">
+                <h5 class="card-title text-start mt-2 ps-3 mb-2 fs-4 tracking-wide">Buyer's Agent Compensation</h5>
+                <p class="text-secondary fw-medium ps-3 tracking-wider opacity-75 mb-3 normal"><%= listing.created_at.strftime("%A %B %d, %Y") %></p>
+                <div class="card-body px-3 pb-4 py-2">
+                    <p><strong>MLS Number:</strong> <%= listing.listing_mls_number %></p>
+                    <p>
+                    <strong>
+                        Commission Amount:
+                    </strong> 
+                    <% if listing.commission_type === "percentage" %>
+                        <%= number_to_percentage(listing.listing_commission_amount, precision: 5, strip_insignificant_zeros: true) %>
+                    <% else %>
+                        <%= number_to_currency(listing.listing_commission_amount) %>
+                    <% end %>
+                    </p>
+                    <p><strong>Commission type:</strong>
+                    <%= listing.commission_type %>
+                    </p>
+                    <p><strong>Notes:</strong> <%= listing.notes %></p>
+                </div>
+                <div class="d-flex justify-content-start mt-4">
+                    <% if listing.user_id == current_user.id %>
+                    <%= link_to 'Edit', edit_listing_path(listing), class: 'btn btn-primary text-center mt-2 rounded-pill px-4' %>
+                    <% end %>
+                </div>
+            </div>
+        </div>
+      </div>
+    <% end %>
+  </div>
 </div>
