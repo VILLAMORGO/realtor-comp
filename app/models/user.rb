@@ -8,7 +8,7 @@ class User < ApplicationRecord
   has_many :listings, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
 
-  after_update :send_approval_email, if: :status_changed_to_approved?
+  after_update :send_activated_email, if: :status_changed_to_approved?
 
   validates :email, presence: true, uniqueness: true
   validates :first_name, :last_name, presence: true
@@ -57,9 +57,9 @@ class User < ApplicationRecord
 
   private
 
-  def send_approval_email
+  def send_activated_email
     Rails.logger.debug "Send approval email called for user: #{id}"
-    UserMailer.with(user: self).approval_email.deliver_later
+    UserMailer.with(user: self).activated_email.deliver_later
   end
 
   def full_name
