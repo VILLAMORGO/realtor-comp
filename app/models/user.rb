@@ -2,7 +2,8 @@ class User < ApplicationRecord
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :confirmable
 
   has_many :listings, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
@@ -18,9 +19,9 @@ class User < ApplicationRecord
   validates :state, presence: true
   STATUS = ["Pending", "Declined", "Approved"]
 
-  def confirmed?
-    true
-  end
+  # def confirmed?
+  #   true
+  # end
 
   def admin?
     role == 'admin'
