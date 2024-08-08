@@ -7,6 +7,7 @@ Rails.application.routes.draw do
 
   # Define custom controller for Devise registrations
   devise_for :users, controllers: {
+    confirmations: 'users/confirmations',
     registrations: 'users/registrations',
     sessions: 'users/sessions'
   }
