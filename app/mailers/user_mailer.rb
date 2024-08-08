@@ -7,7 +7,7 @@ class UserMailer < ApplicationMailer
     mail(to: @user.email, subject: 'Your account has been created successfully')
   end
 
-  def approval_email
+  def activated_email
     @user = params[:user]
     Rails.logger.debug "Approval email user: #{@user.inspect}"
     mail(to: @user.email, subject: 'Your account has been approved')
