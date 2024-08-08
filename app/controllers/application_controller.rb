@@ -20,9 +20,9 @@ class ApplicationController < ActionController::Base
     controller_name == "subscriptions" && ["new", "create_checkout_session"].include?(action_name)
   end
 
-  def after_sign_up_path_for(resource)
-    new_user_session_path
-  end
+  # def after_sign_up_path_for(resource)
+  #   new_user_session_path
+  # end
 
   def notify_trial_expiration
     if current_user.subscription_status == "trial" && current_user.trial_ends_at.present?
