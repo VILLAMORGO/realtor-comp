@@ -31,11 +31,11 @@
           </li>
         <% end %>
       </ul>
-      <% if user_signed_in? && current_user.admin? %>
-        <span class="navbar-text text-white me-3">
-          The place to find commissions splits!
-        </span>
-      <% end %>
+      
+      <span class="navbar-text text-white me-3">
+        <%= link_to 'The place to find commissions splits!', about_page_index_path, class: 'nav-link' %>
+      </span>
+      
       <ul class="navbar-nav text-white">
         <% if user_signed_in? %>
           <li class="nav-item nav-link text-white">
