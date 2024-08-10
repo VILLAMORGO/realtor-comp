@@ -1,6 +1,6 @@
 <%= render 'shared/hero_section' %>
 
-<div class="d-flex flex-column flex-md-row justify-content-center col-md-8 mx-auto main-font">
+<div class="d-flex flex-column flex-md-row justify-content-center col-md-8 mx-auto main-font mb-5 pb-5">
   <div class="card border border-0 bg-color col-12 col-md-6">
     <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'card-body px-2' }) do |f| %>
       <h5 class="card-title text-start mt-2 mb-2 fs-3 tracking-wide">Create Account</h5>
@@ -140,7 +140,9 @@
   </div>
 </div>
 
-<%= render 'shared/about_section' %>
+<div class="container">
+  <%= render 'shared/about_section' %>
+</div>
 
 <style>
   .hero-section {
