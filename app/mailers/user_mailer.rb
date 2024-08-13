@@ -14,6 +14,13 @@ class UserMailer < ApplicationMailer
     Rails.logger.debug "Mail object created and ready to be sent"
   end
 
+  def extended_trial_email
+    @user = params[:user]
+    Rails.logger.debug "Extended Trial email user: #{@user.inspect}"
+    mail(to: @user.email, subject: 'Your Free Trial Has Been Extended!')
+    Rails.logger.debug "Mail object created and ready to be sent"
+  end
+
   def decline_email
     @user = params[:user]
     Rails.logger.debug "Decline email user: #{@user.inspect}"

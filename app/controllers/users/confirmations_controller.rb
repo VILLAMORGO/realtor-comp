@@ -15,7 +15,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   def show
     super do |resource|
       if resource.errors.empty?
-        resource.update(status: 'Approved', trial_ends_at: 30.days.from_now, subscription_status: 'trial')
+        resource.update(status: 'Approved', trial_ends_at: 90.days.from_now, subscription_status: 'trial')
       end
     end
   end

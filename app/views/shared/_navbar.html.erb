@@ -20,18 +20,21 @@
           </li>
         <% end %>
         <% if user_signed_in? %>
-          <li class="nav-item <%= 'active' if current_page?(listings_path) %>">
+          <li class="nav-item">
             <%= link_to 'Listings', listings_path, class: "nav-link #{'active' if [listings_path, authenticated_user_root_path].include?(request.path)  && !current_user.admin? || current_page?(listings_path)}" %>
           </li>
-          <li class="nav-item <%= 'active' if current_page?(support_index_path) %>">
+          <li class="nav-item">
+            <%= link_to 'Subscriptions', subscriptions_path, class: "nav-link #{'active' if current_page?(subscriptions_path)}" %>
+          </li>
+          <li class="nav-item">
             <%= link_to 'Support', support_index_path, class: "nav-link #{'active' if current_page?(support_index_path)}" %>
           </li>
         <% end %>
         <% if user_signed_in? && current_user.admin? %>
-          <li class="nav-item <%= 'active' if current_page?(pending_requests_path) %>">
+          <li class="nav-item">
             <%= link_to 'Pending Request', pending_requests_path, class: "nav-link #{'active' if current_page?(pending_requests_path)}" %>
           </li>
-          <li class="nav-item <%= 'active' if current_page?(declined_requests_path) %>">
+          <li class="nav-item">
             <%= link_to 'Declined Request', declined_requests_path, class: "nav-link #{'active' if current_page?(declined_requests_path)}" %>
           </li>
         <% end %>
