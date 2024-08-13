@@ -55,11 +55,23 @@ class User < ApplicationRecord
     ["listings"]
   end
 
+  def extend_trial_period
+    if trial_period_active? && trial_ends_at <= 30.days.from_now
+      update(trial_ends_at: trial_ends_at + 60.days)
+      send_trial_extend_email
+    end
+  end
+
   private
 
   def send_activated_email
     Rails.logger.debug "Send approval email called for user: #{id}"
     UserMailer.with(user: self).activated_email.deliver_later
+  end
+
+  def send_trial_extend_email
+    Rails.logger.debug "Send extended trial email called for user: #{id}"
+    UserMailer.with(user: self).extended_trial_email.deliver_now
   end
 
   def full_name

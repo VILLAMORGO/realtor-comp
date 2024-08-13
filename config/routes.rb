@@ -1,8 +1,6 @@
 Rails.application.routes.draw do
   get 'about_page/index'
   get 'support/index'
-  get 'subscriptions/new'
-  get 'subscriptions/create'
 
   post '/stripe/webhook', to: 'stripe_webhooks#create'
 
@@ -26,7 +24,7 @@ Rails.application.routes.draw do
   resources :declined_requests, only: [:index, :destroy]
   resources :listings, only: [:index, :create, :edit, :update, :destroy, :new, :show]
 
-  resources :subscriptions, only: [:new, :create] do
+  resources :subscriptions, only: [:index, :new, :create] do
     collection do
       post :create_checkout_session
     end

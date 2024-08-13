@@ -7,12 +7,12 @@
     <div class="col">
       <div class="card mb-4 rounded-5 shadow-sm border-1">
         <div class="card-header py-3 rounded-top-5">
-          <h4 class="my-0 fw-normal">30 Days Free Trial</h4>
+          <h4 class="my-0 fw-normal">90 Days Free Trial</h4>
         </div>
         <div class="card-body rounded-5 border-1">
           <h2 class="card-title pricing-card-title">&#x24; 0<small class="text-muted fw-light">/mo</small></h2>
           <ul class="list-unstyled mt-3 mb4">
-            <li>Unlimited listings for 30 days</li>
+            <li>Unlimited listings for 90 days</li>
             <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
               <% days_left = (current_user.trial_ends_at.to_date - Date.current).to_i %>
               <li class="nav-item nav-link text-warning">
@@ -64,12 +64,12 @@
       <div class="col carousel-item active">
         <div class="card mb-4 rounded-5 shadow-sm border-1 d-block w-100">
           <div class="card-header py-3 rounded-top-5">
-            <h4 class="my-0 fw-normal">30 Days Free Trial</h4>
+            <h4 class="my-0 fw-normal">90 Days Free Trial</h4>
           </div>
           <div class="card-body rounded-5 border-1">
             <h2 class="card-title pricing-card-title">&#x24; 0<small class="text-muted fw-light">/mo</small></h2>
             <ul class="list-unstyled mt-3 mb4">
-              <li>Unlimited listings for 30 days</li>
+              <li>Unlimited listings for 90 days</li>
               <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
                 <% days_left = (current_user.trial_ends_at.to_date - Date.current).to_i %>
                 <li class="nav-item nav-link text-warning">
@@ -138,7 +138,7 @@
       <thead>
         <tr>
           <th style="width: 34%; background-color: #f9f9fa;"></th>
-          <th style="width: 22%; background-color: #f9f9fa;">30 Days Free Trial</th>
+          <th style="width: 22%; background-color: #f9f9fa;">90 Days Free Trial</th>
           <th style="width: 22%; background-color: #f9f9fa;">Monthly</th>
           <th style="width: 22%; background-color: #f9f9fa;">Yearly</th>
         </tr>
@@ -158,7 +158,7 @@
                 
                   <%= pluralize(days_left, "day") %> left. 
               <% else %>
-              Yes <p class="text-muted fw-light">(30 days)</p>
+              Yes <p class="text-muted fw-light">(90 days)</p>
               <% end %>
           </td>
           <td style="background-color: #f9f9fa;">Yes</td>
@@ -181,8 +181,8 @@
   </div>
 
   <div class="d-flex flex-column justify-content-center mx-auto main-font mt-5 px-4" style="max-width: 1000px;">
-    <h3>Need a custom plan?</h3>
-    <p>We can help you decide what's the best for your company based on your needs. <a href="contact_us_path">Contact Us</a></p>
+    <h3>Need something?</h3>
+    <p>You can help us decide what's the best for you based on your needs. <%= link_to 'Support', support_index_path %></p>
   </div>
 </main>
 
