@@ -13,7 +13,6 @@ class UsersController < ApplicationController
     @brokers = @users.where(role: 'broker', status: 'Approved').paginate(page: @page, per_page: @per_page)
   
     respond_to do |format|
-      format.turbo_stream
       format.html
       format.json {
         render json: {
