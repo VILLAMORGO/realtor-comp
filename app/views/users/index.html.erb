@@ -89,34 +89,36 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div class="table-responsive" style="height: 60vh;">
-              <table class="table table-hover table-striped">
-                <thead>
-                  <tr>
-                    <th>Full Name</th>
-                    <th>Role</th>
-                    <th>Location</th>
-                    <th>Registration Date</th>
-                    <th>Action</th>
-                  </tr>
-                </thead>
-                <tbody class="overflow-y-auto">
-                  <% @recently_registered_users.each do |user| %>
+            <%= turbo_frame_tag 'recent_users_frame' do %>
+              <div class="table-responsive" style="height: 60vh;">
+                <table class="table table-hover table-striped">
+                  <thead>
                     <tr>
-                      <td><%= user.first_name %> <%= user.last_name %></td>
-                      <td><%= user.role %></td>
-                      <td><%= full_state_name(user.state) %></td>
-                      <td><%= user.created_at.strftime("%B %d, %Y") %></td>
-                      <td>
-                        <%= link_to user_path(user), class: "text-dark text-decoration-none" do %>
-                          <i class="bi bi-person-lines-fill"></i>
-                        <% end %>
-                      </td>
+                      <th><%= sort_link(@q, :first_name, "Name", remote: true, class: "text-decoration-none main-font text-black") %></th>
+                      <th><%= sort_link(@q, :role, "Role", remote: true, class: "text-decoration-none main-font text-black") %></th>
+                      <th><%= sort_link(@q, :state, "Location", remote: true, class: "text-decoration-none main-font text-black") %></th>
+                      <th><%= sort_link(@q, :created_at, "Registration", remote: true, class: "text-decoration-none main-font text-black") %></th>
+                      <th>Action</th>
                     </tr>
-                  <% end %>
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody class="overflow-y-auto">
+                    <% @recently_registered_users.each do |user| %>
+                      <tr>
+                        <td class="text-capitalize"><%= user.first_name %> <%= user.last_name %></td>
+                        <td class="text-capitalize"><%= user.role %></td>
+                        <td class="text-capitalize"><%= full_state_name(user.state) %></td>
+                        <td class="text-capitalize"><%= user.created_at.strftime("%B %d, %Y") %></td>
+                        <td>
+                          <%= link_to user_path(user), class: "text-dark text-decoration-none", data: { turbo: false } do %>
+                            <i class="bi bi-person-lines-fill"></i>
+                          <% end %>
+                        </td>
+                      </tr>
+                    <% end %>
+                  </tbody>
+                </table>
+              </div>
+            <% end %>
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

@@ -13,6 +13,7 @@ class UsersController < ApplicationController
     @brokers = @users.where(role: 'broker', status: 'Approved').paginate(page: @page, per_page: @per_page)
   
     respond_to do |format|
+      format.turbo_stream
       format.html
       format.json {
         render json: {
@@ -38,7 +39,7 @@ class UsersController < ApplicationController
     @total_users = User.count
     @users_by_role = User.group(:role).count
     @users_by_status = User.group(:status).count
-    @recently_registered_users = User.where('created_at >= ?', 1.week.ago)
+    @recently_registered_users = @q.result.where('created_at >= ?', 1.week.ago)
   
     @total_listings = Listing.count
     # @listings_by_agent = Listing.group(:listing_agent).count

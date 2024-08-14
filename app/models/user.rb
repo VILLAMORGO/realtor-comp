@@ -8,6 +8,8 @@ class User < ApplicationRecord
   has_many :listings, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
 
+  has_one_attached :profile_picture
+
   after_update :send_activated_email, if: :status_changed_to_approved?
 
   validates :email, presence: true, uniqueness: true
@@ -48,7 +50,7 @@ class User < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["first_name", "last_name", "mls_number", "email", "status", "role"]
+    ["first_name", "last_name", "mls_number", "email", "status", "role", "state", "created_at"]
   end
 
   def self.ransackable_associations(auth_object = nil)
