@@ -20,10 +20,7 @@ class User < ApplicationRecord
 
   validates :state, presence: true
   STATUS = ["Pending", "Declined", "Approved"]
-
-  # def confirmed?
-  #   true
-  # end
+  
 
   def admin?
     role == 'admin'

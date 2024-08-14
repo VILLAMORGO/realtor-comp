@@ -39,6 +39,9 @@ class UsersController < ApplicationController
     @users_by_role = User.group(:role).count
     @users_by_status = User.group(:status).count
     @recently_registered_users = @q.result.where('created_at >= ?', 1.week.ago)
+    @recently_subscribed_users = User.joins(:subscriptions)
+                                     .where('subscriptions.created_at >= ?', 1.month.ago)
+    @free_trial_users = @q.result.where(subscription_status: "trial").count
   
     @total_listings = Listing.count
     # @listings_by_agent = Listing.group(:listing_agent).count
@@ -46,9 +49,16 @@ class UsersController < ApplicationController
     # Calculate Today and Monthly Registered Users
     @today_registered_users = User.where('created_at >= ?', Time.zone.now.beginning_of_day).count
     @monthly_registered_users = User.where('created_at >= ?', Time.zone.now.beginning_of_month).count
-  
+
+    # Calculate Today and Monthly Subscribed Users
+    @today_subscribed_users = User.joins(:subscriptions)
+                                  .where('subscriptions.created_at >= ?', Time.zone.now.beginning_of_day).count
+    @monthly_subscribed_users = User.joins(:subscriptions)
+                                    .where('subscriptions.created_at >= ?', Time.zone.now.beginning_of_month).count
+                                    
     # Chartkick data
     @users_by_day = User.group_by_day(:created_at).count
+    @subscriptions_by_day = Subscription.group_by_day(:created_at).count
     @listings_by_day = Listing.group_by_day(:created_at).count
   end  
 
