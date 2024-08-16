@@ -119,11 +119,23 @@
         <div class="row">
           <div class="form-group col-md-6 mb-2">
             <%= f.label :password, class: "mb-1 fw-bold medium" %>
-            <%= f.password_field :password, class: "form-control bg-input-color", placeholder: "Password", maxlength: "25" %>
+            <div class="input-group">
+              <%= f.password_field :password, class: "form-control bg-input-color", placeholder: "Password", maxlength: "25", value: resource.password, id: "password" %>
+              <button type="button" class="btn btn-outline-secondary position-absolute end-0 top-50 translate-middle-y" style="border: none; background: none; padding: 0;" onclick="togglePassword()">
+                <i class="bi bi-eye-slash fs-4 me-2 text-black" id="togglePasswordIcon"></i>
+              </button>
+            </div>
+            <% if @user.errors[:password].any? %>
+              <% @user.errors[:password].each do |error| %>
+                <div class="error-message text-danger mt-2">
+                  <%= error %>
+                </div>
+              <% end %>
+            <% end %>
           </div>
           <div class="form-group col-md-6 mb-2">
             <%= f.label :password_confirmation, "Confirm Password", class: "mb-1 fw-bold medium" %>
-            <%= f.password_field :password_confirmation, class: "form-control bg-input-color", placeholder: "Confirm Password", maxlength: "25" %>
+            <%= f.password_field :password_confirmation, class: "form-control bg-input-color", placeholder: "Confirm Password", maxlength: "25", id: "password_confirmation" %>
           </div>
         </div>
       </div>
@@ -150,3 +162,21 @@
     color: black;
   }
 </style>
+
+<script>
+  function togglePassword() {
+    var passwordField = document.getElementById("password");
+    var passwordFieldType = passwordField.getAttribute("type");
+    var toggleIcon = document.getElementById("togglePasswordIcon");
+
+    if (passwordFieldType === "password") {
+      passwordField.setAttribute("type", "text");
+      toggleIcon.classList.remove("bi-eye-slash");
+      toggleIcon.classList.add("bi-eye");
+    } else {
+      passwordField.setAttribute("type", "password");
+      toggleIcon.classList.remove("bi-eye");
+      toggleIcon.classList.add("bi-eye-slash");
+    }
+  }
+</script>
