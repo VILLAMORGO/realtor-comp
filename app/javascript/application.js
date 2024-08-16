@@ -48,3 +48,40 @@ document.addEventListener('turbo:load', function() {
     });
   });
 });
+
+document.addEventListener('turbo:load', () => {
+  const form = document.querySelector('.needs-validation');
+  
+  if (!form) return;
+
+  const fields = form.querySelectorAll('input, select, textarea');
+
+  fields.forEach(field => {
+    field.addEventListener('input', () => validateField(field));
+  });
+
+  form.addEventListener('submit', (event) => {
+    let valid = true;
+    fields.forEach(field => {
+      if (!validateField(field)) valid = false;
+    });
+
+    if (!valid) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+  });
+
+  function validateField(field) {
+    const validity = field.checkValidity();
+    if (validity) {
+      field.classList.remove('is-invalid');
+      field.classList.add('is-valid');
+      return true;
+    } else {
+      field.classList.remove('is-valid');
+      field.classList.add('is-invalid');
+      return false;
+    }
+  }
+});
