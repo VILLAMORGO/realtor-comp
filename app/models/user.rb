@@ -1,6 +1,4 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable,
          :confirmable
@@ -16,11 +14,16 @@ class User < ApplicationRecord
   validates :first_name, :last_name, presence: true
   validates :mls_number, numericality: { only_integer: true }, allow_blank: true
 
-  enum role: [:agent, :broker, :admin]
+  validate :password_lower_case, if: -> { password.present? && should_validate_password? }
+  validate :password_uppercase, if: -> { password.present? && should_validate_password? }
+  validate :password_special_char, if: -> { password.present? && should_validate_password? }
+  validate :password_contains_number, if: -> { password.present? && should_validate_password? }
+  validates :password, length: { minimum: 8, message: 'must be at least 8 characters long' }, if: -> { password.present? && should_validate_password? }
 
   validates :state, presence: true
   STATUS = ["Pending", "Declined", "Approved"]
-  
+
+  enum role: [:agent, :broker, :admin]
 
   def admin?
     role == 'admin'
@@ -61,7 +64,33 @@ class User < ApplicationRecord
     end
   end
 
+  def password_uppercase
+    return if password.match(/\p{Upper}/)
+    errors.add :password, ' must contain at least 1 uppercase '
+  end
+
+  def password_lower_case
+    return if password.match(/\p{Lower}/)
+    errors.add :password, ' must contain at least 1 lowercase '
+  end
+
+  def password_special_char
+    special = "?<>',?[]}{=-)(*&^%$#`~{}!"
+    regex = /[#{special.gsub(/./){|char| "\\#{char}"}}]/
+    return if password =~ regex
+    errors.add :password, ' must contain special character'
+  end
+
+  def password_contains_number
+    return if password.count("0-9") > 0
+    errors.add :password, ' must contain at least one number'
+  end
+
   private
+
+  def should_validate_password?
+    new_record? || password.present?
+  end
 
   def send_activated_email
     Rails.logger.debug "Send approval email called for user: #{id}"

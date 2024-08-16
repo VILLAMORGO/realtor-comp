@@ -26,14 +26,15 @@ class Users::RegistrationsController < Devise::RegistrationsController
         expire_data_after_sign_in!
         respond_with resource, location: after_inactive_sign_up_path_for(resource)
       end
+      flash[:notice] = "Please confirm your email to activate your free 30-day trial."
     else
-      clean_up_passwords resource
+      # clean_up_passwords resource
       set_minimum_password_length
       respond_with resource
     end
 
     # Flash notice for pending account approval
-    flash[:notice] = "Please confirm your email to activate your free 30-day trial."
+    
   end
 
   # GET /resource/edit
