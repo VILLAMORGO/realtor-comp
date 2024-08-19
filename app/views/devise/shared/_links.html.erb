@@ -1,5 +1,5 @@
 
-<div class="text-center">
+<div class="text-start fs-6 tracking-wide">
   <% if controller_name != 'sessions' %>
     <%= link_to "Already have an account?", new_session_path(resource_name), style: "text-decoration: none; color: grey;" %><br />
   <% end %>
@@ -16,10 +16,12 @@
   <% end %>
 </div>
 
-
-<%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
-  <%= link_to "Didn't receive confirmation instructions?", new_confirmation_path(resource_name) %><br />
-<% end %>
+<div class="text-start fs-6 tracking-wide d-flex flex-column">
+  <%- if devise_mapping.confirmable? && controller_name != 'confirmations' %>
+    Didn't receive confirmation instructions?
+    <%= link_to "Resend Confirmation", new_user_confirmation_path(resource_name), class: "fw-bold",  style: "text-decoration: none; color: grey;" %><br />
+  <% end %>
+</div>
 
 <%- if devise_mapping.lockable? && resource_class.unlock_strategy_enabled?(:email) && controller_name != 'unlocks' %>
   <%= link_to "Didn't receive unlock instructions?", new_unlock_path(resource_name) %><br />

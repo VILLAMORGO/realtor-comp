@@ -9,7 +9,7 @@ class PendingRequestsController < ApplicationController
         @per_page = (params[:per_page] || 10).to_i
         @page = params[:page] || 1
 
-        @requests = @users.where(role: "agent", status: "Pending")
+        @requests = @users.where(status: "Pending")
                         .order(created_at: :desc)
                         .paginate(page: @page, per_page: @per_page)
     end  
@@ -24,7 +24,7 @@ class PendingRequestsController < ApplicationController
         if @user.update(status: params[:status])
           if params[:status] == "Approved"
             @user.update(subscription_status: "trial", trial_ends_at: 30.days.from_now)
-            # UserMailer.with(user: @user).approval_email.deliver_now
+            # UserMailer.with(user: @user).activated_email.deliver_now
           elsif params[:status] == "Declined"
             # UserMailer.with(user: @user).decline_email.deliver_now
           end

@@ -38,17 +38,27 @@ class UsersController < ApplicationController
     @total_users = User.count
     @users_by_role = User.group(:role).count
     @users_by_status = User.group(:status).count
-    @recently_registered_users = User.where('created_at >= ?', 1.week.ago)
+    @recently_registered_users = @q.result.where('created_at >= ?', 1.week.ago)
+    @recently_subscribed_users = User.joins(:subscriptions)
+                                     .where('subscriptions.created_at >= ?', 1.month.ago)
+    @free_trial_users = @q.result.where(subscription_status: "trial").count
   
     @total_listings = Listing.count
-    @listings_by_agent = Listing.group(:listing_agent).count
+    # @listings_by_agent = Listing.group(:listing_agent).count
   
     # Calculate Today and Monthly Registered Users
     @today_registered_users = User.where('created_at >= ?', Time.zone.now.beginning_of_day).count
     @monthly_registered_users = User.where('created_at >= ?', Time.zone.now.beginning_of_month).count
-  
+
+    # Calculate Today and Monthly Subscribed Users
+    @today_subscribed_users = User.joins(:subscriptions)
+                                  .where('subscriptions.created_at >= ?', Time.zone.now.beginning_of_day).count
+    @monthly_subscribed_users = User.joins(:subscriptions)
+                                    .where('subscriptions.created_at >= ?', Time.zone.now.beginning_of_month).count
+                                    
     # Chartkick data
     @users_by_day = User.group_by_day(:created_at).count
+    @subscriptions_by_day = Subscription.group_by_day(:created_at).count
     @listings_by_day = Listing.group_by_day(:created_at).count
   end  
 
@@ -90,7 +100,7 @@ class UsersController < ApplicationController
   def approve
     @user = User.find(params[:id])
     if @user.update(status: "Approved")
-      UserMailer.with(user: @user).approval_email.deliver_later
+      UserMailer.with(user: @user).activated_email.deliver_later
       flash[:notice] = "User approved and notification email sent."
     else
       flash[:alert] = "There was an error approving the user."

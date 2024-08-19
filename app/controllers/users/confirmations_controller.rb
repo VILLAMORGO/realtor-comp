@@ -12,9 +12,13 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # end
 
   # GET /resource/confirmation?confirmation_token=abcdef
-  # def show
-  #   super
-  # end
+  def show
+    super do |resource|
+      if resource.errors.empty?
+        resource.update(status: 'Approved', trial_ends_at: 90.days.from_now, subscription_status: 'trial')
+      end
+    end
+  end
 
   # protected
 
@@ -27,4 +31,9 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   # def after_confirmation_path_for(resource_name, resource)
   #   super(resource_name, resource)
   # end
+  private
+  def after_confirmation_path_for(resource_name, resource)
+    sign_in(resource)
+    authenticated_user_root_path
+  end
 end

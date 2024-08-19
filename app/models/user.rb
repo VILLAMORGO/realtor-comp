@@ -1,26 +1,29 @@
 class User < ApplicationRecord
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable, :trackable and :omniauthable
   devise :database_authenticatable, :registerable,
-         :recoverable, :rememberable, :validatable
+         :recoverable, :rememberable, :validatable,
+         :confirmable
 
   has_many :listings, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
 
-  after_update :send_approval_email, if: :status_changed_to_approved?
+  has_one_attached :profile_picture
+
+  after_update :send_activated_email, if: :status_changed_to_approved?
 
   validates :email, presence: true, uniqueness: true
   validates :first_name, :last_name, presence: true
   validates :mls_number, numericality: { only_integer: true }, allow_blank: true
 
-  enum role: [:agent, :broker, :admin]
+  validate :password_lower_case, if: -> { password.present? && should_validate_password? }
+  validate :password_uppercase, if: -> { password.present? && should_validate_password? }
+  validate :password_special_char, if: -> { password.present? && should_validate_password? }
+  validate :password_contains_number, if: -> { password.present? && should_validate_password? }
+  validates :password, length: { minimum: 8, message: 'must be at least 8 characters long' }, if: -> { password.present? && should_validate_password? }
 
   validates :state, presence: true
   STATUS = ["Pending", "Declined", "Approved"]
 
-  def confirmed?
-    true
-  end
+  enum role: [:agent, :broker, :admin]
 
   def admin?
     role == 'admin'
@@ -47,18 +50,56 @@ class User < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["first_name", "last_name", "mls_number", "email", "status", "role"]
+    ["first_name", "last_name", "mls_number", "email", "status", "role", "state", "created_at"]
   end
 
   def self.ransackable_associations(auth_object = nil)
     ["listings"]
   end
 
+  def extend_trial_period
+    if trial_period_active? && trial_ends_at <= 30.days.from_now
+      update(trial_ends_at: trial_ends_at + 60.days)
+      send_trial_extend_email
+    end
+  end
+
+  def password_uppercase
+    return if password.match(/\p{Upper}/)
+    errors.add :password, ' At least 1 uppercase '
+  end
+
+  def password_lower_case
+    return if password.match(/\p{Lower}/)
+    errors.add :password, ' At least 1 lowercase '
+  end
+
+  def password_special_char
+    special = "?<>',?[]}{=-)(*&^%$#`~{}!"
+    regex = /[#{special.gsub(/./){|char| "\\#{char}"}}]/
+    return if password =~ regex
+    errors.add :password, ' At least one special character'
+  end
+
+  def password_contains_number
+    return if password.count("0-9") > 0
+    errors.add :password, ' At least one number'
+  end
+
   private
 
-  def send_approval_email
+  def should_validate_password?
+    new_record? || password.present?
+  end
+
+  def send_activated_email
     Rails.logger.debug "Send approval email called for user: #{id}"
-    UserMailer.with(user: self).approval_email.deliver_later
+    UserMailer.with(user: self).activated_email.deliver_later
+  end
+
+  def send_trial_extend_email
+    Rails.logger.debug "Send extended trial email called for user: #{id}"
+    UserMailer.with(user: self).extended_trial_email.deliver_now
   end
 
   def full_name

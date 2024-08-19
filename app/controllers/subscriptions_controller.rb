@@ -1,6 +1,10 @@
 class SubscriptionsController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @subscriptions = current_user.subscriptions
+  end
+  
   def new
     @plans = [
       { id: 'monthly_plan_id', name: 'Monthly Plan', price: 15 },

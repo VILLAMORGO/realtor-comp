@@ -1,4 +1,4 @@
-# Change these
+# Deployment settings
 server '140.82.3.49', user: 'root', roles: [:web, :app, :db], primary: true
 
 set :repo_url, 'git@github.com:VILLAMORGO/realtor-comp.git'
@@ -21,10 +21,8 @@ set :puma_access_log, "#{release_path}/log/puma.access.log"
 set :puma_error_log, "#{release_path}/log/puma.error.log"
 set :pty, true
 
-# Update the restart command to use the new service name
 set :puma_service_unit_name, 'realtor-comp-puma'
 set :puma_restart_command, 'sudo systemctl restart realtor-comp-puma.service'
-
 
 set :ssh_options, {
   user: 'root',
@@ -58,12 +56,11 @@ namespace :puma do
       info "Restarting Puma..."
       execute 'sudo systemctl restart realtor-comp-puma.service'
       info "Puma restart command executed."
+    rescue => e
+      error "Failed to restart Puma: #{e.message}"
     end
   end
 end
-
-# Ensure the Puma restart task is called after deploy:publishing
-after 'deploy:publishing', 'puma:restart'
 
 namespace :deploy do
   desc "Make sure local git is in sync with remote."
@@ -85,27 +82,6 @@ namespace :deploy do
     end
   end
 
-  desc 'Restart application'
-  task :restart do
-    on roles(:app), in: :sequence, wait: 5 do
-      invoke 'puma:restart'
-    end
-  end
-
-  desc 'Stop Nginx'
-  task :stop_nginx do
-    on roles(:web) do
-      execute :sudo, :systemctl, 'stop nginx'
-    end
-  end
-
-  desc 'Start Nginx'
-  task :start_nginx do
-    on roles(:web) do
-      execute :sudo, :systemctl, 'start nginx'
-    end
-  end
-
   desc 'Restart Nginx'
   task :restart_nginx do
     on roles(:web) do
@@ -113,34 +89,29 @@ namespace :deploy do
     end
   end
 
-  before 'deploy:publishing', 'deploy:stop_nginx'
+  # Ensuring Nginx and Puma restart after publishing
+  after 'deploy:publishing', 'puma:restart'
+  after 'deploy:publishing', 'deploy:restart_nginx'
+
   after :finishing, 'compile_assets'
   after :finishing, 'cleanup'
-  after 'deploy:publishing', 'deploy:start_nginx'
-
 end
 
 namespace :puma_config do
-  desc "remove index.php"
+  desc "Remove puma.rb file"
   task :rm_files do
-      on roles(:all) do
-              execute "rm -rf #{release_path}/config/puma.rb"
-      end
+    on roles(:all) do
+      execute "rm -rf #{release_path}/config/puma.rb"
+    end
   end
-end
 
-namespace :puma_config do
-  desc "add symlink to index.php"
+  desc "Symlink puma.rb file"
   task :add_files do
-      on roles(:all) do
-              execute "ln -sf #{shared_path}/puma.rb #{release_path}/config/puma.rb"
-      end
+    on roles(:all) do
+      execute "ln -sf #{shared_path}/puma.rb #{release_path}/config/puma.rb"
+    end
   end
 end
 
 after "deploy:finished", "puma_config:rm_files"
 after "deploy:finished", "puma_config:add_files"
-
-# ps aux | grep puma    # Get puma pid
-# kill -s SIGUSR2 pid   # Restart puma
-# kill -s SIGTERM pid   # Stop puma

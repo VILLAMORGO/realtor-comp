@@ -2,22 +2,35 @@
 
 <div class="d-flex flex-column flex-md-row justify-content-center col-md-8 mx-auto main-font">
   <div class="card mt-5 border border-0 bg-color col-12 col-md-6">
-    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'card-body mt-3 px-2' }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: session_path(resource_name), html: { class: 'card-body mt-3 px-2 needs-validation', novalidate: true }) do |f| %>
       <h5 class="card-title text-start mt-2 mb-2 fs-3 tracking-wide">Sign In</h5>
-      <p class="text-secondary fw-medium tracking-wider opacity-75 mb-4">Enter your email address and password to access admin panel</p>
+      <p class="text-secondary fw-medium tracking-wider opacity-75 mb-4">Enter your email address and password to access your account</p>
       
       <div class="form-row">
         <div class="form-group col">
-          <%= f.label :email , class: "mb-1 fw-bold medium"%>
-          <%= f.email_field :email, class: "form-control bg-input-color", placeholder: "Email" %>
+          <% if @user.errors[:email].any? %>
+            <% @user.errors[:email].each do |error| %>
+              <div class="error-message text-danger mt-2">
+                <%= error %>
+              </div>
+            <% end %>
+          <% end %>
+          <%= f.label :email, class: "mb-1 fw-bold medium" %>
+          <%= f.email_field :email, class: "form-control bg-input-color", placeholder: "Email", required: true %>
+          <div class="invalid-feedback">
+            Please provide a valid email.
+          </div>
         </div>
         <div class="form-group col position-relative">
           <%= f.label :password, class: "mb-1 mt-3 fw-bold medium" %>
-          <div class="input-group">
-            <%= f.password_field :password, class: "form-control bg-input-color", placeholder: "Password", id: "password" %>
+          <div class="input-group has-validation">
+            <%= f.password_field :password, class: "form-control bg-input-color", placeholder: "Password", id: "password", required: true %>
             <button type="button" class="btn btn-outline-secondary position-absolute end-0 top-50 translate-middle-y" style="border: none; background: none; padding: 0;" onclick="togglePassword()">
               <i class="bi bi-eye-slash fs-4 me-2 text-black" id="togglePasswordIcon"></i>
             </button>
+            <div class="invalid-feedback">
+              Please enter your password.
+            </div>
           </div>
         </div>
       </div>
@@ -29,7 +42,7 @@
         <%= f.submit "Sign in", class: "btn btn-primary text-center mt-2 rounded-pill px-4" %>
       </div>
     <% end %>
-    <div class="d-flex justify-content-start mt-5 mb-5 text-secondary">
+    <div class="d-flex flex-column justify-content-start mt-5 mb-5 text-secondary">
       <%= render "devise/shared/links" %>
     </div>
   </div>

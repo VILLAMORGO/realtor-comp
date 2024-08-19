@@ -14,6 +14,11 @@ module ApplicationHelper
         ]
     end
 
+    def full_state_name(abbreviation)
+      state = us_states.find { |name, abbr| abbr == abbreviation }
+      state ? state.first : abbreviation
+    end
+
     # Custom pagination renderer
     def will_paginate_with_bootstrap(collection, options = {})
       options = options.merge(renderer: BootstrapPagination::Rails)

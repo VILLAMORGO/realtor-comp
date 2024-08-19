@@ -1,4 +1,4 @@
-<!-- Existing User Tables with Search -->
+<!-- Existing Listing Tables with Search -->
 <div class="card mt-5 text-center responsive-users col-md-9 mx-auto rounded">
   <div class="card-header d-flex align-items-center justify-content-between border-0 py-4" style="background-color: white;">
     
@@ -18,7 +18,7 @@
       <!-- Search button for small screens -->
       <div class="d-md-none mx-3">
         <button type="button" class="btn btn-outline-secondary rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#searchModal">
-          Search User...
+          Search Listings...
           <i class="bi bi-search"></i>
         </button>
       </div>
@@ -43,7 +43,7 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="searchModalLabel">Search Users</h5>
+        <h5 class="modal-title" id="searchModalLabel">Search Listings</h5>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
@@ -58,55 +58,152 @@
   </div>
 </div>
 
+<!-- Listings Carousel -->
 <div class="card border-0 rounded-4 shadow-sm text-center responsive-listings mt-2 col-md-9 mx-auto">
   <div class="card-header d-flex align-items-center border-0 py-4" style="background-color: white;">
     <h6 class="card-title text-start px-3 my-auto fw-bold">LISTINGS</h6>
+    <div class="btn-group btn-group-toggle ms-3" data-toggle="buttons">
+      <label class="btn btn-outline active" data-bs-target="#listing-carousel" data-bs-slide-to="0">
+        All Listings
+      </label>
+      <label class="btn btn-outline" data-bs-target="#listing-carousel" data-bs-slide-to="1">
+        My Listings
+      </label>
+    </div>
   </div>
 
-  <div class="table-responsive rounded-bottom-3">
-    <table class="table align-middle table-edge table-hover table-nowrap mb-0">
-      <thead class="table-header text-secondary small">
-        <tr>
-          <th>MLS Number</th>
-          <th>Listing Amount</th>
-          <th>Listing Agent</th>
-          <th>Commission</th>
-          <th class="text-center" colspan="3">Actions</th>
-        </tr>
-      </thead>
-      <tbody class="list container">
-        <% @listings.each do |listing| %>
-          <tr>
-            <td><%= listing.listing_mls_number %></td>
-            <td><%= number_to_currency(listing.listing_amount) %></td>
-            <td><%= User.find(listing.listing_agent).first_name %></td>
-            <td>
-              <% if listing.commission_type == 'percentage' %>
-                <%= listing.commission_split %>%
-              <% else %>
-                <%= number_to_currency(listing.commission_split) %>
+  <div id="listing-carousel" class="carousel slide" data-bs="carousel">
+    <div class="carousel-inner">
+      <!-- All Listings -->
+      <div class="carousel-item active">
+        <div class="table-responsive rounded-bottom-3">
+          <table class="table align-middle table-edge table-hover table-nowrap mb-0">
+            <thead class="table-header text-secondary small">
+              <tr>
+                <th>MLS Number</th>
+                <th>Listing Amount</th>
+                <th>Commission Type</th>
+                <th class="text-center" colspan="3">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="list container">
+              <% @all_listings.each do |listing| %>
+                <tr>
+                  <td>
+                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
+                      <%= listing.listing_mls_number %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
+                      <% if listing.commission_type == "percentage" %>
+                        <%= number_to_percentage(listing.listing_commission_amount, precision: 5, strip_insignificant_zeros: true) %>
+                      <% else %>
+                        <%= number_to_currency(listing.listing_commission_amount) %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
+                      <%= listing.commission_type %>
+                    <% end %>
+                  </td>
+                  <td class="text-center">
+                    <%= link_to 'Show', listing_path(listing), class: "btn btn-sm btn-outline-primary" %>
+                    <% if listing.user_id == current_user.id %>
+                      <%= link_to 'Edit', edit_listing_path(listing), class: 'btn btn-sm btn-outline-secondary' %>
+                      <%= link_to 'Delete', listing_path(listing), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this listing?" }, class: 'btn btn-sm btn-outline-danger' %>
+                    <% end %>
+                  </td>
+                </tr>
               <% end %>
-            </td>
-            <td class="text-center">
-              <%= link_to 'Show', listing_path(listing), class: 'btn btn-sm btn-outline-primary' %>
-              <%= link_to 'Edit', edit_listing_path(listing), class: 'btn btn-sm btn-outline-secondary' %>
-              <%= link_to 'Delete', listing_path(listing), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this listing?" }, class: 'btn btn-sm btn-outline-danger' %>
-            </td>
-          </tr>
-        <% end %>
-      </tbody>
-    </table>
-  </div>
-
-  <div class="card-footer" style="background-color: white;">
-    <div class="d-flex flex-column justify-content-between align-items-center">
-      <div class="text-secondary small mt-3 mb-2">
-        Showing: <span class="list-pagination-page-first"><%= @listings.offset_value + 1 %></span> - <span class="list-pagination-page-last"><%= [@listings.offset_value + @listings.length, @listings.total_entries].min %></span> of <span class="list-pagination-pages"><%= @listings.total_entries %></span>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer" style="background-color: white;">
+          <div class="d-flex flex-column justify-content-between align-items-center">
+            <div class="text-secondary small mt-3 mb-2">
+              Showing: <span class="list-pagination-page-first"><%= @all_listings.offset_value + 1 %></span> - <span class="list-pagination-page-last"><%= [@all_listings.offset_value + @all_listings.length, @all_listings.total_entries].min %></span> of <span class="list-pagination-pages"><%= @all_listings.total_entries %></span>
+            </div>
+            <!-- Pagination -->
+            <div>
+              <%= will_paginate @all_listings, renderer: CustomPaginationRenderer %>
+            </div>
+          </div>
+        </div>
       </div>
-      <!-- Pagination -->
-      <div>
-        <%= will_paginate @listings, renderer: CustomPaginationRenderer %>
+
+      <!-- My Listings -->
+      <div class="carousel-item">
+        <div class="table-responsive rounded-bottom-3">
+          <table class="table align-middle table-edge table-hover table-nowrap mb-0">
+            <thead class="table-header text-secondary small">
+              <tr>
+                <th>MLS Number</th>
+                <th>Commission Amount</th>
+                <th>Commission Type</th>
+                <th class="text-center" colspan="3">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="list container">
+              <% @my_listings.each do |listing| %>
+                <tr>
+                  <td>
+                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
+                      <%= listing.listing_mls_number %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
+                      <% if listing.commission_type == "percentage" %>
+                        <%= number_to_percentage(listing.listing_commission_amount, precision: 5, strip_insignificant_zeros: true) %>
+                      <% else %>
+                        <%= number_to_currency(listing.listing_commission_amount) %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
+                      <%= listing.commission_type %>
+                    <% end %>
+                  </td>
+                  <td class="text-center">
+                    <%= link_to 'Show', listing_path(listing), class: "btn btn-sm btn-outline-primary #{'disabled' if listing.user_id != current_user.id}" %>
+                    <% if listing.user_id == current_user.id %>
+                      <%= link_to 'Edit', edit_listing_path(listing), class: 'btn btn-sm btn-outline-secondary' %>
+                      <%= link_to 'Delete', listing_path(listing), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this listing?" }, class: 'btn btn-sm btn-outline-danger' %>
+                    <% end %>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+        <div class="card-footer" style="background-color: white;">
+          <div class="d-flex flex-column justify-content-between align-items-center">
+            <div class="text-secondary small mt-3 mb-2">
+              Showing: <span class="list-pagination-page-first"><%= @my_listings.offset_value + 1 %></span> - <span class="list-pagination-page-last"><%= [@my_listings.offset_value + @my_listings.length, @my_listings.total_entries].min %></span> of <span class="list-pagination-pages"><%= @my_listings.total_entries %></span>
+            </div>
+            <!-- Pagination -->
+            <div>
+              <%= will_paginate @my_listings, renderer: CustomPaginationRenderer %>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
 </div>
+
+<style>
+  .stretched-link {
+    display: block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+  }
+
+  .text-decoration-none {
+    text-decoration: none;
+  }
+</style>

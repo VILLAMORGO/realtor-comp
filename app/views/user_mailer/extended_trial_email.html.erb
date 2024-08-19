@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div class="container">
+      <h1>Your Free Trial Has Been Extended!</h1>
+      <p>Hello <%= @user.first_name %> <%= @user.last_name %>,</p>
+      <p>We are excited to let you know that your free trial has been extended from 30 days to 90 days! 🎉</p>
+      <p>This means you now have an additional 60 days to explore all the features of RealtorComp. We hope this extra time helps you fully experience everything our platform has to offer.</p>
+      <p>You can log in to your account anytime using the link below:</p>
+      <p><a href="<%= new_user_session_url %>">Log In to Your Account</a></p>
+      <p>If you have any questions or need support, our team is here to help.</p>
+      <div class="footer">
+        <p>Best regards,</p>
+        <p>The RealtorComp Team</p>
+        <p>If you did not request this extension, please ignore this email or contact us for assistance.</p>
+      </div>
+    </div>
+  </body>
+</html>

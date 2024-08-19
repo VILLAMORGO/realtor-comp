@@ -1,8 +1,8 @@
 <%= render 'shared/hero_section' %>
 
-<div class="d-flex flex-column flex-md-row justify-content-center col-md-8 mx-auto main-font">
+<div class="d-flex flex-column flex-md-row justify-content-center col-md-8 mx-auto main-font mb-md-5 pb-md-5">
   <div class="card border border-0 bg-color col-12 col-md-6">
-    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'card-body px-2' }) do |f| %>
+    <%= form_for(resource, as: resource_name, url: registration_path(resource_name), html: { class: 'card-body px-2 needs-validation', novalidate: true }) do |f| %>
       <h5 class="card-title text-start mt-2 mb-2 fs-3 tracking-wide">Create Account</h5>
       <p class="text-secondary fw-medium tracking-wider opacity-75 mb-5">Fill in the form below to create a new account</p>
 
@@ -13,22 +13,28 @@
         <div class="row mt-4">
           <div class="col-md-6 mb-2">
             <%= f.label :first_name, "First Name", class: "mb-1 fw-bold medium" %>
-            <%= f.text_field :first_name, class: "form-control bg-input-color", placeholder: "First Name", maxlength: "25" %>
+            <%= f.text_field :first_name, class: "form-control bg-input-color", placeholder: "First Name", maxlength: "25", required: true %>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Please provide your first name.</div>
           </div>
           <div class="col-md-6 mb-2">
             <%= f.label :last_name, "Last Name", class: "mb-1 fw-bold medium" %>
-            <%= f.text_field :last_name, class: "form-control bg-input-color", placeholder: "Last Name", maxlength: "25" %>
+            <%= f.text_field :last_name, class: "form-control bg-input-color ", placeholder: "Last Name", maxlength: "25", required: true %>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Please provide your last name.</div>
           </div>
         </div>
 
         <div class="row">
           <div class="col-md-6 mb-2">
             <%= f.label :phone_number, "Phone Number", class: "mb-1 fw-bold medium" %>
-            <%= f.number_field :phone_number, class: "form-control bg-input-color", placeholder: "Enter your phone number here..." %>
+            <%= f.number_field :phone_number, class: "form-control bg-input-color is-valid", placeholder: "Enter your phone number here..." %>
           </div>
           <div class="col-md-6 mb-2">
             <%= f.label :email, "Email Address", class: "mb-1 fw-bold medium" %>
-            <%= f.email_field :email, class: "form-control bg-input-color", placeholder: "Email address", maxlength: "25" %>
+            <%= f.email_field :email, class: "form-control bg-input-color", placeholder: "Email address", maxlength: "25", required: true %>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Email address can't be blank.</div>
           </div>
         </div>
 
@@ -39,7 +45,9 @@
           </div>
           <div class="col-md-6 mb-2">
             <%= f.label :state, class: "mb-1 fw-bold medium" %>
-            <%= f.select :state, options_for_select(us_states, @user.state), {}, class: "form-control bg-input-color" %>
+            <%= f.select :state, options_for_select(us_states, @user.state), {}, class: "form-control bg-input-color", required: true %>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Please select a state.</div>
           </div>
         </div>
 
@@ -54,21 +62,21 @@
           <p class="fw-semibold">Address:</p>
           <div class="form-group mb-2">
             <%= f.label :street_address, class: "mb-1 fw-bold medium" %>
-            <%= f.text_field :street_address, class: "form-control bg-input-color", placeholder: "1234 Main St", maxlength: "25" %>
+            <%= f.text_field :street_address, class: "form-control bg-input-color is-valid", placeholder: "1234 Main St", maxlength: "25" %>
           </div>
           <div class="form-group mb-2">
             <%= f.label :home_address, class: "mb-1 fw-bold medium" %>
-            <%= f.text_field :home_address, class: "form-control bg-input-color", placeholder: "Apartment, studio, or floor", maxlength: "25" %>
+            <%= f.text_field :home_address, class: "form-control bg-input-color is-valid", placeholder: "Apartment, studio, or floor", maxlength: "25" %>
           </div>
           <div class="row">
             <div class="form-group col-md-8 mb-2">
               <%= f.label :city_address, class: "mb-1 fw-bold medium" %>
-              <%= f.text_field :city_address, class: "form-control bg-input-color", placeholder: "City", maxlength: "25" %>
+              <%= f.text_field :city_address, class: "form-control bg-input-color is-valid", placeholder: "City", maxlength: "25" %>
             </div>
             
             <div class="form-group col-md-4 mb-2">
               <%= f.label :zip_code, class: "mb-1 fw-bold medium" %>
-              <%= f.number_field :zip_code, class: "form-control bg-input-color", placeholder: "Zip Code" %>
+              <%= f.number_field :zip_code, class: "form-control bg-input-color is-valid", placeholder: "Zip Code" %>
             </div>
           </div>
 
@@ -78,21 +86,21 @@
           <div class="row">
             <div class="col-md-6 mb-2">
               <%= f.label :broker_first_name, "Broker's First Name", class: "mb-1 fw-bold medium" %>
-              <%= f.text_field :broker_first_name, class: "form-control bg-input-color", placeholder: "His/Her first name ...", maxlength: "25" %>
+              <%= f.text_field :broker_first_name, class: "form-control bg-input-color is-valid", placeholder: "His/Her first name ...", maxlength: "25" %>
             </div>
             <div class="col-md-6 mb-2">
               <%= f.label :broker_last_name, "Broker's Last Name", class: "mb-1 fw-bold medium" %>
-              <%= f.text_field :broker_last_name, class: "form-control bg-input-color", placeholder: "His/Her last name ...", maxlength: "25" %>
+              <%= f.text_field :broker_last_name, class: "form-control bg-input-color is-valid", placeholder: "His/Her last name ...", maxlength: "25" %>
             </div>
           </div>
           <div class="row">
             <div class="col-md-6 mb-2">
               <%= f.label :broker_email, "Broker's Email Address", class: "mb-1 fw-bold medium" %>
-              <%= f.email_field :broker_email, class: "form-control bg-input-color", placeholder: "Your broker's email address", maxlength: "25" %>
+              <%= f.email_field :broker_email, class: "form-control bg-input-color is-valid", placeholder: "Your broker's email address", maxlength: "25" %>
             </div>
             <div class="col-md-6 mb-2">
                 <%= f.label :broker_phone_number, "Broker's Phone Number", class: "mb-1 fw-bold medium" %>
-                <%= f.number_field :broker_phone_number, class: "form-control bg-input-color", placeholder: "Your broker's phone number" %>
+                <%= f.number_field :broker_phone_number, class: "form-control bg-input-color is-valid", placeholder: "Your broker's phone number" %>
             </div>
           </div>
         </div>
@@ -117,13 +125,32 @@
         <hr>
 
         <div class="row">
+          <% if @user.errors[:password].any? %>
+            <span class="mb-2">
+              <h6 class="heading-font text-uppercase">Password Must Contain:</h6>
+              <% @user.errors[:password].each do |error| %>
+                <div class="error-message text-danger mt-2">
+                  <%= error %>
+                </div>
+              <% end %>
+            </span>
+          <% end %>
           <div class="form-group col-md-6 mb-2">
             <%= f.label :password, class: "mb-1 fw-bold medium" %>
-            <%= f.password_field :password, class: "form-control bg-input-color", placeholder: "Password", maxlength: "25" %>
+            <div class="input-group">
+              <%= f.password_field :password, class: "form-control bg-input-color", placeholder: "Password", maxlength: "25", value: resource.password, id: "password", required: true %>
+              <button type="button" class="btn btn-outline-secondary position-absolute end-0 top-50 translate-middle-y" style="border: none; background: none; padding: 0;" onclick="togglePassword()">
+                <i class="bi bi-eye-slash fs-4 me-2 text-black" id="togglePasswordIcon"></i>
+              </button>
+              <div class="valid-feedback">Looks good!</div>
+              <div class="invalid-feedback">Please provide a password.</div>
+            </div>
           </div>
           <div class="form-group col-md-6 mb-2">
             <%= f.label :password_confirmation, "Confirm Password", class: "mb-1 fw-bold medium" %>
-            <%= f.password_field :password_confirmation, class: "form-control bg-input-color", placeholder: "Confirm Password", maxlength: "25" %>
+            <%= f.password_field :password_confirmation, class: "form-control bg-input-color", placeholder: "Confirm Password", maxlength: "25", id: "password_confirmation", required: true %>
+            <div class="valid-feedback">Looks good!</div>
+            <div class="invalid-feedback">Please confirm your password.</div>
           </div>
         </div>
       </div>
@@ -131,7 +158,7 @@
         <%= f.submit "Create Account", class: "btn btn-primary text-center mt-2 rounded-pill px-4" %>
       </div>
     <% end %>
-    <div class="d-flex justify-content-start mt-5 mb-5 text-secondary">
+    <div class="d-flex flex-column justify-content-start mt-5 mb-5 text-secondary">
       <%= render "devise/shared/links" %>
     </div>
   </div>
@@ -140,18 +167,9 @@
   </div>
 </div>
 
-<%# <script>
-  document.getElementById("toggle-optional-fields").addEventListener("click", function() {
-    var optionalFields = document.getElementById("optional-fields");
-    if (optionalFields.classList.contains("hidden")) {
-      optionalFields.classList.remove("hidden");
-      this.innerText = "Hide Optional Fields";
-    } else {
-      optionalFields.classList.add("hidden");
-      this.innerText = "Show Optional Fields";
-    }
-  });
-</script> %>
+<div class="container">
+  <%= render 'shared/about_section' %>
+</div>
 
 <style>
   .hero-section {
@@ -159,3 +177,55 @@
     color: black;
   }
 </style>
+
+<script>
+
+  (function () {
+    'use strict';
+    var forms = document.querySelectorAll('.needs-validation');
+    Array.prototype.slice.call(forms).forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+
+        var password = document.getElementById('password').value;
+        var passwordConfirmation = document.getElementById('password_confirmation').value;
+
+        // Check if the passwords match
+        if (password !== passwordConfirmation) {
+          event.preventDefault();
+          event.stopPropagation();
+          const passwordConfirmationField = document.getElementById('password_confirmation');
+          passwordConfirmationField.classList.remove('is-valid');
+          passwordConfirmationField.classList.add('is-invalid');
+          passwordConfirmationField.nextElementSibling.textContent = "Passwords do not match.";
+        } else {
+          const passwordConfirmationField = document.getElementById('password_confirmation');
+          passwordConfirmationField.classList.remove('is-invalid');
+          passwordConfirmationField.classList.add('is-valid');
+          passwordConfirmationField.nextElementSibling.textContent = ""; // Clear the error message if passwords match.
+        }
+
+        if (!form.checkValidity()) {
+          event.preventDefault();
+          event.stopPropagation();
+        }
+        form.classList.add('was-validated');
+      }, false);
+    });
+  })();
+
+  function togglePassword() {
+    var passwordField = document.getElementById("password");
+    var passwordFieldType = passwordField.getAttribute("type");
+    var toggleIcon = document.getElementById("togglePasswordIcon");
+
+    if (passwordFieldType === "password") {
+      passwordField.setAttribute("type", "text");
+      toggleIcon.classList.remove("bi-eye-slash");
+      toggleIcon.classList.add("bi-eye");
+    } else {
+      passwordField.setAttribute("type", "password");
+      toggleIcon.classList.remove("bi-eye");
+      toggleIcon.classList.add("bi-eye-slash");
+    }
+  }
+</script>
