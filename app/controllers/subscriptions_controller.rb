@@ -2,8 +2,10 @@ class SubscriptionsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @subscriptions = current_user.subscriptions
+    @q = current_user.subscriptions.ransack(params[:q])
+    @subscriptions = @q.result.paginate(page: params[:page], per_page: 10) # Example with pagination
   end
+  
   
   def new
     @plans = [
