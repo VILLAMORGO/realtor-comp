@@ -49,19 +49,25 @@ class StripeWebhooksController < ApplicationController
   def handle_checkout_session_completed(session)
     customer_email = session['customer_email'] || session.dig('customer_details', 'email')
     user = User.find_by(email: customer_email)
-
+  
     if user
       subscription = Stripe::Subscription.retrieve(session['subscription'])
       interval = subscription['items']['data'].first['price']['recurring']['interval']
       subscription_plan = interval == 'month' ? 'monthly' : 'annual'
-
+      status = subscription['status']
+      price = subscription['items']['data'].first['price']['unit_amount'] / 100.0
+      next_billing_date = Time.at(subscription['current_period_end'])
+  
       # Create the subscription record
       user.subscriptions.create(
         subscription_plan: subscription_plan,
         stripe_customer_id: session['customer'],
-        subscription_id: subscription['id']
+        subscription_id: subscription['id'],
+        status: status,
+        price: price,
+        next_billing_date: next_billing_date
       )
-
+  
       # Update user's subscription status
       user.update(subscription_status: 'active')
       Rails.logger.info "User #{user.email} updated with stripe_customer_id, subscription_status, subscription_plan, and subscription_id."
@@ -89,6 +95,9 @@ class StripeWebhooksController < ApplicationController
     if user
       interval = subscription['items']['data'].first['price']['recurring']['interval']
       subscription_plan = interval == 'month' ? 'monthly' : 'annual'
+      status = subscription['status']
+      price = subscription['items']['data'].first['price']['unit_amount'] / 100.0
+      next_billing_date = Time.at(subscription['current_period_end'])
   
       # Find the subscription record
       user_subscription = user.subscriptions.find_by(subscription_id: subscription['id'])
@@ -97,7 +106,10 @@ class StripeWebhooksController < ApplicationController
         # Update the subscription record
         user_subscription.update(
           subscription_plan: subscription_plan,
-          stripe_customer_id: subscription['customer']
+          stripe_customer_id: subscription['customer'],
+          status: status,
+          price: price,
+          next_billing_date: next_billing_date
         )
         Rails.logger.info "Subscription updated for user #{user.email}."
       end

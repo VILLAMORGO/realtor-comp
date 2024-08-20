@@ -7,20 +7,18 @@
           <div class="card rounded-3 mt-2 shadow border-0 bg-color">
             <div class="card-body px-2">
               <h5 class="card-title text-start mt-2 ps-3 mb-2 fs-4 tracking-wide">
-                <%= subscription.plan_name %>
+                <%= subscription.subscription_plan %>
               </h5>
               <p class="text-secondary fw-medium ps-3 tracking-wider opacity-75 mb-3 normal">
                 Started: <%= subscription.created_at.strftime("%A, %B %d, %Y") %>
               </p>
+              
+              <!-- Placeholder for additional details -->
               <div class="card-body px-3 pb-4 py-2">
+                <!-- Assuming the status, price, and billing date are stored as additional attributes -->
                 <p><strong>Status:</strong> <%= subscription.status.capitalize %></p>
-                <p><strong>Price:</strong> <%= number_to_currency(subscription.price) %> / <%= subscription.plan_type %></p>
+                <p><strong>Price:</strong> <%= number_to_currency(subscription.price) %></p>
                 <p><strong>Next Billing Date:</strong> <%= subscription.next_billing_date.strftime("%A, %B %d, %Y") %></p>
-              </div>
-              <div class="d-flex justify-content-start mt-4">
-                <% if subscription.user_id == current_user.id %>
-                  <%= link_to 'Manage', edit_subscription_path(subscription), class: 'btn btn-primary text-center mt-2 rounded-pill px-4' %>
-                <% end %>
               </div>
             </div>
           </div>
