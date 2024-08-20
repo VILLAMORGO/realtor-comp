@@ -5,14 +5,14 @@
         <h1>Account Created</h1>
         <p>Hello <%= @user.first_name %> <%= @user.last_name %>,</p>
 
-        <p>Welcome to RealtorComp, brought to you by D&H Realtor Service! To help realtors in the hectic real estate business of today. We're excited to assist you in navigating the fast-paced real estate market. To get started, please follow the link below to activate your account, set your password, and activate your free 90-day trial. This will grant you full access to all the features of our application:</p>
+        <p>Welcome to RealtorComp, brought to you by D & H Realtor Services, LLC! To help realtors in the hectic real estate business of today. We're excited to assist you in navigating the fast-paced real estate market. To get started, please follow the link below to activate your account, set your password, and activate your free 90 days trial. This will grant you full access to all the features of our application:</p>
 
-        <p><%= link_to 'Activate My Free 30-Day Trial', confirmation_url(@resource, confirmation_token: @token) %></p>
+        <p><%= link_to 'Activate My Free 90 Days Trial', confirmation_url(@resource, confirmation_token: @token) %></p>
 
         <p>If you didn't sign up for this account, please ignore this email. We're here to help if you have any questions or need assistance.</p>
 
         <p>Be Well,<br>
-        M&D Realtor Services</p>
+        D & H Realtor Services, LLC</p>
         
     </div>
   </body>
