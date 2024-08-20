@@ -89,8 +89,8 @@ class User < ApplicationRecord
   private
 
   def should_validate_password?
-    new_record? || password.present?
-  end
+    new_record? || (password.present? && encrypted_password.blank?)
+  end  
 
   def send_activated_email
     Rails.logger.debug "Send approval email called for user: #{id}"
