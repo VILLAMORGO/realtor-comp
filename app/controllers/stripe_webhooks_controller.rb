@@ -67,6 +67,9 @@ class StripeWebhooksController < ApplicationController
         price: price,
         next_billing_date: next_billing_date
       )
+
+      #Send mail to customer
+      UserMailer.with(user: @user).subscribed_email.deliver_now
   
       # Update user's subscription status
       user.update(subscription_status: 'active')
@@ -112,8 +115,6 @@ class StripeWebhooksController < ApplicationController
           next_billing_date: next_billing_date
         )
 
-        #Send mail to customer
-        UserMailer.with(user: @user).subscribed_email.deliver_now
         Rails.logger.info "Subscription updated for user #{user.email}."
       end
   
