@@ -1,0 +1,31 @@
+<div class="card mt-5 mb-4 mx-auto text-dark border-0 bg-color col-12 col-md-8 main-font">
+  <h3 class="px-2">Subscriptions</h3>
+  <div class="row">
+    <% if @subscriptions.any? %>
+      <% @subscriptions.each do |subscription| %>
+        <div class="col-md-4 mb-1">
+          <div class="card rounded-3 mt-2 shadow border-0 bg-color">
+            <div class="card-body px-2">
+              <h5 class="card-title text-start mt-2 ps-3 mb-2 fs-4 tracking-wide">
+                <%= subscription.subscription_plan %>
+              </h5>
+              <p class="text-secondary fw-medium ps-3 tracking-wider opacity-75 mb-3 normal">
+                Started: <%= subscription.created_at.strftime("%A, %B %d, %Y") %>
+              </p>
+              
+              <!-- Placeholder for additional details -->
+              <div class="card-body px-3 pb-4 py-2">
+                <!-- Assuming the status, price, and billing date are stored as additional attributes -->
+                <p><strong>Status:</strong> <%= subscription.status.capitalize %></p>
+                <p><strong>Price:</strong> <%= number_to_currency(subscription.price) %></p>
+                <p><strong>Next Billing Date:</strong> <%= subscription.next_billing_date.strftime("%A, %B %d, %Y") %></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      <% end %>
+    <% else %>
+      <p class="card-text text-center mt-4">No subscriptions found.</p>
+    <% end %>
+  </div>
+</div>

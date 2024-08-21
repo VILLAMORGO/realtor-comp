@@ -14,6 +14,13 @@ class UserMailer < ApplicationMailer
     Rails.logger.debug "Mail object created and ready to be sent"
   end
 
+  def subscribed_email
+    @user = params[:user]
+    Rails.logger.debug "Subscription email user: #{@user.inspect}"
+    mail(to: @user.email, subject: 'Your subscription payment succedded')
+    Rails.logger.debug "Mail object created and ready to be sent"
+  end
+
   def extended_trial_email
     @user = params[:user]
     Rails.logger.debug "Extended Trial email user: #{@user.inspect}"
