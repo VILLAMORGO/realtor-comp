@@ -16,6 +16,7 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
     super do |resource|
       if resource.errors.empty?
         resource.update(status: 'Approved', trial_ends_at: 90.days.from_now, subscription_status: 'trial')
+        UserMailer.with(user: resource).activated_email.deliver_later
       end
     end
   end
