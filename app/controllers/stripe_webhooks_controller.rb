@@ -69,7 +69,7 @@ class StripeWebhooksController < ApplicationController
       )
 
       #Send mail to customer
-      UserMailer.with(user: @user).subscribed_email.deliver_now
+      UserMailer.with(user: user).subscribed_email.deliver_now
   
       # Update user's subscription status
       user.update(subscription_status: 'active')
