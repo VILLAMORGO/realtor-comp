@@ -35,6 +35,8 @@ set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true
 
+set :whenever_command, "bundle exec whenever"
+
 append :rbenv_map_bins, 'puma', 'pumactl'
 append :linked_files, 'config/master.key'
 append :linked_files, 'config/credentials/production.key'
