@@ -3,7 +3,7 @@
   <body>
     <div class="container">
       <h1>Account Approved</h1>
-      <p>Hello <%= @user.first_name %> <%= @user.last_name %>,</p>
+      <p>Hello <%= @user.first_name.capitalize %> <%= @user.last_name.capitalize %>,</p>
       <p>We are thrilled to inform you that your account has been approved by the admin! 🎉</p>
       <p>You can now log in to your account and start exploring the full features of our application. Just click the link below to get started:</p>
       <p><a href="<%= new_user_session_url %>">Log In to Your Account</a></p>

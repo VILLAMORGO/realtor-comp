@@ -41,7 +41,7 @@
   <body>
     <div class="container">
       <h1>Subscription Payment Successful</h1>
-      <p>Hello <%= @user.first_name %> <%= @user.last_name %>,</p>
+      <p>Hello <%= @user.first_name.capitalize %> <%= @user.last_name.capitalize %>,</p>
       <p>We’re excited to let you know that your subscription payment was successful! Your account is now fully active, and you have access to all the features of our platform.</p>
       <p>You can log in to your account and start using all the benefits by clicking the link below:</p>
       <p><a href="<%= new_user_session_url %>">Log In to Your Account</a></p>
