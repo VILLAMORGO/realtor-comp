@@ -100,12 +100,10 @@ class UsersController < ApplicationController
   def approve
     @user = User.find(params[:id])
     if @user.update(status: "Approved")
-      # UserMailer.with(user: @user).admin_approval_email.deliver_later
       flash[:notice] = "User approved and notification email sent."
     else
       flash[:alert] = "There was an error approving the user."
     end
     redirect_to users_path
   end
-  
 end

@@ -8,8 +8,6 @@ class User < ApplicationRecord
 
   has_one_attached :profile_picture
 
-  # after_update :send_activated_email, if: :status_changed_to_approved?
-
   validates :email, presence: true, uniqueness: true
   validates :first_name, :last_name, presence: true
   validates :mls_number, numericality: { only_integer: true }, allow_blank: true
@@ -86,16 +84,18 @@ class User < ApplicationRecord
     errors.add :password, ' At least one number'
   end
 
+  def self.check_expired_trials
+    where(subscription_status: 'trial').where('trial_ends_at <= ?', Time.current).find_each do |user|
+      user.update(subscription_status: 'inactive')
+      UserMailer.with(user: user).extended_trial_expired_email.deliver_now
+    end
+  end
+
   private
 
   def should_validate_password?
     new_record? || (password.present? && encrypted_password.blank?)
   end  
-
-  # def send_activated_email
-  #   Rails.logger.debug "Send approval email called for user: #{id}"
-  #   UserMailer.with(user: self).admin_approval_email.deliver_later
-  # end
 
   def send_trial_extend_email
     Rails.logger.debug "Send extended trial email called for user: #{id}"

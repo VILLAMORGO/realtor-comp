@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <body>
+    <div class="container">
+      <h1>Your <%= @user.subscriptions.last.subscription_plan.capitalize %> Subscription Has Expired!</h1>
+      <p>Hello <%= @user.first_name %> <%= @user.last_name %>,</p>
+      <p>We wanted to inform you that your <%= @user.subscriptions.last.subscription_plan.capitalize %> subscription to RealtorComp has ended.</p>
+      <p>We hope you've found our platform valuable during your subscription period. To continue accessing RealtorComp's full suite of features, we encourage you to renew your subscription or explore other plans that may suit your needs better.</p>
+      <p>You can log in to your account to view renewal options or reach out to us for any questions:</p>
+      <p><a href="<%= new_user_session_url %>">Log In to Your Account</a></p>
+      <p>We appreciate your time with us, and we look forward to assisting you further.</p>
+      <div class="footer">
+        <p>Be Well,<br>
+        D & H Realtor Services, LLC</p>
+        <p>If you have any questions or need additional support, feel free to contact us.</p>
+      </div>
+    </div>
+  </body>
+</html>
