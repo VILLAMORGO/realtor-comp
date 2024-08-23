@@ -34,13 +34,13 @@ rails_path = "/usr/local/rvm/gems/ruby-3.3.0/bin/rails
 "
 
 every 1.minute do
-  command "cd /home/villamor/my-projects/realtor-comp && #{rails_path} runner 'puts \"Hello, World\"' -e production"
+  command "cd /home/ubuntu/realtor-comp && #{rails_path} runner 'puts \"Hello, World\"' -e production"
 end
 
 every 2.minutes do
-  command "cd /home/villamor/my-projects/realtor-comp && #{rails_path} runner 'Subscription.check_expired_subscriptions' -e production"
+  command "cd /home/ubuntu/realtor-comp && #{rails_path} runner 'Subscription.check_expired_subscriptions' -e production"
 end
 
-every 1.hour do
-  command "cd /home/villamor/my-projects/realtor-comp && #{rails_path} runner 'User.check_expired_trials' -e production"
+every 1.minute do
+  command "cd /home/ubuntu/realtor-comp && #{rails_path} runner 'User.check_expired_trials' -e production"
 end
