@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
   def registration_email
     @user = params[:user]
     Rails.logger.debug "Registration email user: #{@user.inspect}"
-    mail(to: @user.email, subject: 'Your account has been created successfully')
+    mail(to: @user.email, subject: "You're invited to join RealtorComp.")
   end
 
   def activated_email

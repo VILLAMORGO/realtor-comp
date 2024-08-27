@@ -1,10 +1,19 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Account Was Declined</title>
+  </head>
   <body>
-    <h1>Account Declined</h1>
-    <p>Hello <%= @user.last_name.capitalize %>, <%= @user.first_name.capitalize %>,</p>
-    <p>Sorry, But your account has been declined. You can check your temporary profile to what you need to update for approval.</p>
-    <p>Be Well,<br>
-        D & H Realtor Services, LLC</p>
+    <div style="font-family: 'Lato', sans-serif; margin: 0 auto; padding-left: 30px; padding-right: 30px; padding-top: 20px; padding-bottom: 25px;max-width: 600px; background-color: #fbfbfb; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+      <h3 style="margin-bottom: 25px;">Account Declined</h3>
+      <p>Hello <strong> <%= @user.first_name.capitalize %> <%= @user.last_name.capitalize %></strong>,</p>
+      <p style="font-size: 15px;">Sorry, But your account has been declined. You can check your temporary profile to what you need to update for approval.</p>
+      <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 14px; color: #777;">
+        <p>Best regards,<br>
+        The D & H Realtor Services, LLC</p>
+        <p>If you have any concerns, please contact our support team immediately.</p>
+      </div>
+    </div>
   </body>
 </html>

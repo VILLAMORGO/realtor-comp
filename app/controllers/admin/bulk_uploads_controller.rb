@@ -16,7 +16,7 @@ module Admin
           user_params = row.to_hash
           user = User.new(user_params)
           if user.save
-              # UserMailer.with(user: @user).registration_email.deliver_now
+              # UserMailer.with(user: user).registration_email.deliver_now
           else
             # Handle error for individual user creation
           end
@@ -45,7 +45,7 @@ module Admin
     def generate_csv_template
       CSV.generate(headers: true) do |csv|
         csv << ["first_name", "last_name", "phone_number", "email", "mls_number", "realtor_license_number", "state", "street_address", "home_address", "city_address", "zip_code", "broker_first_name", "broker_last_name", "broker_email", "broker_phone_number", "role", "password", "password_confirmation"]
-        csv << ["John", "Doe", "1234567890", "john.doe@example.com", "123456", "7891011", "CA", "1234 Main St", "Apt 101", "Los Angeles", "90001", "Jane", "Smith", "jane.smith@example.com", "0987654321", "agent", "password", "password"]
+        csv << ["John", "Doe", "1234567890", "john.doe@example.com", "123456", "7891011", "CA", "1234 Main St", "Apt 101", "Los Angeles", "90001", "Jane", "Smith", "jane.smith@example.com", "0987654321", "agent", "Password=123", "Password=123"]
       end
     end
   end
