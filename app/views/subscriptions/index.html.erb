@@ -1,5 +1,9 @@
 <div class="card mt-5 mb-4 mx-auto text-dark border-0 bg-color col-12 col-md-8 main-font">
-  <h3 class="px-2">Subscriptions</h3>
+  <% if  @all_subscriptions && current_user.admin?%>
+    <h3 class="px-2">Subscriptions  <strong class="text-info-emphasis"><%= number_to_currency(@all_subscriptions_total) %></strong></h3>
+  <% elsif @subscriptions.any? %>
+    <h3 class="px-2">Subscriptions <strong class="text-info-emphasis"><%= number_to_currency(@subscriptions_total) %></strong></h3>
+  <% end %>
   <div class="row">
     <% if @all_subscriptions && current_user.admin? %>
       <% @all_subscriptions.each do |all_subscription| %>

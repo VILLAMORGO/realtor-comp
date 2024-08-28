@@ -35,6 +35,15 @@ set :puma_preload_app, true
 set :puma_worker_timeout, nil
 set :puma_init_active_record, true
 
+# Set the environment for the cron jobs
+set :whenever_environment, -> { fetch(:stage) }
+
+# Update the cron jobs on the server
+set :whenever_roles, [:app]
+
+# Set the cron job identifier to your application name
+set :whenever_identifier, -> { "#{fetch(:application)}_#{fetch(:stage)}" }
+
 append :rbenv_map_bins, 'puma', 'pumactl'
 append :linked_files, 'config/master.key'
 append :linked_files, 'config/credentials/production.key'

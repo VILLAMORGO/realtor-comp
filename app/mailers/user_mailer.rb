@@ -4,7 +4,7 @@ class UserMailer < ApplicationMailer
   def registration_email
     @user = params[:user]
     Rails.logger.debug "Registration email user: #{@user.inspect}"
-    mail(to: @user.email, subject: 'Your account has been created successfully')
+    mail(to: @user.email, subject: "You're invited to join RealtorComp.")
   end
 
   def activated_email
@@ -44,5 +44,17 @@ class UserMailer < ApplicationMailer
     @user = params[:user]
     Rails.logger.debug "Approval email user: #{@user.inspect}"
     mail(to: @user.email, subject: 'Your account has been approved')
+  end
+
+  def subscription_expired_email
+    @user = params[:user]
+    Rails.logger.debug "Expired subscription email user: #{@user.inspect}"
+    mail(to: @user.email, subject: 'Your subscription has expired')
+  end
+
+  def extended_trial_expired_email
+    @user = params[:user]
+    Rails.logger.debug "Expired subscription email user: #{@user.inspect}"
+    mail(to: @user.email, subject: 'Your 90 days free trial has expired')
   end
 end

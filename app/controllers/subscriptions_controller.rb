@@ -2,12 +2,18 @@ class SubscriptionsController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    @all_subscriptions = Subscription.all
+    @all_subscriptions = Subscription.all.order(created_at: 'desc')
     @subscriptions = current_user.subscriptions
+
+    # Calculate the total price of all subscriptions
+    @all_subscriptions_total = Subscription.sum(:price)
+
+    # Calculate the total price of current users subscriptions
+    @subscriptions_total =current_user.subscriptions.sum(:price)
+    
     # @q = current_user.subscriptions.ransack(params[:q])s
     # @subscriptions = @q.result.paginate(page: params[:page], per_page: 10) # Example with pagination
   end
-  
   
   def new
     @plans = [

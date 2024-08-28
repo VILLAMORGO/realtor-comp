@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Subscription Payment Successful</title>
+  </head>
+  <body>
+    <div style="font-family: 'Lato', sans-serif; margin: 0 auto; padding-left: 30px; padding-right: 30px; padding-top: 20px; padding-bottom: 25px;max-width: 600px; background-color: #fbfbfb; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+      <h3 style="margin-bottom: 20px;">Your <%= @user.subscriptions.last.subscription_plan.capitalize %> Subscription Has Expired!</h3>
+      <p>Hello <strong> <%= @user.first_name.capitalize %> <%= @user.last_name.capitalize %></strong>,</p>
+      <p style="font-size: 15px;">We wanted to inform you that your <%= @user.subscriptions.last.subscription_plan %> subscription to RealtorComp has ended.</p>
+      <p style="font-size: 15px;">We hope you've found our platform valuable during your subscription period. To continue accessing RealtorComp's full suite of features, we encourage you to renew your subscription or explore other plans that may suit your needs better.</p>
+      <p style="margin-bottom: 25px; font-size: 15px;">You can log in to your account to view renewal options or reach out to us for any questions:</p>
+      <p><a href="<%= new_user_session_url %>" style="color: #1a73e8; text-decoration: none; font-weight: bold;">Log In to Your Account</a></p>
+      <p style="font-size: 15px;">We appreciate your time with us, and we look forward to assisting you further.</p>
+      <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 14px; color: #777;">
+        <p>Be Well,<br>
+        D & H Realtor Services, LLC</p>
+        <p>If you have any questions or need additional support, feel free to contact us.</p>
+      </div>
+    </div>
+  </body>
+</html>

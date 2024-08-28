@@ -1,20 +1,25 @@
 <!DOCTYPE html>
 <html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Account Was Locked</title>
+  </head>
   <body>
-    <div class="container">
-        <h1>Account Locked</h1>
-        <p>Hello <%= @resource.email %>,</p>
+    <div style="font-family: 'Lato', sans-serif; margin: 0 auto; padding-left: 30px; padding-right: 30px; padding-top: 20px; padding-bottom: 25px;max-width: 600px; background-color: #fbfbfb; border-radius: 8px; box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);">
+        <h3 style="margin-bottom: 20px;">Account Locked</h3>
+        <p>Hello <strong><%= @resource.first_name %> <%= @resource.last_name %></strong>,</p>
 
-        <p>Your account has been locked due to an excessive number of unsuccessful sign-in attempts. For your security, we have temporarily suspended access to your account.</p>
+        <p style="font-size: 15px;">Your account has been locked due to an excessive number of unsuccessful sign-in attempts. For your security, we have temporarily suspended access to your account.</p>
 
-        <p>To unlock your account, please click the link below:</p>
+        <p style="margin-bottom: 25px; font-size: 15px;">To unlock your account, please click the link below:</p>
 
-        <p><%= link_to 'Unlock my account', unlock_url(@resource, unlock_token: @token) %></p>
+        <p><%= link_to 'Unlock my account', unlock_url(@resource, unlock_token: @token), style: "color: #1a73e8; text-decoration: none; font-weight: bold;" %></p>
 
-        <p>If you did not attempt to sign in or believe this lock was made in error, please contact our support team for assistance.</p>
-
-        <p>Be Well,<br>
-        D & H Realtor Services, LLC</p>
+        <div style="margin-top: 30px; padding-top: 15px; border-top: 1px solid #ddd; font-size: 14px; color: #777;">
+          <p>Be Well,<br>
+          D & H Realtor Services, LLC</p>
+          <p>If you did not attempt to sign in or believe this lock was made in error, please contact our support team for assistance.</p>
+      </div>
     </div>
   </body>
 </html>
