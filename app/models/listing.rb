@@ -9,6 +9,10 @@ class Listing < ApplicationRecord
 
   # validate :commission_split_within_valid_range
 
+  # Scopes for active and inactive listings
+  scope :active, -> { where(active: true) }
+  scope :inactive, -> { where(active: false) }
+
   def self.ransackable_attributes(auth_object = nil)
     ["commission_split", "commission_type", "created_at", "id", "listing_commission_amount", "listing_mls_number", "updated_at", "user_id"]
   end

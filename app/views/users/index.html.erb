@@ -355,12 +355,12 @@
                       <span class="name fw-bold"><%= agent.first_name.capitalize %> <%= agent.last_name.capitalize %></span>
                     </td>
                     <td class="email">
-                      <%= link_to  agent.email, user_path(agent), class: "btn btn-outline-light text-dark col"%>
+                      <%= link_to  agent.email, user_path(agent), class: "btn btn-outline-light text-dark col", data: { turbo: false }%>
                     </td>
                     <td class="mls_number"><%= agent.mls_number %></td>
                     <td class="created_at"><%= agent.created_at.strftime("%B %d, %Y") %></td>
                     <td class="action">
-                      <%= link_to edit_user_path(agent) do %>
+                      <%= link_to edit_user_path(agent), data: { turbo: false } do %>
                         <i class="bi bi-person-fill-gear fs-3 text-info" style="cursor: pointer;"></i>
                       <% end %>
                     </td>
@@ -405,12 +405,12 @@
                     <span class="name fw-bold"><%= broker.first_name %> <%= broker.last_name %></span>
                   </td>
                   <td class="email">
-                    <%= link_to  broker.email, user_path(broker), class: "btn btn-outline-light text-dark col"%>
+                    <%= link_to  broker.email, user_path(broker), class: "btn btn-outline-light text-dark col", data: { turbo: false }%>
                   </td>
                   <td class="mls_number"><%= broker.mls_number %></td>
                   <td class="created_at"><%= broker.created_at.strftime("%B %d, %Y") %></td>
                   <td class="action">
-                    <%= link_to edit_user_path(broker) do %>
+                    <%= link_to edit_user_path(broker), data: { turbo: false } do %>
                       <i class="bi bi-person-fill-gear fs-3 text-info" style="cursor: pointer;"></i>
                     <% end %>
                   </td>
