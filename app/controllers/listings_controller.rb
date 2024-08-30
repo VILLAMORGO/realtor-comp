@@ -9,8 +9,8 @@ class ListingsController < ApplicationController
     @page = params[:page] || 1
 
     # Fetch My Listings and All Listings separately with pagination
-    @my_listings = current_user.listings.paginate(page: @page, per_page: @per_page)
-    @all_listings = @q.result.paginate(page: @page, per_page: @per_page)
+    @my_listings = current_user.listings.where(active: "true").paginate(page: @page, per_page: @per_page)
+    @all_listings = @q.result.where(active: "true").paginate(page: @page, per_page: @per_page)
 
     respond_to do |format|
       format.html
@@ -73,6 +73,12 @@ class ListingsController < ApplicationController
     redirect_to listings_path, notice: 'Listing was successfully deleted.'
   end
 
+  def toggle_active
+    @listing = Listing.find(params[:id])
+    @listing.update(active: !@listing.active)
+    redirect_to listings_path, notice: "Listing status was successfully updated."
+  end
+
   private
 
   def set_listing
@@ -81,7 +87,7 @@ class ListingsController < ApplicationController
   end
 
   def listing_params
-    params.require(:listing).permit(:listing_commission_amount, :commission_split, :commission_type, :listing_mls_number, :notes)
+    params.require(:listing).permit(:listing_commission_amount, :commission_split, :commission_type, :listing_mls_number, :notes, :active)
   end
 
   def authorize_user!
