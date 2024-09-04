@@ -60,13 +60,13 @@
 
 <!-- Listings Carousel -->
 <div class="card border-0 rounded-4 shadow-sm text-center responsive-listings mt-2 col-md-9 mx-auto">
-  <div class="card-header d-flex align-items-center border-0 py-4" style="background-color: white;">
+  <div class="card-header d-flex justify-content-between align-items-center border-0 py-4" style="background-color: white;">
     <h6 class="card-title text-start px-3 my-auto fw-bold">LISTINGS</h6>
     <div class="btn-group btn-group-toggle ms-3" data-toggle="buttons">
-      <label class="btn btn-outline active" data-bs-target="#listing-carousel" data-bs-slide-to="0">
+      <label class="btn btn-outline active" style="font-size: 12px;" data-bs-target="#listing-carousel" data-bs-slide-to="0">
         All Listings
       </label>
-      <label class="btn btn-outline" data-bs-target="#listing-carousel" data-bs-slide-to="1">
+      <label class="btn btn-outline" style="font-size: 12px;" data-bs-target="#listing-carousel" data-bs-slide-to="1">
         My Listings
       </label>
     </div>
@@ -76,68 +76,70 @@
     <div class="carousel-inner">
       <!-- All Listings -->
       <div class="carousel-item active">
-        <div class="table-responsive rounded-bottom-3">
-          <table class="table align-middle table-edge table-hover table-nowrap mb-0">
-            <thead class="table-header text-secondary small">
-              <tr>
-                <th>MLS Number</th>
-                <th>Listing Amount</th>
-                <th>Commission Type</th>
-                <th></th>
-                <th class="text-center" colspan="3">Actions</th>
-              </tr>
-            </thead>
-            <tbody class="list container">
-              <% @all_listings.each do |listing| %>
+        <%= turbo_frame_tag 'all_listings_frame' do %>
+          <div class="table-responsive rounded-bottom-3">
+            <table class="table align-middle table-edge table-hover table-nowrap mb-0">
+              <thead class="table-header text-secondary small">
                 <tr>
-                  <td>
-                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
-                      <%= listing.listing_mls_number %>
-                    <% end %>
-                  </td>
-                  <td>
-                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
-                      <% if listing.commission_type == "percentage" %>
-                        <%= number_to_percentage(listing.listing_commission_amount, precision: 5, strip_insignificant_zeros: true) %>
-                      <% else %>
-                        <%= number_to_currency(listing.listing_commission_amount) %>
-                      <% end %>
-                    <% end %>
-                  </td>
-                  <td style="max-width: 50px;">
-                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
-                      <%= listing.commission_type %>
-                    <% end %>
-                  </td>
-                  <td style="max-width: 80px;">
-                    <% if listing.commission_type == "percentage" %>
-                      <p class="tracking-normal main-font my-auto opacity-75" style="font-size: 12px;">Initial offer, Negotiable, see notes for details...</p>
-                    <% end %>
-                  </td>
-
-                  <td class="nav-item dropstart text-center" style="max-width: 5px !important;">
-                    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="bi bi-three-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li><%= link_to 'Show', listing_path(listing), class: "dropdown-item" %></li>
-                      <% if listing.user_id == current_user.id %>
-                        <li><%= link_to 'Edit', edit_listing_path(listing), class: "dropdown-item" %></li>
-                        <li><%= link_to 'Delete', listing_path(listing), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this listing?" }, class: "dropdown-item text-danger" %></li>
-                      <% end %>
-                      <% if current_user.admin? %>
-                        <li><%= link_to 'Turn off', toggle_active_listing_path(listing), data: { turbo_method: :patch, turbo_confirm: "Are you sure you want to update this listing?" }, class: "dropdown-item text-dark" %></li>
-                      <% end %>
-                    </ul>
-                  </td>
+                  <th><%= sort_link(@q, :listing_mls_number, "MLS Number", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                  <th><%= sort_link(@q, :listing_commission_amount, "Listing Amount", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                  <th><%= sort_link(@q, :commission_type, "Commission Type", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                  <th></th>
+                  <th class="text-decoration-none main-font table-header text-secondary text-center" colspan="3">Actions</th>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody class="list container">
+                <% @all_listings.each do |listing| %>
+                  <tr>
+                    <td>
+                      <%= link_to listing_path(listing), data: { turbo: false }, class: "stretched-link text-decoration-none text-black" do %>
+                        <%= listing.listing_mls_number %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= link_to listing_path(listing), data: { turbo: false }, class: "stretched-link text-decoration-none text-black" do %>
+                        <% if listing.commission_type == "percentage" %>
+                          <%= number_to_percentage(listing.listing_commission_amount, precision: 5, strip_insignificant_zeros: true) %>
+                        <% else %>
+                          <%= number_to_currency(listing.listing_commission_amount) %>
+                        <% end %>
+                      <% end %>
+                    </td>
+                    <td style="max-width: 50px;">
+                      <%= link_to listing_path(listing), data: { turbo: false }, class: "stretched-link text-decoration-none text-black" do %>
+                        <%= listing.commission_type %>
+                      <% end %>
+                    </td>
+                    <td style="max-width: 80px;">
+                      <% if listing.commission_type == "percentage" %>
+                        <p class="tracking-normal main-font my-auto opacity-75" style="font-size: 12px;">Initial offer, Negotiable, see notes for details...</p>
+                      <% end %>
+                    </td>
+
+                    <td class="nav-item dropstart text-center" style="max-width: 5px !important;">
+                      <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li><%= link_to 'Show', listing_path(listing), data: { turbo: false }, class: "dropdown-item" %></li>
+                        <% if listing.user_id == current_user.id %>
+                          <li><%= link_to 'Edit', edit_listing_path(listing), data: { turbo: false }, class: "dropdown-item" %></li>
+                          <li><%= link_to 'Delete', listing_path(listing), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this listing?" }, class: "dropdown-item text-danger" %></li>
+                        <% end %>
+                        <% if current_user.admin? %>
+                          <li><%= link_to 'Turn off', toggle_active_listing_path(listing), data: { turbo_method: :patch, turbo_confirm: "Are you sure you want to turn off this listing?" }, class: "dropdown-item text-dark" %></li>
+                        <% end %>
+                      </ul>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
         <div class="card-footer" style="background-color: white;">
-          <div class="d-flex flex-column justify-content-between align-items-center">
-            <div class="text-secondary small mt-3 mb-2">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="text-secondary small mt-3 mb-2 me-5">
               Showing: <span class="list-pagination-page-first"><%= @all_listings.offset_value + 1 %></span> - <span class="list-pagination-page-last"><%= [@all_listings.offset_value + @all_listings.length, @all_listings.total_entries].min %></span> of <span class="list-pagination-pages"><%= @all_listings.total_entries %></span>
             </div>
             <!-- Pagination -->
@@ -150,61 +152,63 @@
 
       <!-- My Listings -->
       <div class="carousel-item">
-        <div class="table-responsive rounded-bottom-3">
-          <table class="table align-middle table-edge table-hover table-nowrap mb-0">
-            <thead class="table-header text-secondary small">
-              <tr>
-                <th>MLS Number</th>
-                <th>Commission Amount</th>
-                <th>Commission Type</th>
-                <th class="text-center" colspan="3">Actions</th>
-              </tr>
-            </thead>
-            <tbody class="list container">
-              <% @my_listings.each do |listing| %>
+        <%= turbo_frame_tag 'my_listings_frame' do %>
+          <div class="table-responsive rounded-bottom-3">
+            <table class="table align-middle table-edge table-hover table-nowrap mb-0">
+              <thead class="table-header text-secondary small">
                 <tr>
-                  <td>
-                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
-                      <%= listing.listing_mls_number %>
-                    <% end %>
-                  </td>
-                  <td>
-                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
-                      <% if listing.commission_type == "percentage" %>
-                        <%= number_to_percentage(listing.listing_commission_amount, precision: 5, strip_insignificant_zeros: true) %>
-                      <% else %>
-                        <%= number_to_currency(listing.listing_commission_amount) %>
-                      <% end %>
-                    <% end %>
-                  </td>
-                  <td>
-                    <%= link_to listing_path(listing), class: "stretched-link text-decoration-none text-black" do %>
-                      <%= listing.commission_type %>
-                    <% end %>
-                  </td>
-                  <td class="nav-item dropstart text-center" style="max-width: 5px !important;">
-                    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                      <i class="bi bi-three-dots-vertical"></i>
-                    </a>
-                    <ul class="dropdown-menu">
-                      <li><%= link_to 'Show', listing_path(listing), class: "dropdown-item" %></li>
-                      <% if listing.user_id == current_user.id %>
-                        <li><%= link_to 'Edit', edit_listing_path(listing), class: "dropdown-item" %></li>
-                        <li><%= link_to 'Delete', listing_path(listing), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this listing?" }, class: "dropdown-item text-danger" %></li>
-                      <% end %>
-                      <% if current_user.admin? %>
-                        <li><%= link_to 'Turn off', toggle_active_listing_path(listing), data: { turbo_method: :patch, turbo_confirm: "Are you sure you want to update this listing?" }, class: "dropdown-item text-dark" %></li>
-                      <% end %>
-                    </ul>
-                  </td>
+                  <th><%= sort_link(@q, :listing_mls_number, "MLS Number", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                  <th><%= sort_link(@q, :listing_commission_amount, "Listing Amount", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                  <th><%= sort_link(@q, :commission_type, "Commission Type", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                  <th class="text-decoration-none main-font table-header text-secondary text-center" colspan="3">Actions</th>
                 </tr>
-              <% end %>
-            </tbody>
-          </table>
-        </div>
+              </thead>
+              <tbody class="list container">
+                <% @my_listings.each do |listing| %>
+                  <tr>
+                    <td>
+                      <%= link_to listing_path(listing), data: { turbo: false }, class: "stretched-link text-decoration-none text-black" do %>
+                        <%= listing.listing_mls_number %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= link_to listing_path(listing), data: { turbo: false }, class: "stretched-link text-decoration-none text-black" do %>
+                        <% if listing.commission_type == "percentage" %>
+                          <%= number_to_percentage(listing.listing_commission_amount, precision: 5, strip_insignificant_zeros: true) %>
+                        <% else %>
+                          <%= number_to_currency(listing.listing_commission_amount) %>
+                        <% end %>
+                      <% end %>
+                    </td>
+                    <td>
+                      <%= link_to listing_path(listing), data: { turbo: false }, class: "stretched-link text-decoration-none text-black" do %>
+                        <%= listing.commission_type %>
+                      <% end %>
+                    </td>
+                    <td class="nav-item dropstart text-center" style="max-width: 5px !important;">
+                      <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-three-dots-vertical"></i>
+                      </a>
+                      <ul class="dropdown-menu">
+                        <li><%= link_to 'Show', listing_path(listing), data: { turbo: false }, class: "dropdown-item" %></li>
+                        <% if listing.user_id == current_user.id %>
+                          <li><%= link_to 'Edit', edit_listing_path(listing), data: { turbo: false }, class: "dropdown-item" %></li>
+                          <li><%= link_to 'Delete', listing_path(listing), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this listing?" }, class: "dropdown-item text-danger" %></li>
+                        <% end %>
+                        <% if current_user.admin? %>
+                          <li><%= link_to 'Turn off', toggle_active_listing_path(listing), data: { turbo_method: :patch, turbo_confirm: "Are you sure you want to turn off this listing?" }, class: "dropdown-item text-dark" %></li>
+                        <% end %>
+                      </ul>
+                    </td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+        <% end %>
         <div class="card-footer" style="background-color: white;">
-          <div class="d-flex flex-column justify-content-between align-items-center">
-            <div class="text-secondary small mt-3 mb-2">
+          <div class="d-flex justify-content-between align-items-center">
+            <div class="text-secondary small mt-3 mb-2 me-5">
               Showing: <span class="list-pagination-page-first"><%= @my_listings.offset_value + 1 %></span> - <span class="list-pagination-page-last"><%= [@my_listings.offset_value + @my_listings.length, @my_listings.total_entries].min %></span> of <span class="list-pagination-pages"><%= @my_listings.total_entries %></span>
             </div>
             <!-- Pagination -->
@@ -217,6 +221,161 @@
     </div>
   </div>
 </div>
+
+
+  <% if current_user.admin? && @turned_off_listings.any? %>
+    <div class="card border-0 rounded-4 shadow-sm text-center responsive-listings mt-2 col-md-9 mx-auto mt-5 mb-5">
+      <div class="card-header d-flex justify-content-between align-items-center border-0 py-4" style="background-color: white;">
+        <h6 class="card-title text-start px-3 my-auto fw-bold">TURNED OFF LISTINGS</h6>
+        <%= @turned_off_listings.count%>
+      </div>
+      <%= turbo_frame_tag 'turned_off_listings_frame' do %>
+        <div class="table-responsive rounded-bottom-3">
+          <table class="table align-middle table-edge table-hover table-nowrap mb-0">
+            <thead class="table-header text-secondary small">
+              <tr>
+                <th><%= sort_link(@q, :listing_mls_number, "MLS Number", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                <th><%= sort_link(@q, :listing_commission_amount, "Listing Amount", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                <th><%= sort_link(@q, :commission_type, "Commission Type", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                <th class="text-decoration-none main-font table-header text-secondary text-center" colspan="3">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="list container">
+              <% @turned_off_listings.each do |listing| %>
+                <tr>
+                  <td>
+                    <%= link_to listing_path(listing), data: { turbo: false }, class: "stretched-link text-decoration-none text-black" do %>
+                      <%= listing.listing_mls_number %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to listing_path(listing), data: { turbo: false }, class: "stretched-link text-decoration-none text-black" do %>
+                      <% if listing.commission_type == "percentage" %>
+                        <%= number_to_percentage(listing.listing_commission_amount, precision: 5, strip_insignificant_zeros: true) %>
+                      <% else %>
+                        <%= number_to_currency(listing.listing_commission_amount) %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                  <td style="max-width: 50px;">
+                    <%= link_to listing_path(listing), data: { turbo: false }, class: "stretched-link text-decoration-none text-black" do %>
+                      <%= listing.commission_type %>
+                    <% end %>
+                  </td>
+
+                  <td class="nav-item dropstart text-center" style="max-width: 5px !important;">
+                    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="bi bi-three-dots-vertical"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to 'Show', listing_path(listing), data: { turbo: false }, class: "dropdown-item" %></li>
+                      <% if listing.user_id == current_user.id %>
+                        <li><%= link_to 'Edit', edit_listing_path(listing), data: { turbo: false }, class: "dropdown-item" %></li>
+                        <li><%= link_to 'Delete', listing_path(listing), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this listing?" }, class: "dropdown-item text-danger" %></li>
+                      <% end %>
+                      <% if current_user.admin? %>
+                        <li><%= link_to 'Turn on', toggle_active_listing_path(listing), data: { turbo_method: :patch, turbo_confirm: "Are you sure you want to turn on this listing?" }, class: "dropdown-item text-dark" %></li>
+                      <% end %>
+                    </ul>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+      <div class="card-footer" style="background-color: white;">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="text-secondary small mt-3 mb-2 me-5">
+            Showing: <span class="list-pagination-page-first"><%= @turned_off_listings.offset_value + 1 %></span> - <span class="list-pagination-page-last"><%= [@turned_off_listings.offset_value + @turned_off_listings.length, @turned_off_listings.total_entries].min %></span> of <span class="list-pagination-pages"><%= @turned_off_listings.total_entries %></span>
+          </div>
+          <!-- Pagination -->
+          <div>
+            <%= will_paginate @turned_off_listings, renderer: CustomPaginationRenderer %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% elsif @my_turned_off_listings.any? %>
+    <div class="card border-0 rounded-4 shadow-sm text-center responsive-listings mt-2 col-md-9 mx-auto mt-5 mb-5">
+      <div class="card-header d-flex justify-content-between align-items-center border-0 py-4" style="background-color: white;">
+        <h6 class="card-title text-start px-3 my-auto fw-bold">TURNED OFF LISTINGS</h6>
+        <%= @my_turned_off_listings.count%>
+      </div>
+      <%= turbo_frame_tag 'turned_off_listings_frame' do %>
+        <div class="table-responsive rounded-bottom-3">
+          <table class="table align-middle table-edge table-hover table-nowrap mb-0">
+            <thead class="table-header text-secondary small">
+              <tr>
+                <th><%= sort_link(@q, :listing_mls_number, "MLS Number", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                <th><%= sort_link(@q, :listing_commission_amount, "Listing Amount", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                <th><%= sort_link(@q, :commission_type, "Commission Type", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                <th class="text-decoration-none main-font table-header text-secondary text-center" colspan="3">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="list container">
+              <% @my_turned_off_listings.each do |listing| %>
+                <tr>
+                  <td>
+                    <%= link_to listing_path(listing), data: { turbo: false }, class: "stretched-link text-decoration-none text-black" do %>
+                      <%= listing.listing_mls_number %>
+                    <% end %>
+                  </td>
+                  <td>
+                    <%= link_to listing_path(listing), data: { turbo: false }, class: "stretched-link text-decoration-none text-black" do %>
+                      <% if listing.commission_type == "percentage" %>
+                        <%= number_to_percentage(listing.listing_commission_amount, precision: 5, strip_insignificant_zeros: true) %>
+                      <% else %>
+                        <%= number_to_currency(listing.listing_commission_amount) %>
+                      <% end %>
+                    <% end %>
+                  </td>
+                  <td style="max-width: 50px;">
+                    <%= link_to listing_path(listing), data: { turbo: false }, class: "stretched-link text-decoration-none text-black" do %>
+                      <%= listing.commission_type %>
+                    <% end %>
+                  </td>
+
+                  <td class="nav-item dropstart text-center" style="max-width: 5px !important;">
+                    <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                      <i class="bi bi-three-dots-vertical"></i>
+                    </a>
+                    <ul class="dropdown-menu">
+                      <li><%= link_to 'Show', listing_path(listing), data: { turbo: false }, class: "dropdown-item" %></li>
+                      <% if listing.user_id == current_user.id %>
+                        <li><%= link_to 'Edit', edit_listing_path(listing), data: { turbo: false }, class: "dropdown-item" %></li>
+                        <li><%= link_to 'Delete', listing_path(listing), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this listing?" }, class: "dropdown-item text-danger" %></li>
+                      <% end %>
+                      <% if current_user.admin? %>
+                        <li><%= link_to 'Turn on', toggle_active_listing_path(listing), data: { turbo_method: :patch, turbo_confirm: "Are you sure you want to turn on this listing?" }, class: "dropdown-item text-dark" %></li>
+                      <% end %>
+                    </ul>
+                  </td>
+                </tr>
+              <% end %>
+            </tbody>
+          </table>
+        </div>
+      <% end %>
+      <div class="card-footer" style="background-color: white;">
+        <div class="d-flex justify-content-between align-items-center">
+          <div class="text-secondary small mt-3 mb-2 me-5">
+            Showing: <span class="list-pagination-page-first"><%= @my_turned_off_listings.offset_value + 1 %></span> - <span class="list-pagination-page-last"><%= [@my_turned_off_listings.offset_value + @my_turned_off_listings.length, @my_turned_off_listings.total_entries].min %></span> of <span class="list-pagination-pages"><%= @my_turned_off_listings.total_entries %></span>
+          </div>
+          <!-- Pagination -->
+          <div>
+            <%= will_paginate @my_turned_off_listings, renderer: CustomPaginationRenderer %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <% else %>
+    <div class="card border-0 rounded-4 shadow-sm text-center responsive-listings mt-2 col-md-9 mx-auto mt-5 mb-5">
+    </div>
+  <% end %>
+
+  
+  
 
 <style>
   .stretched-link {
