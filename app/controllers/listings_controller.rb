@@ -5,13 +5,17 @@ class ListingsController < ApplicationController
 
   def index
     @q = Listing.includes(:user).ransack(params[:q])
+    @listings = @q.result
+
     @per_page = (params[:per_page] || 10).to_i
     @page = params[:page] || 1
 
     # Fetch My Listings and All Listings separately with pagination
-    @my_listings = current_user.listings.where(active: "true").paginate(page: @page, per_page: @per_page)
-    @all_listings = @q.result.where(active: "true").paginate(page: @page, per_page: @per_page)
-
+    @my_listings = @listings.where(user: current_user, active: "true").order(created_at: :desc).paginate(page: @page, per_page: @per_page)
+    @all_listings = @listings.where(active: "true").order(created_at: :desc).paginate(page: @page, per_page: @per_page)
+    @turned_off_listings = @listings.where(active: "false").order(created_at: :desc).paginate(page: @page, per_page: @per_page)
+    @my_turned_off_listings = @listings.where(user: current_user, active: "false").order(created_at: :desc).paginate(page: @page, per_page: @per_page)
+    
     respond_to do |format|
       format.html
       format.json {
