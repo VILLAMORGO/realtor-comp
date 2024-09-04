@@ -12,6 +12,13 @@
           <span>&copy; <%= Time.now.year %> Realtor Comp. All rights reserved.</span>
         </div>
       </div>
+      <% if current_page?(listings_path) %>
+        <div class="row mt-1">
+          <div class="col text-center fw-light" style="font-size: 14px;">
+            <span class="ms-2 tracking-normal main-font mb-2 opacity-50" style="font-size: 14px;">There is no mandate to compensation provided by this platform.</span>
+          </div>
+        </div>
+      <% end %>
     </div>
   </footer>
 <% end %>
