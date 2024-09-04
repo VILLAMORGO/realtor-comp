@@ -336,11 +336,11 @@
             <table class="table align-middle table-edge table-hover table-nowrap mb-0">
               <thead class="table-header text-secondary small">
                 <tr>
-                  <th><%= sort_link(@q, :first_name, "Full name", remote: true, class: "text-decoration-none main-font text-black") %></th>
-                  <th><%= sort_link(@q, :email, "Email", remote: true, class: "text-decoration-none main-font text-black") %></th>
-                  <th><%= sort_link(@q, :mls_number, "MLS Number", remote: true, class: "text-decoration-none main-font text-black") %></th>
-                  <th><%= sort_link(@q, :created_at, "Date Registered", remote: true, class: "text-decoration-none main-font text-black") %></th>
-                  <th>Action</th>
+                  <th><%= sort_link(@q, :first_name, "Full name", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                  <th><%= sort_link(@q, :email, "Email", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                  <th><%= sort_link(@q, :mls_number, "MLS Number", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                  <th><%= sort_link(@q, :created_at, "Date Registered", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                  <th class= "text-decoration-none main-font table-header text-secondary">Action</th>
                 </tr>
               </thead>
               <tbody class="list container px-3">
@@ -387,10 +387,10 @@
             <thead class="table-header text-secondary small">
               <tr>
                 <th><%= sort_link(@q, :first_name, "Full name", remote: true, class: "text-decoration-none main-font text-black") %></th>
-                <th><%= sort_link(@q, :email, "Email", remote: true, class: "text-decoration-none main-font text-black") %></th>
-                <th><%= sort_link(@q, :mls_number, "MLS Number", remote: true, class: "text-decoration-none main-font text-black") %></th>
-                <th><%= sort_link(@q, :created_at, "Date Registered", remote: true, class: "text-decoration-none main-font text-black") %></th>
-                <th>Action</th>
+                <th><%= sort_link(@q, :email, "Email", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                <th><%= sort_link(@q, :mls_number, "MLS Number", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                <th><%= sort_link(@q, :created_at, "Date Registered", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                <th class= "text-decoration-none main-font table-header text-secondary">Action</th>
               </tr>
             </thead>
             <tbody class="list container">
