@@ -3,12 +3,16 @@
 <div class="card mt-5 py-5 px-3 mx-auto text-dark shadow border border-0 bg-color col-12 col-md-8">
     <div class="card-header d-flex flex-column flex-md-row bg-opacity-25 bg-color ">
         <div class="me-3 w-full h-auto d-flex justify-content-end" style="min-height: 100px;">
-            <img src="<%= user %>" alt="Profile Picture" class="rounded-circle border border-primary bg-white" style="min-width: 50px; min-height: 50px;">
+            <% if  user.profile_picture.representable? %>
+                <%= image_tag rails_storage_proxy_path(user.profile_picture), style:"width: 100px; height: 100px;", class:"rounded-circle border border-3 border-primary" %>
+            <% else %>
+                <i class="bi bi-person-circle mx-2 d-flex rounded-circle border border-3 border-primary", style="font-size: 100px; cursor: pointer;"></i>
+            <% end %>
         </div>
         <div class="">
             <h5 class="card-title mb-1 fs-5 tracking-wide"><%= user.first_name %> <%= user.last_name %></h5>
             <h5 class="card-title mb-3 fs-6 text-capitalize text-secondary"><%= user.role %></h5>
-            <span class="badge bg-dark rounded-pill px-3 py-2"><%= user.status %></span>
+            <span class="badge bg-dark fs-6 fw-light tracking-wide rounded-pill px-4 py-1"><%= user.subscription_status %></span>
         </div>
     </div>
 </div>

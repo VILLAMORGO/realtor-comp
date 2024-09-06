@@ -14,6 +14,60 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarText">
       <ul class="navbar-nav mx-auto mb-2 mb-lg-0 mx-5 d-flex justify-content-center">
+<!------------- Mobile Dropdown Nav ------------->
+        <% if user_signed_in? %>
+          <li class="nav-item dropdown mobile-dropdown-profile" id="mobileDropdownProfile" style="display: none;">
+            <div class="d-flex align-items-center py-2" data-bs-toggle="dropdown" aria-expanded="false" style="cursor: pointer;">
+              <% if current_user.profile_picture.representable? %>
+                <%= image_tag rails_storage_proxy_path(current_user.profile_picture), 
+                    style: "width: 40px; height: 40px;", 
+                    class: "rounded-circle" %>
+              <% else %>
+                <i class="bi bi-person-circle d-flex text-white" style="font-size: 40px;"></i>
+              <% end %>
+              <div class="nav-user-info-wrapper ms-3 flex flex-column">
+                <div class="nav-user-label text-capitalize tracking-wide nav-link p-0" style="font-size: 15px;">
+                  <%= current_user.first_name %> <%= current_user.last_name %>
+                </div>
+                <div class="nav-user-type text-capitalize tracking-wide text-secondary" style="font-size: 12px;">
+                  <%= current_user.role %>
+                </div>
+              </div>
+              <i class="bi bi-chevron-compact-down text-secondary fs-3 ms-auto hide-arrow-down"></i>
+              <i class="bi bi-chevron-compact-up text-secondary fs-3 ms-auto show-arrow-up" style="display: none;"></i>
+            </div>
+
+  <!------------- Mobile Dropdown Nav Item ------------->
+            <ul class="dropdown-menu dropdown-menu-end mt-2 pt-2 border-0" style="min-width: 270px;">
+              <li class="nav-item dropdown-item pt-1 ps-2 pb1">
+                <div class="form-check-reverse form-switch text-start">
+                  <label class="form-check-label tracking-wide text-secondary" for="flexSwitchCheckChecked" style="font-size: 14px;">Online for messages</label>
+                  <input class="form-check-input " type="checkbox" role="switch" id="flexSwitchCheckChecked" checked style="cursor: pointer;">
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li class="nav-item dropdown-item d-flex flex-row align-items-center ps-1">
+                <%= link_to edit_user_registration_path, class: "nav-link d-flex flex-row align-items-center #{'active' if current_page?(edit_user_registration_path)}", style: "cursor: pointer;" do %>
+                  <i class="bi bi-person-square ps-1 me-3 my-auto" style="font-size: 19px;"></i>
+                  <span class="my-auto" style="font-size: 14px;">Your Profile</span>
+                <% end %>
+              </li>
+              <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
+                <% days_left = (current_user.trial_ends_at.to_date - Date.current).to_i %>
+                <li class="nav-item dropdown-item nav-link text-warning ps-4 ms-2 tracking-wide" style="font-size: 14px;">
+                  <%= pluralize(days_left, "day") %> left in trial. 
+                  <%= link_to 'Subscribe', new_subscription_path, class: "text-warning fw-bold #{'active' if current_page?(new_subscription_path)}" %>
+                </li>
+              <% end %>
+              <li><hr class="dropdown-divider"></li>
+            </ul>
+          </li>
+        <% end %>
+        <% if user_signed_in? %>
+          <li class="nav-item nav-link text-white show-welcome" style="display: none; ">
+            Welcome&nbsp;<%=current_user.first_name%>&nbsp;<%=current_user.last_name%>!
+          </li>
+        <% end %>
         <% if user_signed_in? && current_user.admin? %>
           <li class="nav-item">
             <%= link_to 'Dashboard', users_path, class: "nav-link #{'active' if [users_path, authenticated_admin_root_path].include?(request.path) && current_user.admin? }" %>
@@ -30,6 +84,7 @@
             <%= link_to 'Support', support_index_path, class: "nav-link #{'active' if current_page?(support_index_path)}" %>
           </li>
         <% end %>
+
         <% if user_signed_in? && current_user.admin? %>
           <li class="nav-item">
             <%= link_to 'Pending Request', pending_requests_path, class: "nav-link #{'active' if current_page?(pending_requests_path)}" %>
@@ -46,21 +101,89 @@
       
       <ul class="navbar-nav text-white">
         <% if user_signed_in? %>
-          <li class="nav-item nav-link text-white">
-            Welcome, <%= current_user.email %>!
+          <li class="nav-item nav-link text-white hide-welcome">
+            Welcome&nbsp;<%=current_user.first_name%>&nbsp;<%=current_user.last_name%>!
           </li>
-          <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
-            <% days_left = (current_user.trial_ends_at.to_date - Date.current).to_i %>
-            <li class="nav-item nav-link text-warning">
-              <%= pluralize(days_left, "day") %> left in trial. 
-              <%= link_to 'Subscribe', new_subscription_path, class: "text-warning fw-bold #{'active' if current_page?(new_subscription_path)}" %>
-            </li>
-          <% end %>
-          <li class="nav-item <%= 'active' if current_page?(edit_user_registration_path) %>">
-            <%= link_to 'Edit Profile', edit_user_registration_path, class: "nav-link #{'active' if current_page?(edit_user_registration_path)}" %>
+
+<!------------- Dropdown Nav ------------->
+          <li class="nav-item dropdown dropdown-profile">
+            <% if current_user.profile_picture.representable? %>
+              <%= image_tag rails_storage_proxy_path(current_user.profile_picture), 
+                  style: "width: 40px; height: 40px; cursor: pointer;", 
+                  class: "rounded-circle mx-3", 
+                  data: { bs_toggle: "dropdown" }, 
+                  aria: { expanded: "false" } %>
+            <% else %>
+              <i class="bi bi-person-circle mx-3 d-flex" 
+                  style="font-size: 40px; cursor: pointer;" 
+                  data-bs-toggle="dropdown" aria-expanded="false"></i>
+            <% end %>
+
+<!------------- Dropdown Nav Item ------------->
+            <ul class="dropdown-menu dropdown-menu-end mt-4 pt-4" style="min-width: 270px;">
+              <li class="nav-item dropdown-item d-flex">
+                <% if current_user.profile_picture.representable? %>
+                  <%= image_tag rails_storage_proxy_path(current_user.profile_picture), 
+                      style: "width: 40px; height: 40px; cursor: pointer;", 
+                      class: "rounded-circle mx-3", 
+                      data: { bs_toggle: "dropdown" }, 
+                      aria: { expanded: "false" } %>
+                <% else %>
+                  <i class="bi bi-person-circle mx-3 d-flex" 
+                      style="font-size: 40px; cursor: pointer;" 
+                      data-bs-toggle="dropdown" aria-expanded="false"></i>
+                <% end %>
+                <div class="nav-user-info-wrapper flex flex-row">
+                  <div class="nav-user-label text-capitalize tracking-wide nav-link p-0" style="font-size: 15px;"><%=current_user.first_name%>&nbsp;<%=current_user.last_name%> </div>
+                  <div class="nav-user-type text-capitalize tracking-wide text-secondary" style="font-size: 12px;"> <%=current_user.role%> </div>
+                </div>
+              </li>
+              <li class="nav-item dropdown-item pt-3 pb1">
+                <div class="form-check-reverse form-switch text-start ms-3">
+                  <label class="form-check-label tracking-wide text-secondary" for="flexSwitchCheckChecked" style="font-size: 14px;">Online for messages</label>
+                  <input class="form-check-input " type="checkbox" role="switch" id="flexSwitchCheckChecked" checked style="cursor: pointer;">
+                </div>
+              </li>
+              <li><hr class="dropdown-divider"></li>
+              <li class="nav-item dropdown-item d-flex flex-row align-items-center">
+                <%= link_to edit_user_registration_path, class: "nav-link d-flex flex-row align-items-center #{'active' if current_page?(edit_user_registration_path)}", style: "cursor: pointer;" do %>
+                  <i class="bi bi-person-square ms-2 me-3 my-auto" style="font-size: 19px;"></i>
+                  <span class="my-auto" style="font-size: 14px;">Your Profile</span>
+                <% end %>
+              </li>
+              <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
+                <% days_left = (current_user.trial_ends_at.to_date - Date.current).to_i %>
+                <li class="nav-item dropdown-item nav-link text-warning ps-4 ms-2 tracking-wide" style="font-size: 14px;">
+                  <%= pluralize(days_left, "day") %> left in trial. 
+                  <%= link_to 'Subscribe', new_subscription_path, class: "text-warning fw-bold #{'active' if current_page?(new_subscription_path)}" %>
+                </li>
+              <% end %>
+              <li><hr class="dropdown-divider"></li>
+              <li class="nav-item dropdown-item d-flex flex-row align-items-center">
+                <%= link_to edit_user_registration_path, class: "nav-link d-flex flex-row align-items-center #{'active' if current_page?(edit_user_registration_path)}", style: "cursor: pointer;" do %>
+                  <i class="bi bi-gear ms-2 me-3 my-auto" style="font-size: 19px;"></i>
+                  <span class="my-auto tracking-wide" style="font-size: 14px;">Account settings</span>
+                <% end %>
+              </li>
+              <li class="nav-item dropdown-item d-flex flex-row align-items-center">
+                <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link d-flex flex-row align-items-center #{'active' if current_page?(destroy_user_session_path)}", style: "cursor: pointer;" do %>
+                  <i class="bi bi-box-arrow-left ms-2 me-3 my-auto" style="font-size: 19px;"></i>
+                  <span class="my-auto tracking-wide" style="font-size: 14px;">Log Out</span>
+                <% end %>
+              </li>
+            </ul>
           </li>
-          <li class="nav-item">
-            <%= link_to 'Log Out', destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link #{'active' if current_page?(destroy_user_session_path)}" %>
+          <li class="nav-item dropdown-item mobile-links" style="display: none;">
+            <%= link_to edit_user_registration_path, class: "nav-link d-flex flex-row align-items-center #{'active' if current_page?(edit_user_registration_path)}", style: "cursor: pointer;" do %>
+              <i class="bi bi-gear me-2 my-auto" style="font-size: 19px;"></i>
+              <span class="my-auto tracking-wide" style="font-size: 14px;">Account settings</span>
+            <% end %>
+          </li>
+          <li class="nav-item dropdown-item mobile-links mb-3" style="display: none;">
+            <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link d-flex flex-row align-items-center #{'active' if current_page?(destroy_user_session_path)}", style: "cursor: pointer;" do %>
+              <i class="bi bi-box-arrow-left me-2 my-auto" style="font-size: 19px;"></i>
+              <span class="my-auto tracking-wide" style="font-size: 14px;">Log Out</span>
+            <% end %>
           </li>
         <% else %>
           <li class="nav-item <%= 'active' if current_page?(new_user_registration_path) %>">
@@ -77,3 +200,61 @@
     </div>
   </div>
 </nav>
+<style>
+  .form-check-input:checked {
+    background-color: #198754; /* Bootstrap's success color */
+    border-color: #198754; /* Apply success border color */
+  }
+
+  @media (max-width: 991.98px) { /* Adjust breakpoint for your design */
+    .dropdown-profile {
+      display: none !important;
+    }
+    .mobile-dropdown-profile {
+      display: block !important;
+    }
+    .mobile-links {
+      display: block !important;
+    }
+    .show-welcome{
+      display: block !important;
+    }
+    .hide-welcome{
+      display: none !important;
+    }
+  }
+
+  .hide-arrow-down {
+    transition: opacity 0.3s ease;
+  }
+
+  .show-arrow-up {
+    transition: opacity 0.4s ease;
+  }
+
+  /* Optional: Add animation for the dropdown */
+  .dropdown-menu {
+    opacity: 0;
+    transition: opacity 0.4s ease;
+  }
+
+  .dropdown-menu.show {
+    opacity: 1;
+  }
+</style>
+
+<script>
+  document.addEventListener('turbo:load', () => {
+    const dropdownTrigger = document.querySelector('.mobile-dropdown-profile > div');
+    const arrowDown = document.querySelector('.hide-arrow-down');
+    const arrowUp = document.querySelector('.show-arrow-up');
+    const dropdownMenu = document.querySelector('#mobileDropdownProfile');
+
+    dropdownTrigger.addEventListener('click', () => {
+      const isExpanded = dropdownMenu.classList.contains('show');
+      arrowDown.style.display = isExpanded ? 'none' : 'inline';
+      arrowUp.style.display = isExpanded ? 'inline' : 'none';
+      dropdownMenu.classList.toggle('show');
+    });
+  });
+</script>

@@ -347,12 +347,18 @@
                 <% @agents.each do |agent| %>
                   <tr class="mx-3">
                     <td>
-                      <div class="avatar avatar-circle avatar-xs me-2">
-                        <span class="avatar-title text-bg-primary-soft">
-                          <i class="bi bi-person-circle"></i>
-                        </span>
+                      <div class="d-flex flex-row justify-content-start">
+                        <div class="avatar avatar-circle avatar-xs me-2 d-flex align-items-center">
+                          <span class="avatar-title text-bg-primary-soft">
+                            <% if  agent.profile_picture.representable? %>
+                              <%= image_tag rails_storage_proxy_path(agent.profile_picture), style: "width: 30px;", class: "rounded-circle mx-2" %>
+                            <% else %>
+                              <i class="bi bi-person-circle mx-2 d-flex ", style="font-size: 30px;"></i>
+                            <% end %>
+                          </span>
+                        </div>
+                        <span class="name fw-bold d-flex align-items-center"><%= agent.first_name.capitalize %> <%= agent.last_name.capitalize %></span>
                       </div>
-                      <span class="name fw-bold"><%= agent.first_name.capitalize %> <%= agent.last_name.capitalize %></span>
                     </td>
                     <td class="email">
                       <%= link_to  agent.email, user_path(agent), class: "btn btn-outline-light text-dark col", data: { turbo: false }%>
@@ -397,12 +403,18 @@
               <% @brokers.each do |broker| %>
                 <tr>
                   <td>
-                    <div class="avatar avatar-circle avatar-xs me-2">
-                      <span class="avatar-title text-bg-primary-soft">
-                        <i class="bi bi-person-circle"></i>
-                      </span>
+                    <div class="d-flex flex-row justify-content-start">
+                      <div class="avatar avatar-circle avatar-xs me-2 d-flex align-items-center">
+                        <span class="avatar-title text-bg-primary-soft">
+                          <% if  broker.profile_picture.representable? %>
+                            <%= image_tag rails_storage_proxy_path(broker.profile_picture), style: "width: 30px;", class: "rounded-circle mx-2" %>
+                          <% else %>
+                            <i class="bi bi-person-circle mx-2 d-flex ", style="font-size: 30px;"></i>
+                          <% end %>
+                        </span>
+                      </div>
+                      <span class="name fw-bold d-flex align-items-center"><%= broker.first_name.capitalize %> <%= broker.last_name.capitalize %></span>
                     </div>
-                    <span class="name fw-bold"><%= broker.first_name %> <%= broker.last_name %></span>
                   </td>
                   <td class="email">
                     <%= link_to  broker.email, user_path(broker), class: "btn btn-outline-light text-dark col", data: { turbo: false }%>
