@@ -54,7 +54,7 @@
               </li>
               <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
                 <% days_left = (current_user.trial_ends_at.to_date - Date.current).to_i %>
-                <li class="nav-item dropdown-item nav-link text-warning ps-4 ms-2 tracking-wide" style="font-size: 14px;">
+                <li class="nav-item dropdown-item nav-link text-warning ps-0 ms-2 tracking-wide" style="font-size: 14px;">
                   <%= pluralize(days_left, "day") %> left in trial. 
                   <%= link_to 'Subscribe', new_subscription_path, class: "text-warning fw-bold #{'active' if current_page?(new_subscription_path)}" %>
                 </li>
