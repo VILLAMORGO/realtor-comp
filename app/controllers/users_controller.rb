@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  before_action :verify_is_admin, only: [:index, :edit, :show, :destroy]
+  before_action :verify_is_admin, only: [:index, :edit, :destroy]
 
   def index
     @q = User.ransack(params[:q])
