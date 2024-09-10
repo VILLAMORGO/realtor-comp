@@ -47,7 +47,7 @@
               </li>
               <li><hr class="dropdown-divider"></li>
               <li class="nav-item dropdown-item d-flex flex-row align-items-center ps-1">
-                <%= link_to edit_user_registration_path, class: "nav-link d-flex flex-row align-items-center #{'active' if current_page?(edit_user_registration_path)}", style: "cursor: pointer;" do %>
+                <%= link_to user_path(current_user), class: "nav-link d-flex flex-row align-items-center w-100 #{'active' if current_page?(user_path(current_user))}", style: "cursor: pointer;" do %>
                   <i class="bi bi-person-square ps-1 me-3 my-auto" style="font-size: 19px;"></i>
                   <span class="my-auto" style="font-size: 14px;">Your Profile</span>
                 <% end %>
@@ -56,7 +56,7 @@
                 <% days_left = (current_user.trial_ends_at.to_date - Date.current).to_i %>
                 <li class="nav-item dropdown-item nav-link text-warning ps-0 ms-2 tracking-wide" style="font-size: 14px;">
                   <%= pluralize(days_left, "day") %> left in trial. 
-                  <%= link_to 'Subscribe', new_subscription_path, class: "text-warning fw-bold #{'active' if current_page?(new_subscription_path)}" %>
+                  <%= link_to 'Subscribe', new_subscription_path, class: "text-warning fw-bold w-100 #{'active' if current_page?(new_subscription_path)}" %>
                 </li>
               <% end %>
               <li><hr class="dropdown-divider"></li>
@@ -146,7 +146,7 @@
               </li>
               <li><hr class="dropdown-divider"></li>
               <li class="nav-item dropdown-item d-flex flex-row align-items-center">
-                <%= link_to edit_user_registration_path, class: "nav-link d-flex flex-row align-items-center #{'active' if current_page?(edit_user_registration_path)}", style: "cursor: pointer;" do %>
+                <%= link_to user_path(current_user), class: "nav-link d-flex flex-row align-items-center w-100 #{'active' if current_page?(user_path(current_user))}", style: "cursor: pointer;" do %>
                   <i class="bi bi-person-square ms-2 me-3 my-auto" style="font-size: 19px;"></i>
                   <span class="my-auto" style="font-size: 14px;">Your Profile</span>
                 <% end %>
@@ -160,13 +160,13 @@
               <% end %>
               <li><hr class="dropdown-divider"></li>
               <li class="nav-item dropdown-item d-flex flex-row align-items-center">
-                <%= link_to edit_user_registration_path, class: "nav-link d-flex flex-row align-items-center #{'active' if current_page?(edit_user_registration_path)}", style: "cursor: pointer;" do %>
+                <%= link_to edit_user_registration_path, class: "nav-link d-flex flex-row align-items-center w-100 #{'active' if current_page?(edit_user_registration_path)}", style: "cursor: pointer;" do %>
                   <i class="bi bi-gear ms-2 me-3 my-auto" style="font-size: 19px;"></i>
                   <span class="my-auto tracking-wide" style="font-size: 14px;">Account settings</span>
                 <% end %>
               </li>
               <li class="nav-item dropdown-item d-flex flex-row align-items-center">
-                <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link d-flex flex-row align-items-center #{'active' if current_page?(destroy_user_session_path)}", style: "cursor: pointer;" do %>
+                <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link d-flex flex-row align-items-center w-100 #{'active' if current_page?(destroy_user_session_path)}", style: "cursor: pointer;" do %>
                   <i class="bi bi-box-arrow-left ms-2 me-3 my-auto" style="font-size: 19px;"></i>
                   <span class="my-auto tracking-wide" style="font-size: 14px;">Log Out</span>
                 <% end %>
@@ -174,13 +174,13 @@
             </ul>
           </li>
           <li class="nav-item dropdown-item mobile-links" style="display: none;">
-            <%= link_to edit_user_registration_path, class: "nav-link d-flex flex-row align-items-center #{'active' if current_page?(edit_user_registration_path)}", style: "cursor: pointer;" do %>
+            <%= link_to edit_user_registration_path, class: "nav-link d-flex flex-row align-items-center w-100 #{'active' if current_page?(edit_user_registration_path)}", style: "cursor: pointer;" do %>
               <i class="bi bi-gear me-2 my-auto" style="font-size: 19px;"></i>
               <span class="my-auto tracking-wide" style="font-size: 14px;">Account settings</span>
             <% end %>
           </li>
           <li class="nav-item dropdown-item mobile-links mb-3" style="display: none;">
-            <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link d-flex flex-row align-items-center #{'active' if current_page?(destroy_user_session_path)}", style: "cursor: pointer;" do %>
+            <%= link_to destroy_user_session_path, data: { turbo_method: :delete }, class: "nav-link d-flex flex-row w-100 align-items-center #{'active' if current_page?(destroy_user_session_path)}", style: "cursor: pointer;" do %>
               <i class="bi bi-box-arrow-left me-2 my-auto" style="font-size: 19px;"></i>
               <span class="my-auto tracking-wide" style="font-size: 14px;">Log Out</span>
             <% end %>
