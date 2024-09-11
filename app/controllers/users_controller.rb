@@ -85,10 +85,16 @@ class UsersController < ApplicationController
     redirect_to users_path, notice: "You successfully deleted #{@user.email}'s profile."
   end
 
+  def remove_profile_picture
+    @user = User.find(params[:id])
+    @user.profile_picture.purge_later # Use purge for synchronous, purge_later for async
+    redirect_to @user, notice: "Profile picture was successfully deleted."
+  end
+
   private
 
   def user_params
-    params.require(:user).permit(:email, :password, :password_confirmation, :status, :first_name, :last_name, :mls_number, :state, :street_address, :home_address, :city_address, :zip_code, :phone_number, :realtor_license_number, :broker_first_name, :broker_last_name, :broker_email, :broker_phone_number, :role)
+    params.require(:user).permit(:email, :password, :password_confirmation, :status, :first_name, :last_name, :mls_number, :state, :street_address, :home_address, :city_address, :zip_code, :phone_number, :realtor_license_number, :broker_first_name, :broker_last_name, :broker_email, :broker_phone_number, :role, :profile_picture)
   end
 
   def verify_is_admin

@@ -2,13 +2,77 @@
 
 <div class="card mt-5 py-5 px-3 mx-auto text-dark shadow border border-0 bg-color col-12 col-md-8">
     <div class="card-header d-flex flex-column flex-md-row bg-opacity-25 bg-color ">
-        <div class="me-3 w-full h-auto d-flex justify-content-end" style="min-height: 100px;">
-            <% if  user.profile_picture.representable? %>
-                <%= image_tag rails_storage_proxy_path(user.profile_picture), style:"width: 100px; height: 100px;", class:"rounded-circle border border-3 border-primary" %>
-            <% else %>
-                <i class="bi bi-person-circle mx-2 d-flex rounded-circle border border-3 border-primary", style="font-size: 100px; cursor: pointer;"></i>
+
+       
+        <!-- The dropdown menu for actions -->
+        <div class="dropdown-center">
+            <label for="file-input" class="me-3 w-full h-auto d-flex justify-content-end" style="min-height: 100px; cursor: pointer;" data-bs-toggle="dropdown">
+                <% if user.profile_picture.attached? %>
+                    <%= image_tag rails_storage_proxy_path(user.profile_picture), style: "width: 100px; height: 100px;", class: "rounded-circle border border-3 border-primary", id: "profile-picture" %>
+                    <div class="bg-opacity-25 bg-color border border-primary rounded-circle d-flex justify-content-center align-items-center position-absolute" style="width: 25px; height: 25px; z-index: 1; bottom: 1px; padding: 14px;">
+                        <i class="bi bi-pencil text-primary" style="font-size: 17px"></i>
+                    </div>
+                <% else %>
+                    <i class="bi bi-person-circle mx-2 d-flex rounded-circle border border-3 border-primary" style="font-size: 100px;" id="default-picture"></i>
+                <% end %>
+            </label>
+
+            <!-- Dropdown menu with options -->
+            <ul class="dropdown-menu dropdown-menu-end dropdown-menu-md-start mt-1 me-1 ms-md-2 shadow-sm bg-color bg-opacity-25">
+                <!-- See profile picture -->
+                <li class="nav-item dropdown-item nav-link ps-0 tracking-wide" style="font-size: 14px;">
+                    <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#viewProfilePictureModal">
+                        <i class="bi bi-person-video pe-1"></i>
+                        See profile picture
+                    </a>
+                </li>
+                
+                <!-- Trigger file input for uploading a new profile picture -->
+                <li class="nav-item dropdown-item nav-link ps-0 tracking-wide" style="font-size: 14px;">
+                    <a class="dropdown-item" href="#" onclick="document.getElementById('file-input').click(); return false;">
+                        <i class="bi bi-images pe-1"></i>
+                        Upload profile picture
+                    </a>
+                </li>
+
+                <!-- Divider -->
+                <li><hr class="dropdown-divider"></li>
+
+                <!-- Delete profile picture -->
+                <% if user.profile_picture.attached? %>
+                <li class="nav-item dropdown-item nav-link tracking-wide d-flex" style="font-size: 14px;">
+                    <i class="bi bi-trash text-danger dropdown-item pe-1"></i>
+                    <%= link_to"Delete profile picture", remove_profile_picture_user_path(user), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this profile picture?" }, class: "dropdown-item text-danger ps-1" %>
+                </li>
+                <% end %>
+            </ul>
+            </div>
+
+            <!-- Hidden file input for uploading new profile picture -->
+            <%= form_with model: user, url: user_path(user), method: :patch, local: true, multipart: true, html: { id: "profile-picture-form" } do |f| %>
+            <%= f.file_field :profile_picture, class: "d-none", id: "file-input", accept: "image/*", onchange: "document.getElementById('profile-picture-form').submit();" %>
             <% end %>
+
+            <!-- Modal for viewing the profile picture -->
+            <div class="modal fade" id="viewProfilePictureModal" tabindex="-1" aria-labelledby="viewProfilePictureModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="viewProfilePictureModalLabel">Profile Picture</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <% if user.profile_picture.attached? %>
+                    <%= image_tag rails_storage_proxy_path(user.profile_picture), class: "img-fluid rounded-circle" %>
+                    <% else %>
+                    <p>No profile picture uploaded.</p>
+                    <% end %>
+                </div>
+                </div>
+            </div>
         </div>
+            
+         
         <div class="">
             <h5 class="card-title mb-1 fs-5 tracking-wide"><%= user.first_name %> <%= user.last_name %></h5>
             <h5 class="card-title mb-3 fs-6 text-capitalize text-secondary"><%= user.role %></h5>
