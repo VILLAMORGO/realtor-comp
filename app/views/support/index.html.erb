@@ -15,9 +15,20 @@
               <div>
                 <p class="fs-6"><strong>How can I reset my password?</strong></p>
                 <% if user_signed_in? %>
-                  <p>A: If you've forgotten your password and want to change it, you can do so from your account settings <%= link_to 'here', edit_user_registration_path %>.</p>
+                  <p>If you've forgotten your password and want to change it, you can do so from your account settings <%= link_to 'here', edit_user_registration_path %>.</p>
                 <% else %>
-                  <p>A: If you've forgotten your password, you can reset it by clicking on the <%= link_to 'Forgot your password?', new_user_password_path %> link on the sign-in page.</p>
+                  <p>If you've forgotten your password, you can reset it by clicking on the <%= link_to 'Forgot your password?', new_user_password_path %> link on the sign-in page.</p>
+                <% end %>
+              </div>
+            </div>
+            <div class="d-flex flex-row">
+              <i class="bi bi-question-circle-fill fs-5 text-info me-2"></i>
+              <div>
+                <p class="fs-6"><strong>How can I add a profile picture?</strong></p>
+                <% if user_signed_in? %>
+                  <p>If you want to add a profile picture, you can upload an image through this link <%= link_to 'here', user_path(current_user) %>.</p>
+                <% else %>
+                  <p>If you want to add a profile picture, you can upload your photo by visiting your own profile and clicking the person icon above your name.</p>
                 <% end %>
               </div>
             </div>
