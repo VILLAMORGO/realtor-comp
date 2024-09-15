@@ -1,6 +1,6 @@
 <!-- Existing Listing Tables with Search -->
 <div class="card mt-5 text-center responsive-users col-md-9 mx-auto rounded">
-  <div class="card-header d-flex align-items-center justify-content-between border-0 py-4" style="background-color: white;">
+  <div class="card-header d-flex align-items-center justify-content-between border-0 py-4 px-2" style="background-color: white;">
     
     <!-- Items per page selection form -->
     <div class="text-start col-md-1">
@@ -16,14 +16,14 @@
 
     <div class="d-flex">
       <!-- Search button for small screens -->
-      <div class="d-md-none mx-3">
+      <div class="d-md-none ms-1">
         <button type="button" class="btn btn-outline-secondary rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#searchModal">
           Search Listings...
           <i class="bi bi-search"></i>
         </button>
       </div>
 
-      <%= link_to 'Add Listing', new_listing_path, class: 'btn btn-info ms-4', style: 'font-size: 12px;' %>
+      <%= link_to 'Add Listing', new_listing_path, class: 'btn btn-info ms-2 px-2', style: 'font-size: 12px;' %>
     </div>
 
     <!-- Search functionality for larger screens -->
