@@ -3,11 +3,17 @@ class ApplicationController < ActionController::Base
   before_action :check_subscription, unless: :devise_controller?
   before_action :set_current_user, if: :user_signed_in?
   before_action :notify_trial_expiration, if: :user_signed_in?
+  before_action :set_ransack_search
 
   private
 
   def set_current_user
     Current.user = current_user
+  end
+
+  def set_ransack_search
+    @q = User.ransack(params[:q])
+    @search_users = @q.result
   end
 
   def check_subscription
