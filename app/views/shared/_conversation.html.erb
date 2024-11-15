@@ -1,0 +1,10 @@
+<div>
+  <h5>Conversation with <%= conversation.user.first_name %> <%= conversation.user.last_name %></h5>
+  <div class="messages">
+    <% conversation.messages.each do |message| %>
+      <div class="message">
+        <p><strong><%= message.sender.first_name %>:</strong> <%= message.content %></p>
+      </div>
+    <% end %>
+  </div>
+</div>
