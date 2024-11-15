@@ -6,6 +6,10 @@ class User < ApplicationRecord
   has_many :listings, dependent: :destroy
   has_many :subscriptions, dependent: :destroy
 
+  has_many :messages
+  has_many :participants
+  has_many :conversations, through: :participants
+
   has_one_attached :profile_picture
 
   validates :email, presence: true, uniqueness: true

@@ -23,6 +23,10 @@ Rails.application.routes.draw do
     member do
       delete :remove_profile_picture # Custom route to remove the profile picture
     end
+
+    collection do
+      get :search
+    end
   end
 
   resources :pending_requests, only: [:index, :update]
@@ -36,6 +40,11 @@ Rails.application.routes.draw do
       post :create_checkout_session
     end
   end
+
+  resources :conversations do
+    resources :messages, only: [:create]
+  end
+  resources :messages, only: [:new, :create, :index, :show]
 
   authenticated :user, lambda { |u| u.admin? } do
     root 'users#index', as: :authenticated_admin_root

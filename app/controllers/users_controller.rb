@@ -91,6 +91,16 @@ class UsersController < ApplicationController
     redirect_to @user, notice: "Profile picture was successfully deleted."
   end
 
+  def search
+    @q = User.ransack(params[:q])
+    @search_users = @q.result(distinct: true)
+
+    respond_to do |format|
+      format.turbo_stream { render turbo_stream: turbo_stream.replace("search_results", partial: "users/search_results", locals: { search_users: @search_users }) }
+      format.html # for normal requests
+    end
+  end
+
   private
 
   def user_params
