@@ -1,6 +1,6 @@
 class PendingRequestsController < ApplicationController
 
-    before_action :verify_is_admin, only: [:index, :show, :update]
+    before_action :verify_is_admin, only: [:index, :show, :update, :destroy]
 
     def index
         @q = User.ransack(params[:q])
@@ -10,12 +10,20 @@ class PendingRequestsController < ApplicationController
         @page = params[:page] || 1
 
         @requests = @users.where(status: "Pending")
-                        .order(created_at: :desc)
-                        .paginate(page: @page, per_page: @per_page)
+                          .order(created_at: :desc)
+                          .paginate(page: @page, per_page: @per_page)
     end  
     
     def show
 
+    end
+
+    def destroy
+        @user = User.find(params[:id])
+        
+        if @user.destroy
+          redirect_to pending_requests_path, notice: "You successfully deleted #{@user.email}'s application."
+        end
     end
 
     def update

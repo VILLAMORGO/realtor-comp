@@ -110,7 +110,12 @@
                         <td class="text-capitalize"><%= user.created_at.strftime("%B %d, %Y") %></td>
                         <td>
                           <%= link_to user_path(user), class: "text-dark text-decoration-none", data: { turbo: false } do %>
-                            <i class="bi bi-person-lines-fill"></i>
+                            <i class="bi bi-person-square"></i>
+                          <% end %>
+                          <% if user.role != "admin" %>
+                            <%= link_to user_path(user), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this user?" }, class: "text-danger text-decoration-none ms-1" do %>
+                              <i class="bi bi-trash3"></i>
+                            <% end %>
                           <% end %>
                         </td>
                       </tr>
@@ -369,6 +374,9 @@
                       <%= link_to edit_user_path(agent), data: { turbo: false } do %>
                         <i class="bi bi-person-fill-gear fs-3 text-info" style="cursor: pointer;"></i>
                       <% end %>
+                      <%= link_to user_path(agent), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this user?" } do %>
+                        <i class="bi bi-trash3 fs-4 text-danger ms-1" style="cursor: pointer;"></i>
+                      <% end %>
                     </td>
                   </tr>
                 <% end %>
@@ -425,6 +433,9 @@
                     <%= link_to edit_user_path(broker), data: { turbo: false } do %>
                       <i class="bi bi-person-fill-gear fs-3 text-info" style="cursor: pointer;"></i>
                     <% end %>
+                    <%= link_to user_path(broker), data: { turbo_method: :delete, turbo_confirm: "Are you sure you want to delete this user?" } do %>
+                        <i class="bi bi-trash3 fs-4 text-danger ms-1" style="cursor: pointer;"></i>
+                      <% end %>
                   </td>
                 </tr>
               <% end %>

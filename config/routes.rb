@@ -25,7 +25,7 @@ Rails.application.routes.draw do
     end
   end
 
-  resources :pending_requests, only: [:index, :update]
+  resources :pending_requests, only: [:index, :update, :destroy]
   resources :declined_requests, only: [:index, :destroy]
   resources :listings, only: [:index, :create, :edit, :update, :destroy, :new, :show] do
     patch :toggle_active, on: :member

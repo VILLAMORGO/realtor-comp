@@ -9,9 +9,9 @@ class DeclinedRequestsController < ApplicationController
         @per_page = (params[:per_page] || 10).to_i
         @page = params[:page] || 1
 
-        @requests =  @users.where(role: "agent", status: "Declined")
-                    .order(:created_at)
-                    .paginate(page: @page, per_page: @per_page)
+        @requests =  @users.where(status: "Declined")
+                           .order(created_at: :desc)
+                           .paginate(page: @page, per_page: @per_page)
     end
 
     def show
@@ -22,7 +22,6 @@ class DeclinedRequestsController < ApplicationController
         @user = User.find(params[:id])
         
         if @user.destroy
-          UserMailer.with(user: @user).destroy_account_email.deliver_now
           redirect_to declined_requests_path, notice: "You successfully deleted #{@user.email}'s application."
         end
     end
