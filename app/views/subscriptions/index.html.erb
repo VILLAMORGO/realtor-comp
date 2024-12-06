@@ -17,7 +17,7 @@
                 Started: <%= all_subscription.created_at.strftime("%A, %B %d, %Y") %>
               </p>
               <div class="card-body px-3 pb-4 py-2">
-                <p><strong>By:</strong> <%= User.find_by(id: all_subscription.user_id ).first_name.capitalize %> <%= User.find_by(id: all_subscription.user_id ).last_name.capitalize %></p>
+                <p><strong>By:</strong> <%= User.find_by_id(all_subscription.user_id ).first_name.capitalize %> <%= User.find_by_id(all_subscription.user_id ).last_name.capitalize %></p>
                 <p><strong>Status:</strong> <%= all_subscription.status.capitalize %></p>
                 <p><strong>Price:</strong> <%= number_to_currency(all_subscription.price) %></p>
                 <p><strong>Next Billing Date:</strong> <%= all_subscription.next_billing_date.strftime("%A, %B %d, %Y") %></p>

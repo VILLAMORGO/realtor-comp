@@ -36,7 +36,7 @@ class UsersController < ApplicationController
   
     # Report Data
     @total_users = User.count
-    @users_by_role = User.group(:role).count
+    @users_by_role = User.group(:role).where(status: "Approved").count
     @users_by_status = User.group(:status).count
     @recently_registered_users = @q.result.where('created_at >= ?', 1.week.ago)
     @recently_subscribed_users = User.joins(:subscriptions)
