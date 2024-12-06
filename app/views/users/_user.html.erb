@@ -81,81 +81,83 @@
     </div>
 </div>
 
-<div class="card mt-5 p-4 mx-auto text-dark shadow border border-0 bg-color col-12 col-md-8 main-font">
-  <h3 class="card-title text-uppercase">Profile</h3>
-  <div class="row">
-    <h4 class="card-title bg-color card-title text-uppercase text-secondary mt-3">
-        About
-    </h4>
+<div class="d-flex flex-wrap justify-content-between col-md-8 mx-auto">
+    <div class="card mt-5 p-4 ms-0 text-dark shadow border border-0 bg-color col-12 col-md-3 main-font">
+        <h3 class="card-title text-uppercase">Profile</h3>
+        <div class="row">
+            <h4 class="card-title bg-color card-title text-uppercase text-secondary mt-3 mb-0">
+                About
+            </h4>
 
-    <div class="card-body overflow-auto">
-    
-        <p class="mt-2 card-text tracking-wide">
-            Date Added: <%= user.created_at.strftime("%A %B %d, %Y") %>
-        </p>
-        <p class="mt-2 card-text tracking-wide">
-            Last profile update: <%= user.updated_at.strftime("%A %B %d, %Y") %>
-        </p>
-
-        <p class="mt-2 card-text tracking-wide">
-            Role: <%= user.role %>
-        </p>
-
-        <p class="mt-2 card-text tracking-wide">
-            MLS Number: <%= user.mls_number %> 
-        </p>
-
-        <p class="mt-2 card-text tracking-wide">
-            Zip Code: <%= user.zip_code %>
-        </p>
-        
-        <p class="mt-2 card-text tracking-wide">
-            Realtor License Number: <%= user.realtor_license_number %>
-        </p>
+            <div class="card-body overflow-auto">
             
-    </div>
-  </div>
-</div>
+                <p class="mt-0 card-text tracking-wide">
+                    Date Added: <%= user.created_at.strftime("%A %B %d, %Y") %>
+                </p>
+                <p class="mt-2 card-text tracking-wide">
+                    Last profile update: <%= user.updated_at.strftime("%A %B %d, %Y") %>
+                </p>
 
-<div class="card mt-5 mb-4 mx-auto text-dark border border-0 bg-color col-12 col-md-8 main-font">
-  <h3 class="px-2">Listings</h3>
-  <div class="row">
-    <% if user.listings.any?  %>
-        <% user.listings.each do |listing| %>
-            <div class="col-md-4 mb-1">
-                <div class="card rounded-3 mt-2 shadow border border-0 bg-color">
-                    <div class="card-body px-2">
-                        <h5 class="card-title text-start mt-2 ps-3 mb-2 fs-4 tracking-wide">Buyer's Agent Compensation</h5>
-                        <p class="text-secondary fw-medium ps-3 tracking-wider opacity-75 mb-3 normal"><%= listing.created_at.strftime("%A %B %d, %Y") %></p>
-                        <div class="card-body px-3 pb-4 py-2">
-                            <p><strong>MLS Number:</strong> <%= listing.listing_mls_number %></p>
-                            <p>
-                            <strong>
-                                Commission Amount:
-                            </strong> 
-                            <% if listing.commission_type === "percentage" %>
-                                <%= number_to_percentage(listing.listing_commission_amount, precision: 5, strip_insignificant_zeros: true) %>
-                            <% else %>
-                                <%= number_to_currency(listing.listing_commission_amount) %>
-                            <% end %>
-                            </p>
-                            <p><strong>Commission type:</strong>
-                            <%= listing.commission_type %>
-                            </p>
-                            <p><strong>Notes:</strong> <%= listing.notes %></p>
-                        </div>
-                        <div class="d-flex justify-content-start mt-4">
-                            <% if listing.user_id == current_user.id %>
-                            <%= link_to 'Edit', edit_listing_path(listing), class: 'btn btn-primary text-center mt-2 rounded-pill px-4' %>
-                            <% end %>
+                <p class="mt-2 card-text tracking-wide">
+                    MLS Number: <%= user.mls_number %> 
+                </p>
+
+                <p class="mt-2 card-text tracking-wide">
+                    Zip Code: <%= user.zip_code %>
+                </p>
+
+                <p class="mt-2 card-text tracking-wide">
+                    State: <%= full_state_name(user.state) %>
+                </p>
+                
+                <p class="mt-2 card-text tracking-wide">
+                    Realtor License Number: <%= user.realtor_license_number %>
+                </p>
+                    
+            </div>
+        </div>
+    </div>
+
+    <div class="card mt-5 mb-4 me-0 text-dark border border-0 bg-color col-12 col-md-8 main-font">
+        <h3 class="px-2">Listings</h3>
+        <div class="row">
+            <% if user.listings.any?  %>
+                <% user.listings.each do |listing| %>
+                    <div class="col-md-4 mb-1">
+                        <div class="card rounded-3 mt-2 shadow border border-0 bg-color">
+                            <div class="card-body px-2">
+                                <h5 class="card-title text-start mt-2 ps-3 mb-2 fs-4 tracking-wide">Buyer's Agent Compensation</h5>
+                                <p class="text-secondary fw-medium ps-3 tracking-wider opacity-75 mb-3 normal"><%= listing.created_at.strftime("%A %B %d, %Y") %></p>
+                                <div class="card-body px-3 pb-4 py-2">
+                                    <p><strong>MLS Number:</strong> <%= listing.listing_mls_number %></p>
+                                    <p>
+                                    <strong>
+                                        Commission Amount:
+                                    </strong> 
+                                    <% if listing.commission_type === "percentage" %>
+                                        <%= number_to_percentage(listing.listing_commission_amount, precision: 5, strip_insignificant_zeros: true) %>
+                                    <% else %>
+                                        <%= number_to_currency(listing.listing_commission_amount) %>
+                                    <% end %>
+                                    </p>
+                                    <p><strong>Commission type:</strong>
+                                    <%= listing.commission_type %>
+                                    </p>
+                                    <p><strong>Notes:</strong> <%= listing.notes %></p>
+                                </div>
+                                <div class="d-flex justify-content-start mt-4">
+                                    <% if listing.user_id == current_user.id %>
+                                    <%= link_to 'Edit', edit_listing_path(listing), class: 'btn btn-primary text-center mt-2 rounded-pill px-4' %>
+                                    <% end %>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </div>
-        <% end %>
-    <% else %>
-        <p class="card-text text-center mt-4">No listings found.</p>
-    <% end %>
-    
-  </div>
+                <% end %>
+            <% else %>
+                <p class="card-text text-center mt-4">No listings found.</p>
+            <% end %>
+            
+        </div>
+    </div>
 </div>

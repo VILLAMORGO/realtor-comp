@@ -48,7 +48,7 @@ class StripeWebhooksController < ApplicationController
 
   def handle_checkout_session_completed(session)
     customer_email = session['customer_email'] || session.dig('customer_details', 'email')
-    user = User.find_by(email: customer_email)
+    user = User.find_by_email(customer_email)
   
     if user
       subscription = Stripe::Subscription.retrieve(session['subscription'])
@@ -81,7 +81,7 @@ class StripeWebhooksController < ApplicationController
 
   def handle_invoice_payment_succeeded(invoice)
     customer_email = invoice['customer_email']
-    user = User.find_by(email: customer_email)
+    user = User.find_by_email(customer_email)
 
     if user
       Rails.logger.info "Payment succeeded for user #{user.email}."
@@ -93,7 +93,7 @@ class StripeWebhooksController < ApplicationController
 
   def handle_subscription_updated(subscription)
     customer = Stripe::Customer.retrieve(subscription['customer'])
-    user = User.find_by(email: customer.email)
+    user = User.find_by_email(customer.email)
   
     if user
       interval = subscription['items']['data'].first['price']['recurring']['interval']
@@ -103,7 +103,7 @@ class StripeWebhooksController < ApplicationController
       next_billing_date = Time.at(subscription['current_period_end'])
   
       # Find the subscription record
-      user_subscription = user.subscriptions.find_by(subscription_id: subscription['id'])
+      user_subscription = user.subscriptions.find_by_subscription_id(subscription['id'])
   
       if user_subscription
         # Update the subscription record
