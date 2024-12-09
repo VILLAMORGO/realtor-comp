@@ -10,21 +10,39 @@ module Admin
     end
 
     def create
-      if params[:file].present?
+      if params[:file].present? && File.extname(params[:file].path) == ".csv"
         csv_file = params[:file].path
-        CSV.foreach(csv_file, headers: true) do |row|
-          user_params = row.to_hash
-          user = User.new(user_params)
-          if user.save
-              # UserMailer.with(user: user).registration_email.deliver_now
+        success_count = 0
+        error_count = 0
+        errors = []
+
+        CSV.foreach(csv_file, headers: true).with_index(1) do |row, line_number|
+          # Validate each row's data here to ensure it’s valid (e.g., email format, phone number)
+          if valid_row?(row)
+            user_params = row.to_hash
+            user = User.new(user_params)
+
+            if user.save
+              success_count += 1
+            else
+              error_count += 1
+              errors << "Line #{line_number}: #{user.errors.full_messages.to_sentence}"
+            end
           else
-            # Handle error for individual user creation
+            error_count += 1
+            errors << "Line #{line_number}: Invalid row data"
           end
         end
-        flash[:notice] = "Users were successfully uploaded."
+
+        if errors.any?
+          flash[:alert] = "Some users could not be uploaded:\n" + errors.join("\n")
+        else
+          flash[:notice] = "#{success_count} users successfully uploaded. #{error_count} errors occurred."
+        end
       else
-        flash[:alert] = "Please select a CSV file."
+        flash[:alert] = "Please upload a valid CSV file."
       end
+
       redirect_to new_admin_bulk_upload_path
     end
 
@@ -40,6 +58,12 @@ module Admin
       unless current_user.admin?
         redirect_to authenticated_user_root_path, notice: "You must be an admin to perform this action."
       end
+    end
+
+    def valid_row?(row)
+      # Example: Check if the email is valid
+      email = row["email"]
+      email.present? && email.match(/\A[^@\s]+@[^@\s]+\z/)
     end
 
     def generate_csv_template

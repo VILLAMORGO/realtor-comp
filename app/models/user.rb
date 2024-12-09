@@ -48,7 +48,11 @@ class User < ApplicationRecord
   end
 
   def self.ransackable_attributes(auth_object = nil)
-    ["first_name", "last_name", "mls_number", "email", "status", "role", "state", "created_at"]
+    if auth_object && auth_object.admin?
+      ["first_name", "last_name", "mls_number", "email", "role", "state", "created_at"]
+    else
+      ["first_name", "last_name",  "email"]
+    end
   end
 
   def self.ransackable_associations(auth_object = nil)

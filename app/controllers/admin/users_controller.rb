@@ -7,8 +7,7 @@ module Admin
     end
 
     def create
-      @user = User.new(user_params)
-      @user.status = "Pending"
+      @user = User.new(user_params.merge(status: "Pending"))
       if @user.save
         redirect_to some_path, notice: 'User was successfully created.'
       else

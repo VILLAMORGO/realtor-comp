@@ -16,8 +16,8 @@ class Users::RegistrationsController < Devise::RegistrationsController
     resource.status = 'Pending' # Set initial status to 'Pending'
 
     if resource.save
+      resource.send_confirmation_instructions # Send confirmation email
       if resource.active_for_authentication?
-        resource.send_confirmation_instructions # Send confirmation email
         set_flash_message! :notice, :signed_up
         sign_up(resource_name, resource)
         respond_with resource, location: after_sign_up_path_for(resource)

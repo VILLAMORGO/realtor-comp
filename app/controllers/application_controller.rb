@@ -21,21 +21,18 @@ class ApplicationController < ActionController::Base
   end
 
   def notify_trial_expiration
-    if current_user.subscription_status == "trial" && current_user.trial_ends_at.present?
-      time_left = current_user.trial_ends_at - Time.current
-      case time_left
-      when 1.hour
-        message = "Your trial period is about to expire in less than an hour. Please consider subscribing to continue using the service."
-      when 1.day
-        message = "Your trial period is about to expire in 1 day. Please consider subscribing to continue using the service."
-      when 7.days
-        message = "Your trial period is about to expire in 7 days. Please consider subscribing to continue using the service."
-      else
-        return # Exit the method if none of the cases match
-      end
+    return unless current_user.subscription_status == "trial" && current_user.trial_ends_at.present?
   
-      # Only set the flash notice if not on the subscription page
-      flash.now[:notice] = message unless on_subscription_page?
-    end
+    time_left = current_user.trial_ends_at - Time.current
+  
+    # Define messages based on time_left
+    message = case time_left
+              when 1.hour then "Your trial period is about to expire in less than an hour. Please consider subscribing to continue using the service."
+              when 1.day then "Your trial period is about to expire in 1 day. Please consider subscribing to continue using the service."
+              when 7.days then "Your trial period is about to expire in 7 days. Please consider subscribing to continue using the service."
+              else return # Exit the method if no match
+              end
+  
+    flash.now[:notice] = message unless on_subscription_page?
   end
 end

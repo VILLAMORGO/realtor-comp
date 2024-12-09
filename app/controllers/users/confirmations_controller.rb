@@ -15,8 +15,14 @@ class Users::ConfirmationsController < Devise::ConfirmationsController
   def show
     super do |resource|
       if resource.errors.empty?
-        resource.update(status: 'Approved', trial_ends_at: 90.days.from_now, subscription_status: 'trial')
-        UserMailer.with(user: resource).activated_email.deliver_later
+        if resource.update(status: 'Approved', trial_ends_at: 90.days.from_now, subscription_status: 'trial')
+          UserMailer.with(user: resource).activated_email.deliver_later
+        else
+          # Handle error if update fails
+          flash[:alert] = "There was an error activating your account. Please try again later."
+        end
+      else
+        flash[:alert] = "There was an issue with your confirmation. Please try again."
       end
     end
   end
