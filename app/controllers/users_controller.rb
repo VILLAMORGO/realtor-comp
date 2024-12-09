@@ -4,8 +4,8 @@ class UsersController < ApplicationController
   def index
     @q = User.ransack(params[:q])
     @users = @q.result
-  
-    @per_page = [params[:per_page].to_i, 100].min.clamp(1, 100) # Enforce max/min limits
+
+    @per_page = [(params[:per_page] || 10).to_i].min.clamp(1, 100) # Enforce max/min limits
     @page = params[:page].to_i.clamp(1, Float::INFINITY)
   
     # Fetching agents and brokers separately with pagination
