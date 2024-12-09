@@ -5,8 +5,8 @@ class UsersController < ApplicationController
     @q = User.ransack(params[:q])
     @users = @q.result
   
-    @per_page = (params[:per_page] || 10).to_i
-    @page = params[:page] || 1
+    @per_page = [params[:per_page].to_i, 100].min.clamp(1, 100) # Enforce max/min limits
+    @page = params[:page].to_i.clamp(1, Float::INFINITY)
   
     # Fetching agents and brokers separately with pagination
     @agents = @users.where(role: 'agent', status: 'Approved').paginate(page: @page, per_page: @per_page)
@@ -35,7 +35,7 @@ class UsersController < ApplicationController
     end
   
     # Report Data
-    @total_users = User.count
+    @total_users = User.where(status: "Approved").count
     @users_by_role = User.group(:role).where(status: "Approved").count
     @users_by_status = User.group(:status).count
     @recently_registered_users = @q.result.where('created_at >= ?', 1.week.ago)
