@@ -15,14 +15,14 @@
               </div>
             <% end %>
           <% end %>
-          <%= f.label :email, class: "mb-1 fw-bold medium" %>
-          <%= f.email_field :email, class: "form-control bg-input-color", placeholder: "Email", required: true %>
+          <%= f.label :email, class: "mb-1 fw-bold medium", for: "email" %>
+          <%= f.email_field :email, class: "form-control bg-input-color", placeholder: "Email", id: "email" , required: true, autocomplete: "email" %>
           <div class="invalid-feedback">
             Please provide a valid email.
           </div>
         </div>
         <div class="form-group col position-relative">
-          <%= f.label :password, class: "mb-1 mt-3 fw-bold medium" %>
+          <%= f.label :password, class: "mb-1 mt-3 fw-bold medium", for: "password" %>
           <div class="input-group has-validation">
             <%= f.password_field :password, class: "form-control bg-input-color", placeholder: "Password", id: "password", required: true %>
             <button type="button" class="btn btn-outline-secondary position-absolute end-0 top-50 translate-middle-y" style="border: none; background: none; padding: 0;" onclick="togglePassword()">
@@ -36,7 +36,7 @@
       </div>
       <div class="form-check mt-3">
         <%= f.check_box :remember_me, class: "form-check-input", id: "remember_me" %>
-        <%= f.label :remember_me, "Remember me", class: "form-check-label" %>
+        <%= f.label :remember_me, "Remember me", class: "form-check-label", for: "remember_me" %>
       </div>
       <div class="d-flex justify-content-start mt-4">
         <%= f.submit "Sign in", class: "btn btn-primary text-center mt-2 rounded-pill px-4" %>
