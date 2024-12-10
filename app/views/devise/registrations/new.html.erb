@@ -154,6 +154,14 @@
           </div>
         </div>
       </div>
+
+      <%= turbo_frame_tag 'recaptcha' do %>
+      <div class="mb-3 row">
+        <%= recaptcha_v3 action: 'registration', site_key: Rails.application.credentials.recaptcha_v3.recaptcha_site_key, turbolinks: true %>
+      </div>
+      <% end %>
+
+      <%# <%= recaptcha_v3(action: 'registration', noscript: false) %>
       <div class="d-flex justify-content-start mt-4">
         <%= f.submit "Create Account", class: "btn btn-primary text-center mt-2 rounded-pill px-4" %>
       </div>
@@ -177,7 +185,7 @@
     color: black;
   }
 </style>
-
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <script>
 
   (function () {

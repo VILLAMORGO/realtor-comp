@@ -93,3 +93,6 @@ gem 'rack', '~> 2.2'
 
 #Add cron to the subscription
 gem 'whenever', require: false
+
+#Add recaptcha to users registration
+gem 'recaptcha', require: 'recaptcha/rails'
