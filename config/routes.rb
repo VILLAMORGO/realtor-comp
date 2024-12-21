@@ -19,6 +19,10 @@ Rails.application.routes.draw do
     resources :bulk_uploads, only: [:new, :create, :index]
   end
 
+  namespace :broker do
+    resources :users, only: [:index]
+  end
+  
   resources :users, only: [:index, :show, :edit, :update, :destroy] do
     member do
       delete :remove_profile_picture # Custom route to remove the profile picture

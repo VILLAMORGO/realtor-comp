@@ -51,7 +51,7 @@ class User < ApplicationRecord
     if auth_object && auth_object.admin?
       ["first_name", "last_name", "mls_number", "email", "role", "state", "created_at"]
     else
-      ["first_name", "last_name",  "email"]
+      ["first_name", "last_name",  "email", "created_at"]
     end
   end
 
