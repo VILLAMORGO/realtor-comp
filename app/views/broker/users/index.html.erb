@@ -1,0 +1,190 @@
+<!-- Dashboard Header -->
+<div class="card mt-3 text-start responsive-users col-md-9 mx-auto bg-color border-0">
+  <div class="card-header py-4 bg-color border-0 px-0">
+    <h3 class="card-title text-start my-auto fw-bold fs-4 text-uppercase">Dashboard</h3>
+    <p class="text-muted fs-6">Track and manage your agents and their listings efficiently.</p>
+  </div>
+</div>
+
+<!-- Report Section -->
+<div class="mt-2 text-center responsive-users col-md-9 mx-auto">
+  <div class="row">
+
+    <!-- Listings Statistics Card -->
+    <div class="col-lg-4 col-md-6 mb-4">
+      <div class="card border-0 shadow rounded flex-fill responsive-cards pb-2">
+        <div class="card-body pb-2" style="height: 96px;">
+          <div class="d-flex justify-content-between align-items-center">
+            <div>
+              <h5 class="text-uppercase text-muted small fw-semibold mb-2 tracking-wide">Agents Listings Statistics</h5>
+              <h4 class="mb-0 fw-bold text-start fs-5"><%= @total_listings %></h4>
+              <i class="bi bi-list position-absolute top-0 end-0 me-3 mt-3 fs-3 text-info"></i>
+            </div>
+            <div>
+              <svg viewBox="0 0 24 24" height="30" width="30" class="text-primary" xmlns="http://www.w3.org/2000/svg">
+                <!-- SVG Content -->
+              </svg>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col w-auto d-flex flex-column align-items-center">
+      <h5 class="text-uppercase text-muted small fw-semibold mb-2 tracking-wide w-50">Listings by Agent</h5>
+      <%= pie_chart @listing_data, height: "200px", width: "50%", colors: ["#FF6384", "#36A2EB", "#FFCE56"], library: { legend: { position: 'bottom' } } %>
+    </div>
+  </div>
+</div>
+
+<!-- Existing User Tables with Search -->
+<div class="card mt-2 text-center responsive-users col-md-9 mx-auto rounded">
+  <div class="card-header d-flex align-items-center justify-content-between border-0 py-4" style="background-color: white;">
+    
+    <!-- Items per page selection form -->
+    <div class="text-start col-md-1">
+      <%= form_with url: broker_users_path, method: :get, local: true do %>
+        <select name="per_page" id="per_page" onchange="this.form.submit();" class="form-control-sm border-0 compact-select">
+          <option value="5" <%= 'selected' if @per_page.to_i == 5 %>>5</option>
+          <option value="10" <%= 'selected' if @per_page.to_i == 10 %>>10</option>
+          <option value="25" <%= 'selected' if @per_page.to_i == 25 %>>25</option>
+          <option value="100" <%= 'selected' if @per_page.to_i == 100 %>>100</option>
+        </select>
+      <% end %>
+    </div>
+
+    <div class="d-flex">
+      <!-- Search button -->
+      <div class="d-md-none mx-3">
+        <button type="button" class="btn btn-outline-secondary rounded-pill px-3" data-bs-toggle="modal" data-bs-target="#searchModal">
+          Search User...
+          <i class="bi bi-search"></i>
+        </button>
+      </div>
+
+      <!-- Dropdown Menu for Adding Users -->
+      <div class="dropdown">
+        <i class="bi bi-person-fill-add fs-3 text-info" id="addUserDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false" style="font-size: 24px; cursor: pointer;"></i>
+        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="addUserDropdown">
+          <li>
+            <%= link_to "Add Single User", new_admin_user_path, class: "dropdown-item" %>
+          </li>
+          <li>
+            <%= link_to "Add Users from CSV", new_admin_bulk_upload_path, class: "dropdown-item" %>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Search functionality -->
+    <div class="col-md-4 col-lg-4 ms-auto d-flex align-items-center d-none d-md-flex">
+      
+        <%= search_form_for @q, url: broker_users_path, html: { method: :get, class: "input-group" } do |f| %>
+          <%= f.text_field :first_name_cont, class: "form-control small-placeholder mx-1", placeholder: "First name..." %>
+          <%= f.text_field :last_name_cont, class: "form-control small-placeholder mx-1", placeholder: "Last name..." %>
+          <div class="input-group-append d-flex align-items-center">
+            <%= f.submit "Search", class: "btn btn-outline-secondary ms-2" %>
+          </div>
+        <% end %>
+   
+    </div>
+
+  </div>
+</div>
+
+<!-- Search Modal for small screens -->
+<div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="searchModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="searchModalLabel">Search Users</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <%= search_form_for @q, url: users_path, html: { method: :get, class: "input-group" } do |f| %>
+          <%= f.text_field :first_name_cont, class: "form-control small-placeholder mb-2", placeholder: "First name..." %>
+          <%= f.text_field :last_name_cont, class: "form-control small-placeholder mb-2", placeholder: "Last name..." %>
+          <div class="input-group-append d-flex justify-content-end">
+            <%= f.submit "Search", class: "btn btn-outline-secondary" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card border-0 rounded-4 shadow rounded mt-2 text-center responsive-users my-5 col-md-9 mx-auto">
+  <div class="card-header d-flex justify-content-between align-items-center border-0 py-4" style="background-color: white;">
+    <h6 class="card-title text-start px-3 my-auto fw-bold">MY AGENTS</h6>
+    
+  </div>
+
+  <div id="user-carousel" class="carousel slide" data-bs="carousel">
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <%= turbo_frame_tag 'agents_frame' do %>
+          <div class="table-responsive rounded-bottom-3">
+            <table class="table align-middle table-edge table-hover table-nowrap mb-0">
+              <thead class="table-header text-secondary small">
+                <tr>
+                  <th><%= sort_link(@q, :first_name, "Full name", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                  <th><%= sort_link(@q, :email, "Email", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                  <th><%= sort_link(@q, :mls_number, "MLS Number", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                  <th><%= sort_link(@q, :created_at, "Date Registered", remote: true, class: "text-decoration-none main-font table-header text-secondary") %></th>
+                </tr>
+              </thead>
+              <tbody class="list container px-3">
+                <% @agents.each do |agent| %>
+                  <tr class="mx-3">
+                    <td>
+                      <div class="d-flex flex-row justify-content-start">
+                        <div class="avatar avatar-circle avatar-xs me-2 d-flex align-items-center">
+                          <span class="avatar-title text-bg-primary-soft">
+                            <% if  agent.profile_picture.representable? %>
+                              <%= image_tag rails_storage_proxy_path(agent.profile_picture), style: "width: 30px;", class: "rounded-circle mx-2" %>
+                            <% else %>
+                              <i class="bi bi-person-circle mx-2 d-flex ", style="font-size: 30px;"></i>
+                            <% end %>
+                          </span>
+                        </div>
+                        <span class="name fw-bold d-flex align-items-center"><%= agent.first_name.capitalize %> <%= agent.last_name.capitalize %></span>
+                      </div>
+                    </td>
+                    <td class="email">
+                      <%= link_to  agent.email, user_path(agent), class: "btn btn-outline-light text-dark col", data: { turbo: false }%>
+                    </td>
+                    <td class="mls_number"><%= agent.mls_number %></td>
+                    <td class="created_at"><%= agent.created_at.strftime("%B %d, %Y") %></td>
+                  </tr>
+                <% end %>
+              </tbody>
+            </table>
+          </div>
+          <div class="card-footer" style="background-color: white;">
+            <div class="d-flex justify-content-between align-items-center">
+              <div class="me-5 text-secondary small">
+                Showing: <%= @agents.offset_value + 1 %> - <%= [@agents.offset_value + @agents.length, @agents.total_entries].min %> of <%= @agents.total_entries %>
+              </div>
+              <!-- Pagination -->
+              <%= will_paginate @agents, renderer: CustomPaginationRenderer %>
+            </div>
+          </div>
+        <% end %>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- Chart Header -->
+<div class="card mt-3 text-start responsive-users col-md-9 mx-auto bg-color border-0">
+  <div class="card-header pt-4 pb-1 bg-color border-0 px-0">
+    <h5 class="card-title text-start my-auto fw-bold fs-4 text-uppercase">Charts</h5>
+  </div>
+</div>
+<!-- Line Charts -->
+<div class="card mt-3 text-start responsive-users col-md-9 mx-auto bg-color border-0">
+  <div class="col">
+    <h6>Agents Commision Split Over Time</h6>
+    <%= line_chart @split_data, library: { title: { text: "Total Splits Over Time", x: -20 } } %>
+  </div>
+</div>

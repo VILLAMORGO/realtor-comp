@@ -86,6 +86,11 @@
             <%= link_to 'Dashboard', users_path, class: "nav-link #{'active' if [users_path, authenticated_admin_root_path].include?(request.path) && current_user.admin? }" %>
           </li>
         <% end %>
+        <% if user_signed_in? && current_user.broker? %>
+          <li class="nav-item">
+            <%= link_to 'Dashboard', broker_users_path, class: "nav-link #{'active' if [users_path, broker_users_path].include?(request.path) && current_user.broker? }" %>
+          </li>
+        <% end %>
         <% if user_signed_in? %>
           <li class="nav-item">
             <%= link_to 'Listings', listings_path, class: "nav-link #{'active' if [listings_path, authenticated_user_root_path].include?(request.path)  && !current_user.admin? || current_page?(listings_path)}" %>
