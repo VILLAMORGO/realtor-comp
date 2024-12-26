@@ -12,46 +12,50 @@
         <div class="card-body rounded-5 border-1">
           <h2 class="card-title pricing-card-title">&#x24; 0<small class="text-muted fw-light">/mo</small></h2>
           <ul class="list-unstyled mt-3 mb4">
-            <li>Unlimited listings for 90 days</li>
+            <li>Free access to all listings for 90 daysss.</li>
             <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
-              <% days_left = (current_user.trial_ends_at.to_date - Date.current).to_i %>
               <li class="nav-item nav-link text-warning">
-                <%= pluralize(days_left, "day") %> left in trial. 
+                <%= pluralize(days_left.to_i, "day") %> left in trial. 
               </li>
             <% end %>
           </ul>
-          <button type="button" class="btn btn-lg btn-outline-secondary rounded-pill disabled" style="width: 80%;">Already signed up</button>
+          
+          <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
+            <button type="button" class="btn btn-lg btn-outline-secondary rounded-pill disabled" style="width: 80%;">Already signed up</button>
+          <% else %>
+            <button type="button" class="btn btn-lg btn-outline-secondary rounded-pill disabled" style="width: 80%;">Trial expired</button>
+          <% end %>
         </div>
       </div>
     </div>
     <div class="col">
       <div class="card mb-4 rounded-5 shadow border-1">
         <div class="card-header py-3 text-white bg-dark border-dark rounded-top-5">
-          <h4 class="my-0 fw-normal">Monthly</h4>
+          <h4 class="my-0 fw-normal">Monthly Plan</h4>
         </div>
         <div class="card-body rounded-5 border-5 border-dark">
-          <h2 class="card-title pricing-card-title">&#x24; 1.99<small class="text-muted fw-light">/month</small></h2>
+          <h2 class="card-title pricing-card-title">&#x24; 1.99<small class="text-muted fw-light">/mo</small></h2>
           <ul class="list-unstyled mt-3 mb-4">
-            <li>Unlimited listings for both.</li>
-            <li>Unlimited agents for brokers.</li>
+            <li>One-month access to all listings.</li>
+            <li>Unlimited agent accounts for brokers.</li>
           </ul>
-          <button class="btn btn-lg btn-dark rounded-pill" data-plan-id="monthly_plan_id" style="width: 80%;">Subscribe?</button>
+          <button class="btn btn-lg btn-dark rounded-pill" data-plan-id="monthly_plan_id" style="width: 80%;">Choose Plan</button>
         </div>
       </div>
     </div>
     <div class="col">
       <div class="card mb-4 rounded-5 shadow border-1">
         <div class="card-header py-3 text-white bg-primary border-primary rounded-top-5">
-          <h4 class="my-0 fw-normal">Yearly</h4>
+          <h4 class="my-0 fw-normal">Yearly Plan</h4>
         </div>
         <div class="card-body rounded-5 border-5 border-primary">
-          <h2 class="card-title pricing-card-title">&#x24; 20.00<small class="text-muted fw-light">/year</small></h2>
+          <h2 class="card-title pricing-card-title">&#x24; 20.00<small class="text-muted fw-light">/yr</small></h2>
           <ul class="list-unstyled mt-3 mb-4">
-            <li class="fw-medium text-primary-emphasis">Gets two free months.</li>
-            <li class="fw-light">Unlimited listings for both.</li>
-            <li class="fw-light">Unlimited agents for brokers.</li>
+            <li class="fw-medium text-primary-emphasis">Enjoy two months free with annual billing.</li>
+            <li class="fw-light">Unlimited agent accounts for brokers.</li>
+            <li class="fw-light">Unlimited access to all listings for one year.</li>
           </ul>
-          <button class="btn btn-lg btn-primary rounded-pill" data-plan-id="annual_plan_id" style="width: 80%;">Subscribe?</button>
+          <button class="btn btn-lg btn-primary rounded-pill" data-plan-id="annual_plan_id" style="width: 80%;">Choose Plan</button>
         </div>
       </div>
 
@@ -69,15 +73,18 @@
           <div class="card-body rounded-5 border-1">
             <h2 class="card-title pricing-card-title">&#x24; 0<small class="text-muted fw-light">/mo</small></h2>
             <ul class="list-unstyled mt-3 mb4">
-              <li>Unlimited listings for 90 days</li>
+              <li>Free access to all listings for 90 days.</li>
               <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
-                <% days_left = (current_user.trial_ends_at.to_date - Date.current).to_i %>
                 <li class="nav-item nav-link text-warning">
-                  <%= pluralize(days_left, "day") %> left in trial. 
+                  <%= pluralize(days_left.to_i, "day") %> left in trial. 
                 </li>
               <% end %>
             </ul>
-            <button type="button" class="btn btn-lg btn-outline-secondary rounded-pill disabled" style="width: 80%;">Already signed up</button>
+            <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
+              <button type="button" class="btn btn-lg btn-outline-secondary rounded-pill disabled" style="width: 80%;">Already signed up</button>
+            <% else %>
+              <button type="button" class="btn btn-lg btn-outline-secondary rounded-pill disabled" style="width: 80%;">Trial expired</button>
+            <% end %>
           </div>
         </div>
       </div>
@@ -85,15 +92,15 @@
       <div class="col carousel-item">
         <div class="card mb-4 rounded-5 shadow border-1 d-block w-100">
           <div class="card-header py-3 text-white bg-dark border-dark rounded-top-5">
-            <h4 class="my-0 fw-normal">Monthly</h4>
+            <h4 class="my-0 fw-normal">Monthly Plan</h4>
           </div>
           <div class="card-body rounded-5 border-5 border-dark">
-            <h2 class="card-title pricing-card-title">&#x24; 1.99<small class="text-muted fw-light">/month</small></h2>
+            <h2 class="card-title pricing-card-title">&#x24; 1.99<small class="text-muted fw-light">/mo</small></h2>
             <ul class="list-unstyled mt-3 mb-4">
-              <li>Unlimited listings for both.</li>
-              <li>Unlimited agents for brokers.</li>
+              <li>One-month access to all listings.</li>
+              <li>Unlimited agent accounts for brokers.</li>
             </ul>
-            <button class="btn btn-lg btn-dark rounded-pill" data-plan-id="monthly_plan_id" style="width: 80%;">Subscribe?</button>
+            <button class="btn btn-lg btn-dark rounded-pill" data-plan-id="monthly_plan_id" style="width: 80%;">Choose Plan</button>
           </div>
         </div>
       </div>
@@ -101,16 +108,16 @@
       <div class="col carousel-item">
         <div class="card mb-4 rounded-5 shadow border-1 d-block w-100">
           <div class="card-header py-3 text-white bg-primary border-primary rounded-top-5">
-            <h4 class="my-0 fw-normal">Yearly</h4>
+            <h4 class="my-0 fw-normal">Yearly Plan</h4>
           </div>
           <div class="card-body rounded-5 border-5 border-primary">
-            <h2 class="card-title pricing-card-title">&#x24; 20<small class="text-muted fw-light">/year</small></h2>
+            <h2 class="card-title pricing-card-title">&#x24; 20<small class="text-muted fw-light">/yr</small></h2>
             <ul class="list-unstyled mt-3 mb-4">
-              <li class="fw-medium text-primary-emphasis">Gets two free months.</li>
-              <li class="fw-light">Unlimited listings for both.</li>
-              <li class="fw-light">Unlimited agents for brokers.</li>
+              <li class="fw-medium text-primary-emphasis">Enjoy two months free with annual billing.</li>
+              <li class="fw-light">Unlimited agent accounts for brokers.</li>
+              <li class="fw-light">Unlimited access to all listings for one year.</li>
             </ul>
-            <button class="btn btn-lg btn-primary rounded-pill" data-plan-id="annual_plan_id" style="width: 80%;">Subscribe?</button>
+            <button class="btn btn-lg btn-primary rounded-pill" data-plan-id="annual_plan_id" style="width: 80%;">Choose Plan</button>
           </div>
         </div>
       </div>
@@ -151,37 +158,41 @@
           <td style="background-color: #f9f9fa;">$20/yr</td>
         </tr>
         <tr>
-          <th scope="row" class="text-start" style="background-color: #f9f9fa;">Unlimited Listings</th>
+          <th scope="row" class="text-start" style="background-color: #f9f9fa;">Unlimited Access Listings</th>
           <td style="background-color: #f9f9fa;">
             <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
-                <% days_left = (current_user.trial_ends_at.to_date - Date.current).to_i %>
-                
-                  <%= pluralize(days_left, "day") %> left. 
-              <% else %>
-              Yes <p class="text-muted fw-light">(90 days)</p>
-              <% end %>
+              <%= pluralize(days_left.to_i, "day") %> left. 
+            <% else %>
+              Free <p class="text-muted fw-light">(90 days)</p>
+            <% end %>
           </td>
           <td style="background-color: #f9f9fa;">Yes</td>
           <td style="background-color: #f9f9fa;">Yes</td>
         </tr>
         <tr>
-          <th scope="row" class="text-start" style="background-color: #f9f9fa;">Unlimited Agents for Brokers</th>
-          <td style="background-color: #f9f9fa;">No</td>
+          <th scope="row" class="text-start" style="background-color: #f9f9fa;">Unlimited agent accounts for brokers.</th>
+          <td style="background-color: #f9f9fa;">
+            <% if current_user.subscription_status == "trial" && current_user.trial_ends_at.present? %>
+              <%= pluralize(days_left.to_i, "day") %> left. 
+            <% else %>
+              Free <p class="text-muted fw-light">(90 days)</p>
+            <% end %>
+          </p></td>
           <td style="background-color: #f9f9fa;">Yes</td>
           <td style="background-color: #f9f9fa;">Yes</td>
         </tr>
         <tr>
           <th scope="row" class="text-start" style="background-color: #f9f9fa;">Additional Benefits</th>
-          <td style="background-color: #f9f9fa;">N/A</td>
-          <td style="background-color: #f9f9fa;">N/A</td>
+          <td style="background-color: #f9f9fa;"></td>
+          <td style="background-color: #f9f9fa;"></td>
           <td style="background-color: #f9f9fa;">2 months free</td>
         </tr>
       </tbody>
     </table>
   </div>
 
-  <div class="d-flex flex-column justify-content-center mx-auto main-font mt-5 px-4" style="max-width: 1000px;">
-    <h3>Need something?</h3>
+  <div class="d-flex flex-column ms-0 main-font mt-5 mb-3">
+    <h5 class="fw-semibold">Need something?</h5>
     <p>You can help us decide what's the best for you based on your needs. <%= link_to 'Support', support_index_path %></p>
   </div>
 </main>
