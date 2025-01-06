@@ -1,0 +1,3 @@
+<h4 class="py-2 mb-3 ms-2 font-monospace"><%= @conversation.users.where.not(id: current_user.id).map(&:email).join(', ') %></h4>
+<%= render partial: 'conversations/conversation', locals: { conversation: @conversation } %>
+<%= link_to "Back to Conversations", conversations_path, class: "btn btn-secondary mt-3" %>

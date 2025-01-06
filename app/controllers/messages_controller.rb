@@ -7,21 +7,17 @@ class MessagesController < ApplicationController
     @message.user = current_user
 
     if @message.save
-      redirect_to conversation_path(@conversation)
+      redirect_to conversation_path(@conversation), notice: 'Message sent successfully.'
     else
-      flash[:alert] = 'Message cannot be blank'
+      flash.now[:alert] = 'Message cannot be blank.'
       render 'conversations/show'
     end
   end
 
-  def new
-    @conversation = Conversation.find(params[:conversation_id])
-    @message = @conversation.messages.new
-  end
   private
 
   def set_conversation
-    @conversation = Conversation.find(params[:conversation_id])
+    @conversation = current_user.conversations.find(params[:conversation_id])
   end
 
   def message_params

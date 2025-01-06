@@ -123,7 +123,7 @@
             Welcome&nbsp;<%=current_user.first_name%>&nbsp;<%=current_user.last_name%>!
           </li>
           <li class="nav-item nav-link dropdown-center" style="cursor: pointer;">
-            <%= link_to conversations_path(current_user), class: "text-white #{'active' if current_page?(conversations_path(current_user))}", style: "cursor: pointer;" do %>
+            <%= link_to conversations_path, class: "text-white #{'active' if current_page?(conversations_path)}", style: "cursor: pointer;" do %>
               <i  class="bi bi-chat-dots fs-5 mx-1 rounded-circle bg-secondary bg-opacity-50 p-2"></i>
             <% end %>
           </li>
