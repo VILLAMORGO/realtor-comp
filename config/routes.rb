@@ -5,8 +5,7 @@ Rails.application.routes.draw do
   post '/stripe/webhook', to: 'stripe_webhooks#create'
 
   devise_for :users, controllers: {
-    confirmations: 'users/confirmations',
-    registrations: 'users/registrations',
+    confirmations: 'users/confirmations',    registrations: 'users/registrations',
     sessions: 'users/sessions'
   }
 

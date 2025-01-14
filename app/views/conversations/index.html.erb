@@ -1,3 +1,5 @@
+<%= turbo_stream_from @selected_conversation%>
+
 <!-- Conversation Header -->
 <div class="card mt-3 text-start responsive-users col-md-9 mx-auto bg-color border-0">
   <div class="card-header py-4 bg-color border-0 px-0">
@@ -43,7 +45,7 @@
           <h5 class="p-3 border-bottom text-start fw-semibold">
             <%= @selected_conversation.users.where.not(id: current_user.id).map(&:email).join(', ') %>
           </h5>
-          <div class="messages-container px-4 text-start overflow-y-scroll" style="height: 50vh;">
+          <div id="messages" class="messages-container px-4 text-start overflow-y-scroll" style="height: 50vh;" data-controller="scroll">
             <% if @selected_conversation.messages.any? %>
               <% @selected_conversation.messages.each do |message| %>
                 <p>
@@ -55,18 +57,20 @@
               <p>No messages yet. Start the conversation!</p>
             <% end %>
           </div>
-          <%= form_with model: [@selected_conversation, Message.new], local: true do |f| %>
-            <div class="d-flex px-2">
-              <div class="mb-3 mx-2 mt-3" style="width: 85%;">
-                <%= f.text_area :body, placeholder: "Type your message here...", class: "form-control my-", style:"width: 100%;" %>
+          <%= turbo_frame_tag tag dom_id(@selected_conversation, :new_message) do %>
+            <%= form_with model: [@selected_conversation, Message.new], data: { turbo: true, controller: "reset-form", action: "turbo:submit-end->reset-form#reset"} do |f| %>
+              <div class="d-flex px-2">
+                <div class="mb-3 mx-2 mt-3" style="width: 85%;">
+                  <%= f.text_area :body, placeholder: "Type your message here...", class: "form-control my-", style:"width: 100%;" %>
+                </div>
+                <div class="my-auto">
+                  <button type="submit" class="btn btn-primary px-3 py-1 rounded-pill mx-2 my-auto" style="min-width: 110px;">
+                    <i class="bi bi-send me-2 "></i>
+                    Send
+                  </button>
+                </div>
               </div>
-              <div class="my-auto">
-                <button type="submit" class="btn btn-primary px-3 py-1 rounded-pill mx-2 my-auto" style="min-width: 110px;">
-                  <i class="bi bi-send me-2 "></i>
-                  Send
-                </button>
-              </div>
-            </div>
+            <% end %>
           <% end %>
         <% else %>
           <div class="d-flex align-items-center justify-content-center h-100">
@@ -74,6 +78,7 @@
           </div>
         <% end %>
       </div>
+      <!-- end -->
 
     </div>
   </div>
