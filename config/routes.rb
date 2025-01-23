@@ -4,14 +4,11 @@ Rails.application.routes.draw do
 
   post '/stripe/webhook', to: 'stripe_webhooks#create'
 
-  # Define custom controller for Devise registrations
   devise_for :users, controllers: {
-    confirmations: 'users/confirmations',
-    registrations: 'users/registrations',
+    confirmations: 'users/confirmations',    registrations: 'users/registrations',
     sessions: 'users/sessions'
   }
 
-  # Reveal health status on /up that returns 200 if the app boots with no exceptions, otherwise 500.
   get "up" => "rails/health#show", as: :rails_health_check
 
   namespace :admin do
@@ -22,16 +19,19 @@ Rails.application.routes.draw do
   namespace :broker do
     resources :users, only: [:index]
   end
-  
+
   resources :users, only: [:index, :show, :edit, :update, :destroy] do
     member do
-      delete :remove_profile_picture # Custom route to remove the profile picture
+      delete :remove_profile_picture
+    end
+    collection do
+      get :search
     end
   end
 
   resources :pending_requests, only: [:index, :update, :destroy]
   resources :declined_requests, only: [:index, :destroy]
-  resources :listings, only: [:index, :create, :edit, :update, :destroy, :new, :show] do
+  resources :listings, only: [:index, :new, :create, :edit, :update, :destroy, :show] do
     patch :toggle_active, on: :member
   end
 
@@ -41,7 +41,11 @@ Rails.application.routes.draw do
     end
   end
 
-  authenticated :user, lambda { |u| u.admin? } do
+  resources :conversations do
+    resources :messages, only: [:create]
+  end
+
+  authenticated :user, ->(u) { u.admin? } do
     root 'users#index', as: :authenticated_admin_root
   end
 
@@ -49,5 +53,5 @@ Rails.application.routes.draw do
     root 'listings#index', as: :authenticated_user_root
   end
 
-  root 'listings#index' # Default root if no user is logged in
+  root 'listings#index'
 end

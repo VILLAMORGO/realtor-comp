@@ -1,0 +1,9 @@
+<% if search_users.present? %>
+  <% search_users.each do |searched_user| %>
+    <li class="dropdown-item">
+      <%= link_to searched_user.first_name, new_message_path(user_id: searched_user.id) %>
+    </li>
+  <% end %>
+<% else %>
+  <li class="dropdown-item opacity-75" style="font-size: 12px;">No users found.</li>
+<% end %>

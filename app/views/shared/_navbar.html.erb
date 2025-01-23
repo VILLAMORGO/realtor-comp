@@ -122,28 +122,12 @@
           <li class="nav-item nav-link text-white hide-welcome disable" style="cursor: pointer;">
             Welcome&nbsp;<%=current_user.first_name%>&nbsp;<%=current_user.last_name%>!
           </li>
-          <li class="nav-item dropdown-center">
-            <a href="#" class="nav-link text-white" 
-                id="dropdownMenuLink" 
-                role="button" 
-                data-bs-toggle="dropdown" 
-                aria-expanded="false" 
-                style="cursor: pointer;">
+          <li class="nav-item nav-link dropdown-center" style="cursor: pointer;">
+            <%= link_to conversations_path, class: "text-white #{'active' if current_page?(conversations_path)}", style: "cursor: pointer;" do %>
               <i  class="bi bi-chat-dots fs-5 mx-1 rounded-circle bg-secondary bg-opacity-50 p-2"></i>
-            </a>
-            <ul class="dropdown-menu dropdown-menu-end" 
-                aria-labelledby="dropdownMenuLink"
-                style="min-width: 150px;">
-              <li>
-                <div class="mx-3 border border-outline-secondary rounded-pill px-3 py-2 d-flex flex-row justify-content-center" style="min-width: 120px;" >
-                  <p style="font-size: 12px; margin-bottom: 0;">Search User...</p>
-                  <i class="bi bi-search ms-1" style="font-size: 12px;"></i>
-                </div>
-              </li>
-              <div class="dropdown-divider"></div>
-              <li class="dropdown-item opacity-75"><p style="font-size: 12px;" >No chats yet. Currently in development.</p></li>
-            </ul>
+            <% end %>
           </li>
+
           <li class="nav-item dropdown-center">
             <a href="#" class="nav-link text-white" 
                 id="dropdownMenuLink" 
@@ -311,6 +295,25 @@
       arrowDown.style.display = isExpanded ? 'none' : 'inline';
       arrowUp.style.display = isExpanded ? 'inline' : 'none';
       dropdownMenu.classList.toggle('show');
+    });
+  });
+
+  document.addEventListener('DOMContentLoaded', function() {
+    var conversationModal = document.getElementById('conversationModal');
+    
+    conversationModal.addEventListener('show.bs.modal', function (event) {
+      var button = event.relatedTarget;
+      var conversationId = button.getAttribute('data-conversation-id');
+      
+      // Make an AJAX call to fetch the conversation details
+      fetch(`/conversations/${conversationId}`)
+        .then(response => response.text())
+        .then(html => {
+          document.getElementById('conversationContent').innerHTML = html;
+        })
+        .catch(error => {
+          document.getElementById('conversationContent').innerHTML = "Failed to load conversation.";
+        });
     });
   });
 </script>

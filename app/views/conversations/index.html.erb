@@ -1,0 +1,85 @@
+<%= turbo_stream_from @selected_conversation%>
+
+<!-- Conversation Header -->
+<div class="card mt-3 text-start responsive-users col-md-9 mx-auto bg-color border-0">
+  <div class="card-header py-4 bg-color border-0 px-0">
+    <h3 class="card-title text-start my-auto fw-bold fs-4 text-uppercase">Conversations</h3>
+  </div>
+</div>
+
+<div class="card border-0 mt-2 text-center responsive-users my-5 col-md-9 mx-auto bg-color">
+  <div class="card-header d-flex flex-column justify-content-between align-items-center border-0 p-0 bg-color">
+    <div class="d-flex flex-md-row w-100 p-0" style="height: 60vh;">
+      
+      <!-- Conversation List -->
+      <div class="card border-0 rounded-4 shadow rounded border border-warning m-0 me-2" style="width: 400px; height: 60vh;">
+        <div class="card mt-3 col-md-9 mx-auto p-1 border-0">
+          <%= form_with url: conversations_path, method: :post, local: true do %>
+            <div class="mb-1">
+              <%= label_tag :agent_id, "Start a conversation with:", class: "form-label heading-font" %>
+              <%= select_tag :agent_id, options_from_collection_for_select(User.where.not(id: current_user.id), :id, :email), include_blank: true, prompt: "Select to start", class: "form-select" %>
+            </div>
+            <%= submit_tag "Start Conversation", class: "btn btn-primary rounded-pill px-4 py-1 mt-1" %>
+          <% end %>
+        </div>
+
+        <div class="card mt-3 col-md-9 mx-auto p-1 border-0 overflow-y-scroll" style="height: 36vh;">
+          <h6 class="heading-font">Your Conversations</h6>
+          <% if @conversations.any? %>
+            <% @conversations.each do |conversation| %>
+              <div class="conversation-item mb-2">
+                <%= link_to "#{conversation.users.where.not(id: current_user.id).map(&:email).join(', ')}",
+                            conversations_path(selected_conversation_id: conversation.id),
+                            class: "btn btn-outline-secondary w-100" %>
+              </div>
+            <% end %>
+          <% else %>
+            <p>No conversations yet. Start one above!</p>
+          <% end %>
+        </div>
+      </div>
+
+      <!-- Conversation Messages -->
+      <div class="card border-0 rounded-4 shadow border border-dark w-100 ms-4" style="height: 60vh;">
+        <% if @selected_conversation %>
+          <h5 class="p-3 border-bottom text-start fw-semibold">
+            <%= @selected_conversation.users.where.not(id: current_user.id).map(&:email).join(', ') %>
+          </h5>
+          <div id="messages" class="messages-container px-4 text-start overflow-y-scroll" style="height: 50vh;" data-controller="scroll">
+            <% if @selected_conversation.messages.any? %>
+              <% @selected_conversation.messages.each do |message| %>
+                <p>
+                  <strong><%= message.user.email %>:</strong>
+                  <%= message.body %>
+                </p>
+              <% end %>
+            <% else %>
+              <p>No messages yet. Start the conversation!</p>
+            <% end %>
+          </div>
+          <%= turbo_frame_tag tag dom_id(@selected_conversation, :new_message) do %>
+            <%= form_with model: [@selected_conversation, Message.new], data: { turbo: true, controller: "reset-form", action: "turbo:submit-end->reset-form#reset"} do |f| %>
+              <div class="d-flex px-2">
+                <div class="mb-3 mx-2 mt-3" style="width: 85%;">
+                  <%= f.text_area :body, placeholder: "Type your message here...", class: "form-control my-", style:"width: 100%;" %>
+                </div>
+                <div class="my-auto">
+                  <button type="submit" class="btn btn-primary px-3 py-1 rounded-pill mx-2 my-auto" style="min-width: 110px;">
+                    <i class="bi bi-send me-2 "></i>
+                    Send
+                  </button>
+                </div>
+              </div>
+            <% end %>
+          <% end %>
+        <% else %>
+          <div class="d-flex align-items-center justify-content-center h-100">
+            <p>Select a conversation to view messages.</p>
+          </div>
+        <% end %>
+      </div>
+      <!-- end -->
+
+    </div>
+  </div>
+</div>
