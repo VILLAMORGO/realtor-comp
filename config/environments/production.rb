@@ -41,7 +41,7 @@ Rails.application.configure do
 
   # Mount Action Cable outside main process or domain.
   # config.action_cable.mount_path = nil
-  config.action_cable.url = 'wss://www.realtorcomp.biz/cable'
+  config.action_cable.url = 'redis://127.0.0.1:6379/1'
   config.action_cable.allowed_request_origins = [ 
     'https://www.realtorcomp.biz',
     'http://www.realtorcomp.biz'
