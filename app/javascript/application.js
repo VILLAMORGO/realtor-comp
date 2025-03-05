@@ -38,6 +38,42 @@ document.addEventListener("turbo:load", function() {
   console.log("toggleButton.textContent");
 });
 
+/*----------  Messaging disappearing  ----------*/
+
+document.addEventListener("turbo:load", function() {
+  var conversationList = document.getElementById("conversation-list");
+  var messageContainer = document.getElementById("message-container");
+  var backButton = document.getElementById("back-button");
+  var conversationLinks = document.querySelectorAll(".conversation-item a");
+
+  if (conversationList && messageContainer && backButton) {
+    conversationLinks.forEach(function(link) {
+      link.addEventListener("click", function() {
+        if (window.innerWidth < 768) { // Apply only for small screens
+          // conversationList.classList.add('d-none');
+          messageContainer.classList.remove("d-none");
+
+          // setTimeout(function() {
+          //   conversationList.classList.add("d-none");
+          // }, 5000);
+          console.log("Trying to display");
+        }
+      });
+    });
+
+    backButton.addEventListener("click", function() {
+      if (window.innerWidth < 768) {
+        conversationList.classList.remove("d-none");
+        messageContainer.classList.add("d-none");
+      }
+    });
+  }
+});
+
+
+/*----------  Messaging disappearing End ----------*/
+
+
 document.addEventListener('turbo:load', function() {
   document.querySelectorAll('.btn-group-toggle .btn').forEach(function(button) {
     button.addEventListener('click', function() {

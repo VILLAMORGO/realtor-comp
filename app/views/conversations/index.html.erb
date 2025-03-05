@@ -8,11 +8,11 @@
 </div>
 
 <div class="card border-0 mt-2 text-center responsive-users my-5 col-md-9 mx-auto bg-color">
-  <div class="card-header d-flex flex-column justify-content-between align-items-center border-0 p-0 bg-color">
-    <div class="d-flex flex-md-row w-100 p-0" style="height: 60vh;">
-      
-      <!-- Conversation List -->
-      <div class="card border-0 rounded-4 shadow rounded border border-warning m-0 me-2" style="width: 400px; height: 60vh;">
+  <div class="card-header d-flex justify-content-between align-items-center border-0 p-0 bg-color">
+    <div class="w-100 p-0 d-flex flex-column flex-md-row" style="min-height: 60vh;">
+
+      <!-- Test Conversation List Small Screen -->
+      <div id="conversation-list" class="card border-0 rounded-4 shadow rounded border border-warning m-0 mx-auto me-md-2 mb-3 mb-md-0 px-4 px-md-0" style="max-width: 300px; width: 100%; min-width: 250px; height: 60vh;">
         <div class="card mt-3 col-md-9 mx-auto p-1 border-0">
           <%= form_with url: conversations_path, method: :post, local: true do %>
             <div class="mb-1">
@@ -27,7 +27,7 @@
           <h6 class="heading-font">Your Conversations</h6>
           <% if @conversations.any? %>
             <% @conversations.each do |conversation| %>
-              <div class="conversation-item mb-2">
+              <div class="conversation-item mb-2 d-flex flex-column flex-md-row">
                 <%= link_to "#{conversation.users.where.not(id: current_user.id).map(&:email).join(', ')}",
                             conversations_path(selected_conversation_id: conversation.id),
                             class: "btn btn-outline-secondary w-100" %>
@@ -38,20 +38,30 @@
           <% end %>
         </div>
       </div>
+      <!-- End of Test Conversation List Small Screen -->
 
       <!-- Conversation Messages -->
-      <div class="card border-0 rounded-4 shadow border border-dark w-100 ms-4" style="height: 60vh;">
+      <div id="message-container" class="card border-0 rounded-4 shadow border border-dark w-100 mx-auto ms-md-4" style="max-width: 930px; width: 100%;">
         <% if @selected_conversation %>
-          <h5 class="p-3 border-bottom text-start fw-semibold">
+          <h5 class="p-3 border-bottom text-start fw-semibold ">
+            <i id="back-button" class="bi bi-arrow-left me-1 d-inline d-md-none"></i>
             <%= @selected_conversation.users.where.not(id: current_user.id).map(&:email).join(', ') %>
           </h5>
-          <div id="messages" class="messages-container px-4 text-start overflow-y-scroll" style="height: 50vh;" data-controller="scroll">
+          <div id="messages" class="messages-container px-4 d-flex flex-column overflow-y-scroll dynamic-height" style="height: 50vh;" data-controller="scroll">
             <% if @selected_conversation.messages.any? %>
               <% @selected_conversation.messages.each do |message| %>
-                <p>
-                  <strong><%= message.user.email %>:</strong>
-                  <%= message.body %>
-                </p>
+              
+                <% if message.user.email == current_user.email %>
+                  <p class="border border-dark text-end py-2 px-3 rounded-bottom-2 rounded-start-2 bg-dark text-white mb-1 w-auto align-self-end">
+                    <strong><%= message.user.email %>:</strong>
+                    <%= message.body %>
+                  </p>
+                <% else %>
+                  <p class="border border-light-emphasis py-2 px-3 rounded-bottom-2 rounded-end-2 bg-light mb-1 w-auto align-self-start">
+                    <strong><%= message.user.email %>: </strong>
+                    <%= message.body %>
+                  </p>
+                <% end %>
               <% end %>
             <% else %>
               <p>No messages yet. Start the conversation!</p>
@@ -83,3 +93,11 @@
     </div>
   </div>
 </div>
+
+<style>
+  @media (min-width: 768px) {
+    .dynamic-height {
+      height: 35vh !important;
+    }
+  }
+</style>
