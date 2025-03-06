@@ -67,10 +67,10 @@ document.addEventListener("turbo:load", function() {
               setTimeout(function() {
                 messageContainer.style.opacity = "1"; // Fade in
               }, 200);
-            }, 400);
+            }, 500);
 
             console.log("Remove from conversation list");
-          }, 900);
+          }, 1200);
         }
       });
     });
