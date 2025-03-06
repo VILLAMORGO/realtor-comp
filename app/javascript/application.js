@@ -119,9 +119,9 @@ document.addEventListener("turbo:load", function() {
 
             setTimeout(function() {
               conversationList.style.opacity = "1"; // Fade in
-            }, 100);
-          }, 500);
-        }, 500);
+            }, 300);
+          }, 800);
+        }, 800);
       }
     });
   }
