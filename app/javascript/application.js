@@ -66,11 +66,11 @@ document.addEventListener("turbo:load", function() {
 
               setTimeout(function() {
                 messageContainer.style.opacity = "1"; // Fade in
-              }, 500);
-            }, 500);
+              }, 200);
+            }, 400);
 
             console.log("Remove from conversation list");
-          }, 500);
+          }, 900);
         }
       });
     });
@@ -88,7 +88,7 @@ document.addEventListener("turbo:load", function() {
 
             setTimeout(function() {
               conversationList.style.opacity = "1"; // Fade in
-            }, 500);
+            }, 100);
           }, 500);
         }, 500);
       }
