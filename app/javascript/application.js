@@ -40,6 +40,37 @@ document.addEventListener("turbo:load", function() {
 
 /*----------  Messaging disappearing  ----------*/
 
+// document.addEventListener("turbo:load", function() {
+//   var conversationList = document.getElementById("conversation-list");
+//   var messageContainer = document.getElementById("message-container");
+//   var backButton = document.getElementById("back-button");
+//   var conversationLinks = document.querySelectorAll(".conversation-item a");
+
+//   if (conversationList && messageContainer && backButton) {
+//     conversationLinks.forEach(function(link) {
+//       link.addEventListener("click", function() {
+//         if (window.innerWidth < 768) { // Apply only for small screens
+//           setTimeout(function() {
+//             var conversationList = document.getElementById("conversation-list");
+//             var messageContainer = document.getElementById("message-container");
+//             conversationList.classList.add("d-none");
+//             messageContainer.classList.remove("d-none");
+//             console.log("Remove from conversation list");
+//           }, 500);
+//           console.log("Trying to display");
+//         }
+//       });
+//     });
+
+//     backButton.addEventListener("click", function() {
+//       if (window.innerWidth < 768) {
+//         conversationList.classList.remove("d-none");
+//         messageContainer.classList.add("d-none");
+//       }
+//     });
+//   }
+// });
+
 document.addEventListener("turbo:load", function() {
   var conversationList = document.getElementById("conversation-list");
   var messageContainer = document.getElementById("message-container");
@@ -53,19 +84,44 @@ document.addEventListener("turbo:load", function() {
           setTimeout(function() {
             var conversationList = document.getElementById("conversation-list");
             var messageContainer = document.getElementById("message-container");
-            conversationList.classList.add("d-none");
-            messageContainer.classList.remove("d-none");
+
+            // Apply fade-out transition
+            conversationList.style.opacity = "0";
+            conversationList.style.visibility = "hidden";
+
+            setTimeout(function() {
+              conversationList.classList.add("d-none"); // Hide after transition
+              messageContainer.classList.remove("d-none");
+              messageContainer.style.opacity = "0"; // Start invisible
+              messageContainer.style.visibility = "visible";
+
+              setTimeout(function() {
+                messageContainer.style.opacity = "1"; // Fade in
+              }, 100);
+            }, 500);
+
             console.log("Remove from conversation list");
           }, 500);
-          console.log("Trying to display");
         }
       });
     });
 
     backButton.addEventListener("click", function() {
       if (window.innerWidth < 768) {
-        conversationList.classList.remove("d-none");
-        messageContainer.classList.add("d-none");
+        setTimeout(function() {
+          messageContainer.style.opacity = "0"; // Fade out
+
+          setTimeout(function() {
+            messageContainer.classList.add("d-none");
+            conversationList.classList.remove("d-none");
+            conversationList.style.opacity = "0";
+            conversationList.style.visibility = "visible";
+
+            setTimeout(function() {
+              conversationList.style.opacity = "1"; // Fade in
+            }, 100);
+          }, 500);
+        }, 500);
       }
     });
   }
