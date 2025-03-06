@@ -56,7 +56,7 @@ document.addEventListener("turbo:load", function() {
             conversationList.classList.add("d-none");
             messageContainer.classList.remove("d-none");
             console.log("Remove from conversation list");
-          }, 300);
+          }, 500);
           console.log("Trying to display");
         }
       });
